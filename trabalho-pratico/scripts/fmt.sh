@@ -9,9 +9,6 @@ import() {
   . "${SCRIPTS_DIR}/${1}"
 }
 
-# shellcheck source=./helpers.sh
-import helpers.sh
-
 __ansi() {
   echo -e "\e[${1}m${*:2}\e[0m"
 }
