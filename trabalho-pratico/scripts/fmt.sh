@@ -127,4 +127,3 @@ function format() {
 }
 
 [ "$0" = "${BASH_SOURCE[0]}" ] && format "$@" || true
-
