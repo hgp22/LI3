@@ -26,7 +26,7 @@ SRC_DIR = src
 TST_DIR = tests
 UTI_DIR = scripts
 #------------------------------------------------------------------------------
-PROGRAM = trabalho-pratico
+PROGRAM = programa-principal
 #------------------------------------------------------------------------------
 TRASH   = $(PROGRAM) $(BLD_DIR) $(DOC_DIR)/{html,latex} $(LOG_DIR) $(OUT_DIR)
 #------------------------------------------------------------------------------
