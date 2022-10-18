@@ -1,5 +1,8 @@
 #include "batch.h"
 #include <stdio.h>
+#include <glib.h>
+#include "config.h"
+#include "parser.h"
 
 #include <string.h>
 

@@ -1,5 +1,6 @@
 #include "batch.h"
 #include "parser_query.h"
+#include "parser_inputs.h"
 #include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +10,7 @@ int batch(char *path_inputs, char *path_queries)
 {
     Inputs *input = get_input_file_pointers(path_inputs);
 
-    // TODO: parse inputs
+    parse_inputs(input);
 
     close_input_files(input);
 
