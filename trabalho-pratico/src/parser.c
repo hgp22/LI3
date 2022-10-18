@@ -17,34 +17,34 @@ GSList *parse_drivers(FILE *fd, GSList *drivers) {
     while (getline(&record, &len, fd) != -1) {
         //Driver *driver = (Driver*)malloc(sizeof(Driver));
         Driver *driver = g_new(Driver, 1);
-        for (Field_driver field = Id; field <= Account_status; field++) {
+        for (Field_driver field = D_id; field <= D_account_status; field++) {
             buff = strsep(&record, ";");
             switch (field) {
-                case Id:
+                case D_id:
                     driver->id = buff;
                     break;
-                case Name:
+                case D_name:
                     driver->name = buff;
                     break;
-                case Birth_date:
+                case D_birth_date:
                     driver->birth_date = buff;
                     break;
-                case Gender:
+                case D_gender:
                     driver->gender = buff;
                     break;
-                case Car_class:
+                case D_car_class:
                     driver->car_class = buff;
                     break;
-                case License_plate:
+                case D_license_plate:
                     driver->license_plate = buff;
                     break;
-                case City:
+                case D_city:
                     driver->city = buff;
                     break;
-                case Account_creation:
+                case D_account_creation:
                     driver->account_creation = buff;
                     break;
-                case Account_status:
+                case D_account_status:
                     driver->account_status = buff;
                     break;
             }

@@ -2,13 +2,8 @@
 #define __PARSER_INPUTS_H__
 
 #include "batch.h"
+#include <glib.h>
 
-/**
- * @brief 
- * 
- * @param input 
- * @return int 
- */
-int parse_inputs(Inputs *input);
+GSList *parse_inputs(Inputs *input);
 
 #endif
