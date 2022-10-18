@@ -23,7 +23,7 @@ GSList *parse_users(FILE *fu)
 {
     char *record = NULL;
     size_t len = 0;
-    char *buff;
+    char *buff = NULL;
     GSList *users = NULL;
 
     getline(&record, &len, fu); // Remove header
@@ -33,27 +33,35 @@ GSList *parse_users(FILE *fu)
         for (Field_user field = U_username; field <= U_account_status;
              field++) {
             buff = strsep(&record, ";");
+            size_t size = strlen(buff) * sizeof(buff);
             switch (field) {
                 case U_username:
-                    user->username = buff;
+                    user->username = malloc(size);
+                    strcpy(user->username, buff);
                     break;
                 case U_name:
-                    user->name = buff;
+                    user->name = malloc(size);
+                    strcpy(user->name, buff);
                     break;
                 case U_gender:
-                    user->gender = buff;
+                    user->gender = malloc(size);
+                    strcpy(user->gender, buff);
                     break;
                 case U_birth_date:
-                    user->birth_date = buff;
+                    user->birth_date = malloc(size);
+                    strcpy(user->birth_date, buff);
                     break;
                 case U_account_creation:
-                    user->account_creation = buff;
+                    user->account_creation = malloc(size);
+                    strcpy(user->account_creation, buff);
                     break;
                 case U_pay_method:
-                    user->pay_method = buff;
+                    user->pay_method = malloc(size);
+                    strcpy(user->pay_method, buff);
                     break;
                 case U_account_status:
-                    user->account_status = buff;
+                    user->account_status = malloc(size);
+                    strcpy(user->account_status, buff);
                     break;
             }
         }
@@ -62,6 +70,7 @@ GSList *parse_users(FILE *fu)
     }
 
     free(record);
+    //free(buff);
 
     return users;
 }
@@ -70,7 +79,7 @@ GSList *parse_drivers(FILE *fd)
 {
     char *record = NULL;
     size_t len = 0;
-    char *buff;
+    char *buff = NULL;
     GSList *drivers = NULL;
 
     getline(&record, &len, fd); // Remove header
@@ -79,33 +88,43 @@ GSList *parse_drivers(FILE *fd)
         Driver *driver = g_new(Driver, 1);
         for (Field_driver field = D_id; field <= D_account_status; field++) {
             buff = strsep(&record, ";");
+            size_t size = strlen(buff) * sizeof(buff);
             switch (field) {
                 case D_id:
-                    driver->id = buff;
+                    driver->id = malloc(size);
+                    strcpy(driver->id, buff);
                     break;
                 case D_name:
-                    driver->name = buff;
+                    driver->name = malloc(size);
+                    strcpy(driver->name, buff);
                     break;
                 case D_birth_date:
-                    driver->birth_date = buff;
+                    driver->birth_date = malloc(size);
+                    strcpy(driver->birth_date, buff);
                     break;
                 case D_gender:
-                    driver->gender = buff;
+                    driver->gender = malloc(size);
+                    strcpy(driver->gender, buff);
                     break;
                 case D_car_class:
-                    driver->car_class = buff;
+                    driver->car_class = malloc(size);
+                    strcpy(driver->car_class, buff);
                     break;
                 case D_license_plate:
-                    driver->license_plate = buff;
+                    driver->license_plate = malloc(size);
+                    strcpy(driver->license_plate, buff);
                     break;
                 case D_city:
-                    driver->city = buff;
+                    driver->city = malloc(size);
+                    strcpy(driver->city, buff);
                     break;
                 case D_account_creation:
-                    driver->account_creation = buff;
+                    driver->account_creation = malloc(size);
+                    strcpy(driver->account_creation, buff);
                     break;
                 case D_account_status:
-                    driver->account_status = buff;
+                    driver->account_status = malloc(size);
+                    strcpy(driver->account_status, buff);
                     break;
             }
         }
@@ -114,6 +133,7 @@ GSList *parse_drivers(FILE *fd)
     }
 
     free(record);
+    //free(buff);
 
     return drivers;
 }
@@ -122,7 +142,7 @@ GSList *parse_rides(FILE *fr)
 {
     char *record = NULL;
     size_t len = 0;
-    char *buff;
+    char *buff = NULL;
     GSList *rides = NULL;
 
     getline(&record, &len, fr); // Remove header
@@ -131,36 +151,47 @@ GSList *parse_rides(FILE *fr)
         Ride *ride = g_new(Ride, 1);
         for (Field_ride field = R_id; field <= R_comment; field++) {
             buff = strsep(&record, ";");
+            size_t size = strlen(buff) * sizeof(buff);
             switch (field) {
                 case R_id:
-                    ride->id = buff;
+                    ride->id = malloc(size);
+                    strcpy(ride->id, buff);
                     break;
                 case R_state:
-                    ride->state = buff;
+                    ride->state = malloc(size);
+                    strcpy(ride->state, buff);
                     break;
                 case R_driver:
-                    ride->driver = buff;
+                    ride->driver = malloc(size);
+                    strcpy(ride->driver, buff);
                     break;
                 case R_user:
-                    ride->user = buff;
+                    ride->user = malloc(size);
+                    strcpy(ride->user, buff);
                     break;
                 case R_city:
-                    ride->city = buff;
+                    ride->city = malloc(size);
+                    strcpy(ride->city, buff);
                     break;
                 case R_distance:
-                    ride->distance = buff;
+                    ride->distance = malloc(size);
+                    strcpy(ride->distance, buff);
                     break;
                 case R_score_user:
-                    ride->score_user = buff;
+                    ride->score_user = malloc(size);
+                    strcpy(ride->score_user, buff);
                     break;
                 case R_score_driver:
-                    ride->score_driver = buff;
+                    ride->score_driver = malloc(size);
+                    strcpy(ride->score_driver, buff);
                     break;
                 case R_tip:
-                    ride->tip = buff;
+                    ride->tip = malloc(size);
+                    strcpy(ride->tip, buff);
                     break;
                 case R_comment:
-                    ride->comment = buff;
+                    ride->comment = malloc(size);
+                    strcpy(ride->comment, buff);
                     break;
             }
         }
@@ -169,6 +200,7 @@ GSList *parse_rides(FILE *fr)
     }
 
     free(record);
+    //free(buff);
 
     return rides;
 }

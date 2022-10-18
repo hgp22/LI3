@@ -19,9 +19,9 @@ int batch(char *path_inputs, char *path_queries)
     printf("Drivers list length: %d\n", g_slist_length(catalog->drivers));
     printf("Rides list length: %d\n", g_slist_length(catalog->rides));
 
-    // g_slist_free(drivers);
+    // TODO: generate final catalog
 
-    // TODO: generate catalog
+    free_catalog(catalog);
 
     FILE *file_queries = freopen(path_queries, "r", stdin);
 
@@ -51,7 +51,7 @@ Inputs *get_input_file_pointers(char *path_inputs)
 FILE *get_file_pointer(char *path_inputs, char *input_file)
 {
     char *path_file =
-        (char *)malloc(strlen(path_inputs) + strlen(input_file) + 1);
+        malloc((strlen(path_inputs) + strlen(input_file) + 1) * sizeof(char));
     strcpy(path_file, path_inputs);
     strcat(path_file, input_file);
 

@@ -73,10 +73,4 @@ typedef enum field_ride {
     R_comment,
 } Field_ride;
 
-typedef struct catalog {
-    GSList *users;
-    GSList *drivers;
-    GSList *rides;
-} Catalog;
-
 #endif
