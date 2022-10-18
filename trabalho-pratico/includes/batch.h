@@ -10,52 +10,44 @@ typedef struct inputs {
 } Inputs;
 
 /**
- * @brief 
- * 
- * @param path_inputs 
- * @param path_queries 
- * @return int 
+ * @brief Run queries in batch
+ *
+ * @param path_inputs Path to inputs directory
+ * @param path_queries Path to queries batch file
+ * @return int Control integer
  */
 int batch(char *path_inputs, char *path_queries);
 
 /**
  * @brief Get the input file pointers object
- * 
- * @param path_inputs 
- * @return Inputs 
+ *
+ * @param path_inputs String with path to inputs directory
+ * @return Inputs Struct with inputs file pointers
  */
 Inputs *get_input_file_pointers(char *path_inputs);
 
 /**
  * @brief Get the file pointer object
- * 
- * @param path_inputs 
- * @param input_file 
- * @return FILE* 
+ *
+ * @param path_inputs String with path do inputs directory
+ * @param input_file Input file name
+ * @return FILE* File pointer to input file
  */
 FILE *get_file_pointer(char *path_inputs, char *input_file);
 
 /**
- * @brief 
- * 
- * @param input 
+ * @brief Close inputs file pointers
+ *
+ * @param input Struct with inputs file pointers
  */
 void close_input_files(Inputs *input);
 
 /**
- * @brief 
- * 
- * @param file_queries 
- * @return int 
+ * @brief Parse queries in queries batch file
+ *
+ * @param file_queries File pointer to queries batch file
+ * @return int Control integer
  */
 int parse_queries_batch(FILE *file_queries);
-
-/**
- * @brief 
- * 
- * @param query 
- * @return int 
- */
-int parse_query(char *query);
 
 #endif
