@@ -1,7 +1,6 @@
 #ifndef __CATALOG_H__
 #define __CATALOG_H__
 
-#include "config.h"
 #include <glib.h>
 
 typedef struct catalog {

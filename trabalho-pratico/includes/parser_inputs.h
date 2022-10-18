@@ -3,7 +3,6 @@
 
 #include "batch.h"
 #include "catalog.h"
-#include "config.h"
 #include <glib.h>
 #include <stdio.h>
 

@@ -1,7 +1,6 @@
 #ifndef __BATCH_H__
 #define __BATCH_H__
 
-#include "config.h"
 #include <stdio.h>
 
 typedef struct inputs {

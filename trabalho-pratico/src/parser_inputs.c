@@ -70,7 +70,6 @@ GSList *parse_users(FILE *fu)
     }
 
     free(record);
-    //free(buff);
 
     return users;
 }
@@ -133,7 +132,6 @@ GSList *parse_drivers(FILE *fd)
     }
 
     free(record);
-    //free(buff);
 
     return drivers;
 }
@@ -200,7 +198,6 @@ GSList *parse_rides(FILE *fr)
     }
 
     free(record);
-    //free(buff);
 
     return rides;
 }
