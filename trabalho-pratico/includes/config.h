@@ -1,6 +1,8 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
+#include <glib.h>
+
 typedef struct user {
     char *username;
     char *name;
@@ -70,5 +72,11 @@ typedef enum field_ride {
     R_tip,
     R_comment,
 } Field_ride;
+
+typedef struct catalog {
+    GSList *users;
+    GSList *drivers;
+    GSList *rides;
+} Catalog;
 
 #endif
