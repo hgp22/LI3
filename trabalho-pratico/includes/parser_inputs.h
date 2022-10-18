@@ -1,5 +1,7 @@
-#ifndef __BATCH_H__
-#define __BATCH_H__
+#ifndef __PARSER_INPUTS_H__
+#define __PARSER_INPUTS_H__
+
+#include "batch.h"
 
 /**
  * @brief 
@@ -7,6 +9,6 @@
  * @param input 
  * @return int 
  */
-int parse_inputs(Input *input);
+int parse_inputs(Inputs *input);
 
 #endif

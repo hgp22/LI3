@@ -45,9 +45,8 @@ void close_input_files(Inputs *input);
 /**
  * @brief Parse queries in queries batch file
  *
- * @param file_queries File pointer to queries batch file
  * @return int Control integer
  */
-int parse_queries_batch(FILE *file_queries);
+int parse_queries_batch(void);
 
 #endif
