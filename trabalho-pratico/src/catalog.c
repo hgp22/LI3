@@ -1,5 +1,5 @@
-#include "catalog.h" 
-#include "config.h" 
+#include "catalog.h"
+#include "config.h"
 #include <glib.h>
 
 void free_catalog(Catalog *catalog)

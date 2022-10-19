@@ -35,15 +35,12 @@ int batch(char *path_inputs, char *path_queries)
 Inputs *get_input_file_pointers(char *path_inputs)
 {
     // ? how to handle "./" and "/" before and after path_inputs
-    FILE *file_users = get_file_pointer(path_inputs, "/users.csv");
-    FILE *file_drivers = get_file_pointer(path_inputs, "/drivers.csv");
-    FILE *file_rides = get_file_pointer(path_inputs, "/rides.csv");
 
     Inputs *inputs = g_new(Inputs, 1);
 
-    inputs->file_users = file_users;
-    inputs->file_drivers = file_drivers;
-    inputs->file_rides = file_rides;
+    inputs->file_users = get_file_pointer(path_inputs, "/users.csv");
+    inputs->file_drivers = get_file_pointer(path_inputs, "/drivers.csv");
+    inputs->file_rides = get_file_pointer(path_inputs, "/rides.csv");
 
     return inputs;
 }

@@ -6,15 +6,11 @@
 
 Catalog *parse_inputs(Inputs *input)
 {
-    GSList *users = parse_users(input->file_users);
-    GSList *drivers = parse_drivers(input->file_drivers);
-    GSList *rides = parse_rides(input->file_rides);
-
     Catalog *catalog = g_new(Catalog, 1);
 
-    catalog->users = users;
-    catalog->drivers = drivers;
-    catalog->rides = rides;
+    catalog->users = parse_users(input->file_users);
+    catalog->drivers = parse_drivers(input->file_drivers);
+    catalog->rides = parse_rides(input->file_rides);
 
     return catalog;
 }
