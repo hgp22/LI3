@@ -1,10 +1,10 @@
-#include "catalog.h"
 #include "batch.h"
-#include "user.h"
+#include "catalog.h"
 #include "driver.h"
-#include "ride.h"
 #include "parser_inputs.h"
 #include "parser_query.h"
+#include "ride.h"
+#include "user.h"
 #include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,13 +18,16 @@ int batch(char *path_inputs, char *path_queries)
 
     close_input_files(input);
 
-    printf("Users list length: %d\n", g_slist_length(catalog->users));
-    printf("Drivers list length: %d\n", g_slist_length(catalog->drivers));
-    printf("Rides list length: %d\n", g_slist_length(catalog->rides));
+    printf("Users list length: %d\n",
+           g_slist_length(get_catalog_users(catalog)));
+    printf("Drivers list length: %d\n",
+           g_slist_length(get_catalog_drivers(catalog)));
+    printf("Rides list length: %d\n",
+           g_slist_length(get_catalog_rides(catalog)));
 
     // TODO: generate final catalog
 
-    //free_catalog(catalog);
+    free_catalog(catalog);
 
     FILE *file_queries = freopen(path_queries, "r", stdin);
 

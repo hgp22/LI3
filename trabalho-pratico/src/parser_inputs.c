@@ -1,21 +1,26 @@
-#include "user.h"
-#include "driver.h"
-#include "ride.h"
-#include "users.h"
-#include "drivers.h"
-#include "rides.h"
 #include "parser_inputs.h"
+#include "driver.h"
+#include "drivers.h"
+#include "ride.h"
+#include "rides.h"
+#include "user.h"
+#include "users.h"
 #include <glib.h>
 #include <stdio.h>
 #include <string.h>
 
 Catalog *parse_inputs(Inputs *input)
 {
-    Catalog *catalog = g_new(Catalog, 1);
+    // Catalog *catalog = g_new(Catalog, 1);
+    Catalog *catalog = init_catalog();
 
-    catalog->users = parse_users(input->file_users);
-    catalog->drivers = parse_drivers(input->file_drivers);
-    catalog->rides = parse_rides(input->file_rides);
+    set_catalog_users(catalog, parse_users(input->file_users));
+    set_catalog_drivers(catalog, parse_drivers(input->file_drivers));
+    set_catalog_rides(catalog, parse_rides(input->file_rides));
+
+    // catalog->users = parse_users(input->file_users);
+    // catalog->drivers = parse_drivers(input->file_drivers);
+    // catalog->rides = parse_rides(input->file_rides);
 
     return catalog;
 }
@@ -31,7 +36,8 @@ Users *parse_users(FILE *fu)
 
     while (getline(&record, &len, fu) != -1) {
         User *user = init_user();
-        for (Field_user field = U_username; field <= U_account_status; field++) {
+        for (Field_user field = U_username; field <= U_account_status;
+             field++) {
             buff = strsep(&record, ";");
             switch (field) {
                 case U_username:

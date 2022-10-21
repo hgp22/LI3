@@ -6,14 +6,12 @@
 
 typedef GSList Users;
 
-// #define insert_user(a, b) g_list_prepend(a, b)
-
 /**
- * @brief 
- * 
- * @param users 
- * @param user 
- * @return Users* 
+ * @brief
+ *
+ * @param users
+ * @param user
+ * @return Users*
  */
 Users *insert_user(Users *users, User *user);
 

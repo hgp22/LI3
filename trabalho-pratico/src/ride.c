@@ -1,7 +1,7 @@
 #include "ride.h"
-#include <string.h>
-#include <stdlib.h>
 #include <glib.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct ride {
     char *id;
@@ -16,10 +16,7 @@ struct ride {
     char *comment;
 };
 
-Ride *init_ride(void)
-{
-    return g_new(Ride, 1);
-}
+Ride *init_ride(void) { return g_new(Ride, 1); }
 
 void free_ride(void *ride)
 {
@@ -97,52 +94,22 @@ void set_ride_comment(Ride *r, char *comment)
     strcpy(r->comment, comment);
 }
 
-char *get_ride_id(Ride *r)
-{
-    return strdup(r->id);
-}
+char *get_ride_id(Ride *r) { return strdup(r->id); }
 
-char *get_ride_state(Ride *r)
-{
-    return strdup(r->state);
-}
+char *get_ride_state(Ride *r) { return strdup(r->state); }
 
-char *get_ride_driver(Ride *r)
-{
-    return strdup(r->driver);
-}
+char *get_ride_driver(Ride *r) { return strdup(r->driver); }
 
-char *get_ride_user(Ride *r)
-{
-    return strdup(r->user);
-}
+char *get_ride_user(Ride *r) { return strdup(r->user); }
 
-char *get_ride_city(Ride *r)
-{
-    return strdup(r->city);
-}
+char *get_ride_city(Ride *r) { return strdup(r->city); }
 
-char *get_ride_distance(Ride *r)
-{
-    return strdup(r->distance);
-}
+char *get_ride_distance(Ride *r) { return strdup(r->distance); }
 
-char *get_ride_score_user(Ride *r)
-{
-    return strdup(r->score_user);
-}
+char *get_ride_score_user(Ride *r) { return strdup(r->score_user); }
 
-char *get_ride_score_driver(Ride *r)
-{
-    return strdup(r->score_driver);
-}
+char *get_ride_score_driver(Ride *r) { return strdup(r->score_driver); }
 
-char *get_ride_tip(Ride *r)
-{
-    return strdup(r->tip);
-}
+char *get_ride_tip(Ride *r) { return strdup(r->tip); }
 
-char *get_ride_comment(Ride *r)
-{
-    return strdup(r->comment);
-}
+char *get_ride_comment(Ride *r) { return strdup(r->comment); }

@@ -7,11 +7,11 @@
 typedef GSList Rides;
 
 /**
- * @brief 
- * 
- * @param rides 
- * @param ride 
- * @return Rides* 
+ * @brief
+ *
+ * @param rides
+ * @param ride
+ * @return Rides*
  */
 Rides *insert_ride(Rides *rides, Ride *ride);
 

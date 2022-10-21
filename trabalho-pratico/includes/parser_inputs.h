@@ -2,10 +2,10 @@
 #define __PARSER_INPUTS_H__
 
 #include "batch.h"
-#include "user.h"
-#include "driver.h"
 #include "catalog.h"
+#include "driver.h"
 #include "ride.h"
+#include "user.h"
 #include <glib.h>
 #include <stdio.h>
 

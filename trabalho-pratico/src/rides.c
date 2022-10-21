@@ -1,5 +1,5 @@
 #include "rides.h"
-#include "rides.h"
+#include "ride.h"
 
 Rides *insert_ride(Rides *rides, Ride *ride)
 {

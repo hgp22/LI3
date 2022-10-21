@@ -1,7 +1,7 @@
 #include "user.h"
-#include <string.h>
-#include <stdlib.h>
 #include <glib.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct user {
     char *username;
@@ -13,10 +13,7 @@ struct user {
     char *account_status;
 };
 
-User *init_user(void)
-{
-    return g_new(User, 1);
-}
+User *init_user(void) { return g_new(User, 1); }
 
 void free_user(void *user)
 {
@@ -57,7 +54,8 @@ void set_user_birth_date(User *u, char *birth_date)
 
 void set_user_account_creation(User *u, char *account_creation)
 {
-    u->account_creation = malloc(strlen(account_creation) * sizeof(account_creation));
+    u->account_creation =
+        malloc(strlen(account_creation) * sizeof(account_creation));
     strcpy(u->account_creation, account_creation);
 }
 
@@ -73,37 +71,16 @@ void set_user_account_status(User *u, char *account_status)
     strcpy(u->account_status, account_status);
 }
 
-char *get_user_name(User *u)
-{
-    return strdup(u->name);
-}
+char *get_user_name(User *u) { return strdup(u->name); }
 
-char *get_user_username(User *u)
-{
-    return strdup(u->username);
-}
+char *get_user_username(User *u) { return strdup(u->username); }
 
-char *get_user_gender(User *u)
-{
-    return strdup(u->gender);
-}
+char *get_user_gender(User *u) { return strdup(u->gender); }
 
-char *get_user_birth_date(User *u)
-{
-    return strdup(u->birth_date);
-}
+char *get_user_birth_date(User *u) { return strdup(u->birth_date); }
 
-char *get_user_account_creation(User *u)
-{
-    return strdup(u->account_creation);
-}
+char *get_user_account_creation(User *u) { return strdup(u->account_creation); }
 
-char *get_user_pay_method(User *u)
-{
-    return strdup(u->pay_method);
-}
+char *get_user_pay_method(User *u) { return strdup(u->pay_method); }
 
-char *get_user_account_status(User *u)
-{
-    return strdup(u->account_status);
-}
+char *get_user_account_status(User *u) { return strdup(u->account_status); }
