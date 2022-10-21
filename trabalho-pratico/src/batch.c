@@ -1,5 +1,8 @@
+#include "catalog.h"
 #include "batch.h"
-#include "config.h"
+#include "user.h"
+#include "driver.h"
+#include "ride.h"
 #include "parser_inputs.h"
 #include "parser_query.h"
 #include <glib.h>
@@ -21,7 +24,7 @@ int batch(char *path_inputs, char *path_queries)
 
     // TODO: generate final catalog
 
-    free_catalog(catalog);
+    //free_catalog(catalog);
 
     FILE *file_queries = freopen(path_queries, "r", stdin);
 

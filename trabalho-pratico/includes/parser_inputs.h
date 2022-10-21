@@ -2,7 +2,10 @@
 #define __PARSER_INPUTS_H__
 
 #include "batch.h"
+#include "user.h"
+#include "driver.h"
 #include "catalog.h"
+#include "ride.h"
 #include <glib.h>
 #include <stdio.h>
 
@@ -17,25 +20,25 @@ Catalog *parse_inputs(Inputs *input);
 /**
  * @brief
  *
- * @param fu
+ * @param fp
  * @return GSList*
  */
-GSList *parse_users(FILE *fu);
+GSList *parse_users(FILE *fp);
 
 /**
  * @brief
  *
- * @param fd
+ * @param fp
  * @return GSList*
  */
-GSList *parse_drivers(FILE *fd);
+GSList *parse_drivers(FILE *fp);
 
 /**
  * @brief
  *
- * @param fr
+ * @param fp
  * @return GSList*
  */
-GSList *parse_rides(FILE *fr);
+GSList *parse_rides(FILE *fp);
 
 #endif
