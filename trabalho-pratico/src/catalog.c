@@ -13,7 +13,10 @@ struct catalog {
     GSList *rides;
 };
 
-Catalog *init_catalog(void) { return g_new(Catalog, 1); }
+Catalog *init_catalog(void)
+{
+    return g_new(Catalog, 1);
+}
 
 void free_catalog(Catalog *catalog)
 {
@@ -23,14 +26,32 @@ void free_catalog(Catalog *catalog)
     free(catalog);
 }
 
-void set_catalog_users(Catalog *c, Users *users) { c->users = users; }
+void set_catalog_users(Catalog *c, Users *users)
+{
+    c->users = users;
+}
 
-void set_catalog_drivers(Catalog *c, Drivers *drivers) { c->drivers = drivers; }
+void set_catalog_drivers(Catalog *c, Drivers *drivers)
+{
+    c->drivers = drivers;
+}
 
-void set_catalog_rides(Catalog *c, Rides *rides) { c->rides = rides; }
+void set_catalog_rides(Catalog *c, Rides *rides)
+{
+    c->rides = rides;
+}
 
-Users *get_catalog_users(Catalog *c) { return c->users; }
+Users *get_catalog_users(Catalog *c)
+{
+    return c->users;
+}
 
-Drivers *get_catalog_drivers(Catalog *c) { return c->drivers; }
+Drivers *get_catalog_drivers(Catalog *c)
+{
+    return c->drivers;
+}
 
-Rides *get_catalog_rides(Catalog *c) { return c->rides; }
+Rides *get_catalog_rides(Catalog *c)
+{
+    return c->rides;
+}

@@ -15,7 +15,10 @@ struct driver {
     char *account_status;
 };
 
-Driver init_driver(void) { return g_new(struct driver, 1); }
+Driver init_driver(void)
+{
+    return g_new(struct driver, 1);
+}
 
 void free_driver(void *driver)
 {
@@ -87,23 +90,47 @@ void set_driver_account_status(Driver d, char *account_status)
     strcpy(d->account_status, account_status);
 }
 
-char *get_driver_id(Driver d) { return strdup(d->id); }
+char *get_driver_id(Driver d)
+{
+    return strdup(d->id);
+}
 
-char *get_driver_name(Driver d) { return strdup(d->name); }
+char *get_driver_name(Driver d)
+{
+    return strdup(d->name);
+}
 
-char *get_driver_birth_date(Driver d) { return strdup(d->birth_date); }
+char *get_driver_birth_date(Driver d)
+{
+    return strdup(d->birth_date);
+}
 
-char *get_driver_gender(Driver d) { return strdup(d->gender); }
+char *get_driver_gender(Driver d)
+{
+    return strdup(d->gender);
+}
 
-char *get_driver_car_class(Driver d) { return strdup(d->car_class); }
+char *get_driver_car_class(Driver d)
+{
+    return strdup(d->car_class);
+}
 
-char *get_driver_license_plate(Driver d) { return strdup(d->license_plate); }
+char *get_driver_license_plate(Driver d)
+{
+    return strdup(d->license_plate);
+}
 
-char *get_driver_city(Driver d) { return strdup(d->city); }
+char *get_driver_city(Driver d)
+{
+    return strdup(d->city);
+}
 
 char *get_driver_account_creation(Driver d)
 {
     return strdup(d->account_creation);
 }
 
-char *get_driver_account_status(Driver d) { return strdup(d->account_status); }
+char *get_driver_account_status(Driver d)
+{
+    return strdup(d->account_status);
+}

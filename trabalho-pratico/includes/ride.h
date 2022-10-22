@@ -112,81 +112,81 @@ void set_ride_comment(Ride r, char *comment);
 
 /**
  * @brief Get the ride id object
- * 
- * @param r 
- * @return char* 
+ *
+ * @param r
+ * @return char*
  */
 char *get_ride_id(Ride r);
 
 /**
  * @brief Get the ride state object
- * 
- * @param r 
- * @return char* 
+ *
+ * @param r
+ * @return char*
  */
 char *get_ride_state(Ride r);
 
 /**
  * @brief Get the ride driver object
- * 
- * @param r 
- * @return char* 
+ *
+ * @param r
+ * @return char*
  */
 char *get_ride_driver(Ride r);
 
 /**
  * @brief Get the ride user object
- * 
- * @param r 
- * @return char* 
+ *
+ * @param r
+ * @return char*
  */
 char *get_ride_user(Ride r);
 
 /**
  * @brief Get the ride city object
- * 
- * @param r 
- * @return char* 
+ *
+ * @param r
+ * @return char*
  */
 char *get_ride_city(Ride r);
 
 /**
  * @brief Get the ride distance object
- * 
- * @param r 
- * @return char* 
+ *
+ * @param r
+ * @return char*
  */
 char *get_ride_distance(Ride r);
 
 /**
  * @brief Get the ride score user object
- * 
- * @param r 
- * @return char* 
+ *
+ * @param r
+ * @return char*
  */
 char *get_ride_score_user(Ride r);
 
 /**
  * @brief Get the ride score driver object
- * 
- * @param r 
- * @return char* 
+ *
+ * @param r
+ * @return char*
  */
 char *get_ride_score_driver(Ride r);
 
 /**
  * @brief Get the ride tip object
- * 
- * @param r 
- * @return char* 
+ *
+ * @param r
+ * @return char*
  */
 char *get_ride_tip(Ride r);
 
 /**
  * @brief Get the ride comment object
- * 
- * @param r 
- * @return char* 
+ *
+ * @param r
+ * @return char*
  */
 char *get_ride_comment(Ride r);
 

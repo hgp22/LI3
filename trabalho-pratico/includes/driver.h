@@ -103,73 +103,73 @@ void set_driver_account_status(Driver d, char *account_status);
 
 /**
  * @brief Get the driver id object
- * 
- * @param d 
- * @return char* 
+ *
+ * @param d
+ * @return char*
  */
 char *get_driver_id(Driver d);
 
 /**
  * @brief Get the driver name object
- * 
- * @param d 
- * @return char* 
+ *
+ * @param d
+ * @return char*
  */
 char *get_driver_name(Driver d);
 
 /**
  * @brief Get the driver birth date object
- * 
- * @param d 
- * @return char* 
+ *
+ * @param d
+ * @return char*
  */
 char *get_driver_birth_date(Driver d);
 
 /**
  * @brief Get the driver gender object
- * 
- * @param d 
- * @return char* 
+ *
+ * @param d
+ * @return char*
  */
 char *get_driver_gender(Driver d);
 
 /**
  * @brief Get the driver car class object
- * 
- * @param d 
- * @return char* 
+ *
+ * @param d
+ * @return char*
  */
 char *get_driver_car_class(Driver d);
 
 /**
  * @brief Get the driver license plate object
- * 
- * @param d 
- * @return char* 
+ *
+ * @param d
+ * @return char*
  */
 char *get_driver_license_plate(Driver d);
 
 /**
  * @brief Get the driver city object
- * 
- * @param d 
- * @return char* 
+ *
+ * @param d
+ * @return char*
  */
 char *get_driver_city(Driver d);
 
 /**
  * @brief Get the driver account creation object
- * 
- * @param d 
- * @return char* 
+ *
+ * @param d
+ * @return char*
  */
 char *get_driver_account_creation(Driver d);
 
 /**
  * @brief Get the driver account status object
- * 
- * @param d 
- * @return char* 
+ *
+ * @param d
+ * @return char*
  */
 char *get_driver_account_status(Driver d);
 
