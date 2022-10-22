@@ -8,50 +8,50 @@
 #include <glib.h>
 
 struct catalog {
-    GSList *users;
-    GSList *drivers;
-    GSList *rides;
+    Users users;
+    Drivers drivers;
+    Rides rides;
 };
 
-Catalog *init_catalog(void)
+Catalog init_catalog(void)
 {
-    return g_new(Catalog, 1);
+    return g_new(struct catalog, 1);
 }
 
-void free_catalog(Catalog *catalog)
+void free_catalog(Catalog c)
 {
-    g_slist_free_full(catalog->users, free_user);
-    g_slist_free_full(catalog->drivers, free_driver);
-    g_slist_free_full(catalog->rides, free_ride);
-    free(catalog);
+    g_slist_free_full(c->users, free_user);
+    g_slist_free_full(c->drivers, free_driver);
+    g_slist_free_full(c->rides, free_ride);
+    free(c);
 }
 
-void set_catalog_users(Catalog *c, Users *users)
+void set_catalog_users(Catalog c, Users users)
 {
     c->users = users;
 }
 
-void set_catalog_drivers(Catalog *c, Drivers *drivers)
+void set_catalog_drivers(Catalog c, Drivers drivers)
 {
     c->drivers = drivers;
 }
 
-void set_catalog_rides(Catalog *c, Rides *rides)
+void set_catalog_rides(Catalog c, Rides rides)
 {
     c->rides = rides;
 }
 
-Users *get_catalog_users(Catalog *c)
+Users get_catalog_users(Catalog c)
 {
     return c->users;
 }
 
-Drivers *get_catalog_drivers(Catalog *c)
+Drivers get_catalog_drivers(Catalog c)
 {
     return c->drivers;
 }
 
-Rides *get_catalog_rides(Catalog *c)
+Rides get_catalog_rides(Catalog c)
 {
     return c->rides;
 }

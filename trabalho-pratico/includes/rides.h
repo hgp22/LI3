@@ -4,15 +4,15 @@
 #include "ride.h"
 #include <glib.h>
 
-typedef GSList Rides;
+typedef GSList *Rides;
 
 /**
  * @brief
  *
  * @param rides
  * @param ride
- * @return Rides*
+ * @return Rides
  */
-Rides *insert_ride(Rides *rides, Ride ride);
+Rides insert_ride(Rides rides, Ride ride);
 
 #endif

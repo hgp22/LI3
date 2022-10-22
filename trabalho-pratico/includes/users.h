@@ -4,15 +4,15 @@
 #include "user.h"
 #include <glib.h>
 
-typedef GSList Users;
+typedef GSList *Users;
 
 /**
  * @brief
  *
  * @param users
  * @param user
- * @return Users*
+ * @return Users
  */
-Users *insert_user(Users *users, User user);
+Users insert_user(Users users, User user);
 
 #endif

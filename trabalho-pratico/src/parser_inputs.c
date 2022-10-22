@@ -9,9 +9,9 @@
 #include <stdio.h>
 #include <string.h>
 
-Catalog *parse_inputs(Inputs *input)
+Catalog parse_inputs(Inputs *input)
 {
-    Catalog *catalog = init_catalog();
+    Catalog catalog = init_catalog();
 
     set_catalog_users(catalog, parse_users(input->file_users));
     set_catalog_drivers(catalog, parse_drivers(input->file_drivers));
@@ -20,16 +20,16 @@ Catalog *parse_inputs(Inputs *input)
     return catalog;
 }
 
-Users *parse_users(FILE *fu)
+Users parse_users(FILE *fp)
 {
     char *record = NULL;
     size_t len = 0;
     char *buff = NULL;
-    Users *users = NULL;
+    Users users = NULL;
 
-    getline(&record, &len, fu); // Remove header
+    getline(&record, &len, fp); // Remove header
 
-    while (getline(&record, &len, fu) != -1) {
+    while (getline(&record, &len, fp) != -1) {
         User user = init_user();
         for (Field_user field = U_username; field <= U_account_status;
              field++) {
@@ -69,16 +69,16 @@ Users *parse_users(FILE *fu)
     return users;
 }
 
-Drivers *parse_drivers(FILE *fd)
+Drivers parse_drivers(FILE *fp)
 {
     char *record = NULL;
     size_t len = 0;
     char *buff = NULL;
-    Drivers *drivers = NULL;
+    Drivers drivers = NULL;
 
-    getline(&record, &len, fd); // Remove header
+    getline(&record, &len, fp); // Remove header
 
-    while (getline(&record, &len, fd) != -1) {
+    while (getline(&record, &len, fp) != -1) {
         Driver driver = init_driver();
         for (Field_driver field = D_id; field <= D_account_status; field++) {
             buff = strsep(&record, ";");
@@ -121,16 +121,16 @@ Drivers *parse_drivers(FILE *fd)
     return drivers;
 }
 
-Rides *parse_rides(FILE *fr)
+Rides parse_rides(FILE *fp)
 {
     char *record = NULL;
     size_t len = 0;
     char *buff = NULL;
-    Rides *rides = NULL;
+    Rides rides = NULL;
 
-    getline(&record, &len, fr); // Remove header
+    getline(&record, &len, fp); // Remove header
 
-    while (getline(&record, &len, fr) != -1) {
+    while (getline(&record, &len, fp) != -1) {
         Ride ride = init_ride();
         for (Field_ride field = R_id; field <= R_comment; field++) {
             buff = strsep(&record, ";");

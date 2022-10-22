@@ -6,21 +6,21 @@
 #include "users.h"
 #include <glib.h>
 
-typedef struct catalog Catalog;
+typedef struct catalog *Catalog;
 
 /**
  * @brief
  *
- * @return Catalog*
+ * @return Catalog
  */
-Catalog *init_catalog(void);
+Catalog init_catalog(void);
 
 /**
  * @brief
  *
  * @param catalog
  */
-void free_catalog(Catalog *catalog);
+void free_catalog(Catalog c);
 
 /**
  * @brief Set the catalog users object
@@ -28,7 +28,7 @@ void free_catalog(Catalog *catalog);
  * @param c
  * @param users
  */
-void set_catalog_users(Catalog *c, Users *users);
+void set_catalog_users(Catalog c, Users users);
 
 /**
  * @brief Set the catalog drivers object
@@ -36,7 +36,7 @@ void set_catalog_users(Catalog *c, Users *users);
  * @param c
  * @param drivers
  */
-void set_catalog_drivers(Catalog *c, Drivers *drivers);
+void set_catalog_drivers(Catalog c, Drivers drivers);
 
 /**
  * @brief Set the catalog rides object
@@ -44,30 +44,30 @@ void set_catalog_drivers(Catalog *c, Drivers *drivers);
  * @param c
  * @param rides
  */
-void set_catalog_rides(Catalog *c, Rides *rides);
+void set_catalog_rides(Catalog c, Rides rides);
 
 /**
  * @brief Get the catalog users object
  *
  * @param c
- * @return Users*
+ * @return Users
  */
-Users *get_catalog_users(Catalog *c);
+Users get_catalog_users(Catalog c);
 
 /**
  * @brief Get the catalog drivers object
  *
  * @param c
- * @return Drivers*
+ * @return Drivers
  */
-Drivers *get_catalog_drivers(Catalog *c);
+Drivers get_catalog_drivers(Catalog c);
 
 /**
  * @brief Get the catalog rides object
  *
  * @param c
- * @return Rides*
+ * @return Rides
  */
-Rides *get_catalog_rides(Catalog *c);
+Rides get_catalog_rides(Catalog c);
 
 #endif

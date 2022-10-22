@@ -6,6 +6,9 @@
 #include "driver.h"
 #include "ride.h"
 #include "user.h"
+#include "drivers.h"
+#include "rides.h"
+#include "users.h"
 #include <glib.h>
 #include <stdio.h>
 
@@ -13,32 +16,32 @@
  * @brief
  *
  * @param input
- * @return Catalog*
+ * @return Catalog
  */
-Catalog *parse_inputs(Inputs *input);
+Catalog parse_inputs(Inputs *input);
 
 /**
- * @brief
- *
- * @param fp
- * @return GSList*
+ * @brief 
+ * 
+ * @param fp 
+ * @return Users 
  */
-GSList *parse_users(FILE *fp);
+Users parse_users(FILE *fp);
 
 /**
- * @brief
- *
- * @param fp
- * @return GSList*
+ * @brief 
+ * 
+ * @param fp 
+ * @return Drivers 
  */
-GSList *parse_drivers(FILE *fp);
+Drivers parse_drivers(FILE *fp);
 
 /**
- * @brief
- *
- * @param fp
- * @return GSList*
+ * @brief 
+ * 
+ * @param fp 
+ * @return Rider 
  */
-GSList *parse_rides(FILE *fp);
+Rides parse_rides(FILE *fp);
 
 #endif

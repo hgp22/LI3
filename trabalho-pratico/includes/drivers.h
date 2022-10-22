@@ -4,15 +4,15 @@
 #include "driver.h"
 #include <glib.h>
 
-typedef GSList Drivers;
+typedef GSList *Drivers;
 
 /**
  * @brief
  *
  * @param drivers
  * @param driver
- * @return Drivers*
+ * @return Drivers
  */
-Drivers *insert_driver(Drivers *drivers, Driver driver);
+Drivers insert_driver(Drivers drivers, Driver driver);
 
 #endif

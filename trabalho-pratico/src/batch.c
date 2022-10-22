@@ -14,7 +14,7 @@ int batch(char *path_inputs, char *path_queries)
 {
     Inputs *input = get_input_file_pointers(path_inputs);
 
-    Catalog *catalog = parse_inputs(input);
+    Catalog catalog = parse_inputs(input);
 
     close_input_files(input);
 
