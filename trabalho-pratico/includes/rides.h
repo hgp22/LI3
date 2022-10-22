@@ -13,6 +13,6 @@ typedef GSList Rides;
  * @param ride
  * @return Rides*
  */
-Rides *insert_ride(Rides *rides, Ride *ride);
+Rides *insert_ride(Rides *rides, Ride ride);
 
 #endif

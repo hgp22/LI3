@@ -11,16 +11,11 @@
 
 Catalog *parse_inputs(Inputs *input)
 {
-    // Catalog *catalog = g_new(Catalog, 1);
     Catalog *catalog = init_catalog();
 
     set_catalog_users(catalog, parse_users(input->file_users));
     set_catalog_drivers(catalog, parse_drivers(input->file_drivers));
     set_catalog_rides(catalog, parse_rides(input->file_rides));
-
-    // catalog->users = parse_users(input->file_users);
-    // catalog->drivers = parse_drivers(input->file_drivers);
-    // catalog->rides = parse_rides(input->file_rides);
 
     return catalog;
 }
@@ -35,7 +30,7 @@ Users *parse_users(FILE *fu)
     getline(&record, &len, fu); // Remove header
 
     while (getline(&record, &len, fu) != -1) {
-        User *user = init_user();
+        User user = init_user();
         for (Field_user field = U_username; field <= U_account_status;
              field++) {
             buff = strsep(&record, ";");
@@ -84,7 +79,7 @@ Drivers *parse_drivers(FILE *fd)
     getline(&record, &len, fd); // Remove header
 
     while (getline(&record, &len, fd) != -1) {
-        Driver *driver = init_driver();
+        Driver driver = init_driver();
         for (Field_driver field = D_id; field <= D_account_status; field++) {
             buff = strsep(&record, ";");
             switch (field) {
@@ -136,7 +131,7 @@ Rides *parse_rides(FILE *fr)
     getline(&record, &len, fr); // Remove header
 
     while (getline(&record, &len, fr) != -1) {
-        Ride *ride = init_ride();
+        Ride ride = init_ride();
         for (Field_ride field = R_id; field <= R_comment; field++) {
             buff = strsep(&record, ";");
             switch (field) {

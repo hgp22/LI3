@@ -13,6 +13,6 @@ typedef GSList Users;
  * @param user
  * @return Users*
  */
-Users *insert_user(Users *users, User *user);
+Users *insert_user(Users *users, User user);
 
 #endif

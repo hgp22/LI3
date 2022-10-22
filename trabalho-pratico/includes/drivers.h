@@ -13,6 +13,6 @@ typedef GSList Drivers;
  * @param driver
  * @return Drivers*
  */
-Drivers *insert_driver(Drivers *drivers, Driver *driver);
+Drivers *insert_driver(Drivers *drivers, Driver driver);
 
 #endif
