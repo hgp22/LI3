@@ -6,7 +6,7 @@
 struct user {
     char *username;
     char *name;
-    char *gender;
+    Gender gender;
     char *birth_date;
     char *account_creation;
     char *pay_method;
@@ -23,7 +23,6 @@ void free_user(void *user)
     User u = (User)user;
     free(u->username);
     free(u->name);
-    free(u->gender);
     free(u->birth_date);
     free(u->account_creation);
     free(u->pay_method);
@@ -45,8 +44,16 @@ void set_user_name(User u, char *name)
 
 void set_user_gender(User u, char *gender)
 {
-    u->gender = malloc(strlen(gender) * sizeof(gender));
-    strcpy(u->gender, gender);
+    switch (gender[0]) {
+        case 'M':
+            u->gender = Male;
+            break;
+        case 'F':
+            u->gender = Female;
+            break;
+        default:
+            break;
+    }
 }
 
 void set_user_birth_date(User u, char *birth_date)
@@ -84,9 +91,9 @@ char *get_user_username(User u)
     return strdup(u->username);
 }
 
-char *get_user_gender(User u)
+Gender get_user_gender(User u)
 {
-    return strdup(u->gender);
+    return u->gender;
 }
 
 char *get_user_birth_date(User u)

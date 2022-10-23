@@ -13,6 +13,11 @@ typedef enum field_user {
     U_account_status,
 } Field_user;
 
+typedef enum gender {
+    Male,
+    Female,
+} Gender;
+
 /**
  * @brief
  *
@@ -100,12 +105,12 @@ char *get_user_name(User u);
 char *get_user_username(User u);
 
 /**
- * @brief Get the user name object
+ * @brief Get the user gender object
  *
  * @param u
- * @return char*
+ * @return Gender
  */
-char *get_user_gender(User u);
+Gender get_user_gender(User u);
 
 /**
  * @brief Get the user name object
