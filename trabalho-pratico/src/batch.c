@@ -74,6 +74,7 @@ void close_input_files(Inputs *input)
     fclose(input->file_users);
     fclose(input->file_drivers);
     fclose(input->file_rides);
+    free(input);
 }
 
 int parse_queries_batch()
