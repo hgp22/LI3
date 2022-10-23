@@ -4,10 +4,10 @@
 #include "batch.h"
 #include "catalog.h"
 #include "driver.h"
-#include "ride.h"
-#include "user.h"
 #include "drivers.h"
+#include "ride.h"
 #include "rides.h"
+#include "user.h"
 #include "users.h"
 #include <glib.h>
 #include <stdio.h>
@@ -21,26 +21,26 @@
 Catalog parse_inputs(Inputs *input);
 
 /**
- * @brief 
- * 
- * @param fp 
- * @return Users 
+ * @brief
+ *
+ * @param fp
+ * @return Users
  */
 Users parse_users(FILE *fp);
 
 /**
- * @brief 
- * 
- * @param fp 
- * @return Drivers 
+ * @brief
+ *
+ * @param fp
+ * @return Drivers
  */
 Drivers parse_drivers(FILE *fp);
 
 /**
- * @brief 
- * 
- * @param fp 
- * @return Rider 
+ * @brief
+ *
+ * @param fp
+ * @return Rider
  */
 Rides parse_rides(FILE *fp);
 

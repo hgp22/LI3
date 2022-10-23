@@ -22,17 +22,18 @@ Catalog parse_inputs(Inputs *input)
 
 Users parse_users(FILE *fp)
 {
-    char *record = NULL;
+    char *line = NULL;
     size_t len = 0;
     char *buff = NULL;
     Users users = NULL;
 
-    getline(&record, &len, fp); // Remove header
+    getline(&line, &len, fp); // Remove header
 
-    while (getline(&record, &len, fp) != -1) {
+    while (getline(&line, &len, fp) != -1) {
         User user = init_user();
         for (Field_user field = U_username; field <= U_account_status;
              field++) {
+            char *record = line;
             buff = strsep(&record, ";");
             switch (field) {
                 case U_username:
@@ -64,23 +65,24 @@ Users parse_users(FILE *fp)
         users = insert_user(users, user);
     }
 
-    free(record);
+    free(line);
 
     return users;
 }
 
 Drivers parse_drivers(FILE *fp)
 {
-    char *record = NULL;
+    char *line = NULL;
     size_t len = 0;
     char *buff = NULL;
     Drivers drivers = NULL;
 
-    getline(&record, &len, fp); // Remove header
+    getline(&line, &len, fp); // Remove header
 
-    while (getline(&record, &len, fp) != -1) {
+    while (getline(&line, &len, fp) != -1) {
         Driver driver = init_driver();
         for (Field_driver field = D_id; field <= D_account_status; field++) {
+            char *record = line;
             buff = strsep(&record, ";");
             switch (field) {
                 case D_id:
@@ -110,29 +112,32 @@ Drivers parse_drivers(FILE *fp)
                 case D_account_status:
                     set_driver_account_status(driver, buff);
                     break;
+                default:
+                    break;
             }
         }
 
         drivers = insert_driver(drivers, driver);
     }
 
-    free(record);
+    free(line);
 
     return drivers;
 }
 
 Rides parse_rides(FILE *fp)
 {
-    char *record = NULL;
+    char *line = NULL;
     size_t len = 0;
     char *buff = NULL;
     Rides rides = NULL;
 
-    getline(&record, &len, fp); // Remove header
+    getline(&line, &len, fp); // Remove header
 
-    while (getline(&record, &len, fp) != -1) {
+    while (getline(&line, &len, fp) != -1) {
         Ride ride = init_ride();
         for (Field_ride field = R_id; field <= R_comment; field++) {
+            char *record = line;
             buff = strsep(&record, ";");
             switch (field) {
                 case R_id:
@@ -165,13 +170,15 @@ Rides parse_rides(FILE *fp)
                 case R_comment:
                     set_ride_comment(ride, buff);
                     break;
+                default:
+                    break;
             }
         }
 
         rides = insert_ride(rides, ride);
     }
 
-    free(record);
+    free(line);
 
     return rides;
 }
