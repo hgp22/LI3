@@ -1,6 +1,7 @@
 #include "batch.h"
 #include "catalog.h"
 #include "driver.h"
+#include "inputs.h"
 #include "parser_inputs.h"
 #include "parser_query.h"
 #include "ride.h"
@@ -12,11 +13,11 @@
 
 int batch(char *path_inputs, char *path_queries)
 {
-    Inputs *input = get_input_file_pointers(path_inputs);
+    Inputs inputs = init_inputs(path_inputs);
 
-    Catalog catalog = parse_inputs(input);
+    Catalog catalog = parse_inputs(inputs);
 
-    close_input_files(input);
+    close_inputs(inputs);
 
     printf("Users list length: %d\n",
            g_slist_length(get_catalog_users(catalog)));
@@ -36,45 +37,6 @@ int batch(char *path_inputs, char *path_queries)
     fclose(file_queries);
 
     return 0;
-}
-
-Inputs *get_input_file_pointers(char *path_inputs)
-{
-    // ? how to handle "./" and "/" before and after path_inputs
-
-    Inputs *inputs = g_new(Inputs, 1);
-
-    inputs->file_users = get_file_pointer(path_inputs, "/users.csv");
-    inputs->file_drivers = get_file_pointer(path_inputs, "/drivers.csv");
-    inputs->file_rides = get_file_pointer(path_inputs, "/rides.csv");
-
-    return inputs;
-}
-
-FILE *get_file_pointer(char *path_inputs, char *input_file)
-{
-    char *path_file =
-        malloc((strlen(path_inputs) + strlen(input_file) + 1) * sizeof(char));
-    strcpy(path_file, path_inputs);
-    strcat(path_file, input_file);
-
-    FILE *fp = fopen(path_file, "r");
-    if (fp == NULL) {
-        perror(path_file);
-        exit(1);
-    }
-
-    free(path_file);
-
-    return fp;
-}
-
-void close_input_files(Inputs *input)
-{
-    fclose(input->file_users);
-    fclose(input->file_drivers);
-    fclose(input->file_rides);
-    free(input);
 }
 
 int parse_queries_batch()

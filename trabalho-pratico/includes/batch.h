@@ -1,13 +1,8 @@
 #ifndef __BATCH_H__
 #define __BATCH_H__
 
+#include "inputs.h"
 #include <stdio.h>
-
-typedef struct inputs {
-    FILE *file_users;
-    FILE *file_drivers;
-    FILE *file_rides;
-} Inputs;
 
 /**
  * @brief Run queries in batch
@@ -24,7 +19,7 @@ int batch(char *path_inputs, char *path_queries);
  * @param path_inputs String with path to inputs directory
  * @return Inputs Struct with inputs file pointers
  */
-Inputs *get_input_file_pointers(char *path_inputs);
+Inputs get_input_file_pointers(char *path_inputs);
 
 /**
  * @brief Get the file pointer object
@@ -40,7 +35,7 @@ FILE *get_file_pointer(char *path_inputs, char *input_file);
  *
  * @param input Struct with inputs file pointers
  */
-void close_input_files(Inputs *input);
+void close_input_files(Inputs input);
 
 /**
  * @brief Parse queries in queries batch file

@@ -9,17 +9,6 @@
 #include <stdio.h>
 #include <string.h>
 
-Catalog parse_inputs(Inputs *input)
-{
-    Catalog catalog = init_catalog();
-
-    set_catalog_users(catalog, parse_users(input->file_users));
-    set_catalog_drivers(catalog, parse_drivers(input->file_drivers));
-    set_catalog_rides(catalog, parse_rides(input->file_rides));
-
-    return catalog;
-}
-
 Users parse_users(FILE *fp)
 {
     char *line = NULL;

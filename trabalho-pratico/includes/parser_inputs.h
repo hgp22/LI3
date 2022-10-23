@@ -15,14 +15,6 @@
 /**
  * @brief
  *
- * @param input
- * @return Catalog
- */
-Catalog parse_inputs(Inputs *input);
-
-/**
- * @brief
- *
  * @param fp
  * @return Users
  */
