@@ -44,7 +44,7 @@ void set_user_name(User u, char *name)
 
 void set_user_gender(User u, char *gender)
 {
-    switch (gender[0]) {
+    switch (*gender) {
         case 'M':
             u->gender = Male;
             break;
