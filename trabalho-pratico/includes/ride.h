@@ -5,7 +5,7 @@ typedef struct ride *Ride;
 
 typedef enum field_ride {
     R_id,
-    R_state,
+    R_date,
     R_driver,
     R_user,
     R_city,
@@ -39,12 +39,12 @@ void free_ride(void *ride);
 void set_ride_id(Ride r, char *id);
 
 /**
- * @brief Set the ride state object
+ * @brief Set the ride date object
  *
  * @param r
- * @param state
+ * @param date
  */
-void set_ride_state(Ride r, char *state);
+void set_ride_date(Ride r, char *date);
 
 /**
  * @brief Set the ride driver object
@@ -119,12 +119,12 @@ void set_ride_comment(Ride r, char *comment);
 char *get_ride_id(Ride r);
 
 /**
- * @brief Get the ride state object
+ * @brief Get the ride date object
  *
  * @param r
  * @return char*
  */
-char *get_ride_state(Ride r);
+char *get_ride_date(Ride r);
 
 /**
  * @brief Get the ride driver object
