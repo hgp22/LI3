@@ -19,11 +19,11 @@ Users parse_users(FILE *fp)
     getline(&line, &len, fp); // Remove header
 
     while (getline(&line, &len, fp) != -1) {
+        char *record = line;
         User user = init_user();
         for (Field_user field = U_username; field <= U_account_status;
              field++) {
-            char *record = line;
-            buff = strsep(&record, ";");
+            buff = strsep(&record, ";\n");
             switch (field) {
                 case U_username:
                     set_user_username(user, buff);
@@ -69,10 +69,10 @@ Drivers parse_drivers(FILE *fp)
     getline(&line, &len, fp); // Remove header
 
     while (getline(&line, &len, fp) != -1) {
+        char *record = line;
         Driver driver = init_driver();
         for (Field_driver field = D_id; field <= D_account_status; field++) {
-            char *record = line;
-            buff = strsep(&record, ";");
+            buff = strsep(&record, ";\n");
             switch (field) {
                 case D_id:
                     set_driver_id(driver, buff);
@@ -124,16 +124,16 @@ Rides parse_rides(FILE *fp)
     getline(&line, &len, fp); // Remove header
 
     while (getline(&line, &len, fp) != -1) {
+        char *record = line;
         Ride ride = init_ride();
         for (Field_ride field = R_id; field <= R_comment; field++) {
-            char *record = line;
-            buff = strsep(&record, ";");
+            buff = strsep(&record, ";\n");
             switch (field) {
                 case R_id:
                     set_ride_id(ride, buff);
                     break;
-                case R_state:
-                    set_ride_state(ride, buff);
+                case R_date:
+                    set_ride_date(ride, buff);
                     break;
                 case R_driver:
                     set_ride_driver(ride, buff);

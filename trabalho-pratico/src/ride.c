@@ -5,7 +5,7 @@
 
 struct ride {
     char *id;
-    char *state;
+    char *date;
     char *driver;
     char *user;
     char *city;
@@ -25,7 +25,7 @@ void free_ride(void *ride)
 {
     Ride r = (Ride)ride;
     free(r->id);
-    free(r->state);
+    free(r->date);
     free(r->driver);
     free(r->user);
     free(r->city);
@@ -43,10 +43,10 @@ void set_ride_id(Ride r, char *id)
     strcpy(r->id, id);
 }
 
-void set_ride_state(Ride r, char *state)
+void set_ride_date(Ride r, char *date)
 {
-    r->state = malloc(strlen(state) * sizeof(state));
-    strcpy(r->state, state);
+    r->date = malloc(strlen(date) * sizeof(date));
+    strcpy(r->date, date);
 }
 
 void set_ride_driver(Ride r, char *driver)
@@ -102,9 +102,9 @@ char *get_ride_id(Ride r)
     return strdup(r->id);
 }
 
-char *get_ride_state(Ride r)
+char *get_ride_date(Ride r)
 {
-    return strdup(r->state);
+    return strdup(r->date);
 }
 
 char *get_ride_driver(Ride r)
