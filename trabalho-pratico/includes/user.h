@@ -1,6 +1,8 @@
 #ifndef __USER_H__
 #define __USER_H__
 
+#include <stdint.h>
+
 typedef struct user *User;
 
 typedef enum field_user {
@@ -121,9 +123,9 @@ Gender get_user_gender(User u);
  * @brief Get the user age object
  * 
  * @param u 
- * @return char* 
+ * @return uint8_t 
  */
-char *get_user_age(User u);
+uint8_t get_user_age(User u);
 
 /**
  * @brief Get the user account creation object

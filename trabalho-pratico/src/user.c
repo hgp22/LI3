@@ -1,6 +1,7 @@
 #include "user.h"
 #include <glib.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -11,7 +12,7 @@ struct user {
     char *username;
     char *name;
     Gender gender;
-    char *age;
+    uint8_t age;
     short account_creation;
     char *pay_method;
     Status account_status;
@@ -27,7 +28,6 @@ void free_user(void *user)
     User u = (User)user;
     free(u->username);
     free(u->name);
-    free(u->age);
     free(u->pay_method);
     free(user);
 }
@@ -68,15 +68,17 @@ void set_user_age(User u, char *birth_date)
     short d, m, y;
     sscanf(birth_date, "%hd/%hd/%hd", &d, &m, &y);
 
-    short age = local->tm_year - (y - 1900);
+    uint8_t age = local->tm_year - (y - 1900);
 
     if (local->tm_mon < m || (local->tm_mon == m && local->tm_mday < d)) {
         age--;
     }
 
-    u->age = (char *)malloc(AGE_LEN * sizeof(birth_date));
+    u->age = age;
 
-    sprintf(u->age, "%hd", age);
+    // u->age = (char *)malloc(AGE_LEN * sizeof(birth_date));
+
+    // sprintf(u->age, "%hd", age);
 }
 
 void set_user_account_creation(User u, char *account_creation)
@@ -126,9 +128,9 @@ Gender get_user_gender(User u)
     return u->gender;
 }
 
-char *get_user_age(User u)
+uint8_t get_user_age(User u)
 {
-    return strdup(u->age);
+    return u->age;
 }
 
 short get_user_account_creation(User u)
