@@ -12,7 +12,7 @@ struct user {
     char *name;
     Gender gender;
     char *age;
-    char *account_creation;
+    short account_creation;
     char *pay_method;
     char *account_status;
 };
@@ -28,7 +28,7 @@ void free_user(void *user)
     free(u->username);
     free(u->name);
     free(u->age);
-    free(u->account_creation);
+    // free(u->account_creation);
     free(u->pay_method);
     free(u->account_status);
     free(user);
@@ -83,9 +83,14 @@ void set_user_age(User u, char *birth_date)
 
 void set_user_account_creation(User u, char *account_creation)
 {
-    u->account_creation =
-        malloc(strlen(account_creation) * sizeof(account_creation));
-    strcpy(u->account_creation, account_creation);
+    short d, m, y;
+    sscanf(account_creation, "%hd/%hd/%hd", &d, &m, &y);
+
+    int months[] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
+    int leaps = (y - 1970 + 2) / 4; // works until 2100
+    int days = (y - 1970) * 365 + months[m-1] + d + leaps;
+
+    u->account_creation = days;
 }
 
 void set_user_pay_method(User u, char *pay_method)
@@ -120,9 +125,9 @@ char *get_user_age(User u)
     return strdup(u->age);
 }
 
-char *get_user_account_creation(User u)
+short get_user_account_creation(User u)
 {
-    return strdup(u->account_creation);
+    return u->account_creation;
 }
 
 char *get_user_pay_method(User u)

@@ -124,9 +124,9 @@ char *get_user_age(User u);
  * @brief Get the user account creation object
  * 
  * @param u 
- * @return char* 
+ * @return short 
  */
-char *get_user_account_creation(User u);
+short get_user_account_creation(User u);
 
 /**
  * @brief Get the user pay method object
