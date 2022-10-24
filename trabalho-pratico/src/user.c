@@ -14,7 +14,7 @@ struct user {
     char *age;
     short account_creation;
     char *pay_method;
-    char *account_status;
+    Status account_status;
 };
 
 User init_user(void)
@@ -28,9 +28,7 @@ void free_user(void *user)
     free(u->username);
     free(u->name);
     free(u->age);
-    // free(u->account_creation);
     free(u->pay_method);
-    free(u->account_status);
     free(user);
 }
 
@@ -101,8 +99,16 @@ void set_user_pay_method(User u, char *pay_method)
 
 void set_user_account_status(User u, char *account_status)
 {
-    u->account_status = malloc(strlen(account_status) * sizeof(account_status));
-    strcpy(u->account_status, account_status);
+    switch (account_status[0]) {
+        case 'i':
+            u->account_status = Inactive;
+            break;
+        case 'a':
+            u->account_status = Active;
+            break;
+        default:
+            break;
+    }
 }
 
 char *get_user_name(User u)
@@ -135,7 +141,7 @@ char *get_user_pay_method(User u)
     return strdup(u->pay_method);
 }
 
-char *get_user_account_status(User u)
+Status get_user_account_status(User u)
 {
-    return strdup(u->account_status);
+    return u->account_status;
 }

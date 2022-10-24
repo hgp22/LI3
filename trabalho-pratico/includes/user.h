@@ -18,6 +18,11 @@ typedef enum gender {
     Female,
 } Gender;
 
+typedef enum account_status {
+    Inactive,
+    Active,
+} Status;
+
 /**
  * @brief
  *
@@ -140,8 +145,8 @@ char *get_user_pay_method(User u);
  * @brief Get the user account status object
  * 
  * @param u 
- * @return char* 
+ * @return Status 
  */
-char *get_user_account_status(User u);
+Status get_user_account_status(User u);
 
 #endif
