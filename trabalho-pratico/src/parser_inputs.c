@@ -35,7 +35,7 @@ Users parse_users(FILE *fp)
                     set_user_gender(user, buff);
                     break;
                 case U_birth_date:
-                    set_user_birth_date(user, buff);
+                    set_user_age(user, buff);
                     break;
                 case U_account_creation:
                     set_user_account_creation(user, buff);

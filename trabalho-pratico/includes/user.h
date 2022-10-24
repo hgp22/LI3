@@ -57,12 +57,12 @@ void set_user_name(User u, char *name);
 void set_user_gender(User u, char *gender);
 
 /**
- * @brief Set the user birth date object
+ * @brief Set the user age object
  *
  * @param u
  * @param birth_date
  */
-void set_user_birth_date(User u, char *birth_date);
+void set_user_age(User u, char *birth_date);
 
 /**
  * @brief Set the user account creation object
@@ -97,50 +97,50 @@ void set_user_account_status(User u, char *account_status);
 char *get_user_name(User u);
 
 /**
- * @brief Get the user name object
- *
- * @param u
- * @return char*
+ * @brief Get the user username object
+ * 
+ * @param u 
+ * @return char* 
  */
 char *get_user_username(User u);
 
 /**
  * @brief Get the user gender object
- *
- * @param u
- * @return Gender
+ * 
+ * @param u 
+ * @return Gender 
  */
 Gender get_user_gender(User u);
 
 /**
- * @brief Get the user name object
- *
- * @param u
- * @return char*
+ * @brief Get the user age object
+ * 
+ * @param u 
+ * @return char* 
  */
-char *get_user_birth_date(User u);
+char *get_user_age(User u);
 
 /**
- * @brief Get the user name object
- *
- * @param u
- * @return char*
+ * @brief Get the user account creation object
+ * 
+ * @param u 
+ * @return char* 
  */
 char *get_user_account_creation(User u);
 
 /**
- * @brief Get the user name object
- *
- * @param u
- * @return char*
+ * @brief Get the user pay method object
+ * 
+ * @param u 
+ * @return char* 
  */
 char *get_user_pay_method(User u);
 
 /**
- * @brief Get the user name object
- *
- * @param u
- * @return char*
+ * @brief Get the user account status object
+ * 
+ * @param u 
+ * @return char* 
  */
 char *get_user_account_status(User u);
 

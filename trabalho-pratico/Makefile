@@ -82,8 +82,8 @@ lint:
 check: LOG = $(LOG_DIR)/`date +%Y-%m-%d_%H:%M:%S`
 check: CFLAGS += -pg
 check: build
-	@memusage --data=$(LOG).dat --png=$(LOG).png $(BIN_DIR)/$(PROGRAM)
-	@gprof $(BIN_DIR)/$(PROGRAM) gmon.out > $(LOG).txt
+	@memusage --data=$(LOG).dat --png=$(LOG).png $(BIN_DIR)/$(PROGRAM) $(ARGS)
+	@gprof $(BIN_DIR)/$(PROGRAM) $(ARGS) gmon.out > $(LOG).txt
 	@valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all \
 		--log-file=$(LOG).log ./$(BIN_DIR)/$(PROGRAM) $(ARGS)
 

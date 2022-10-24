@@ -1,13 +1,17 @@
 #include "user.h"
 #include <glib.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+
+#define AGE_LEN 4
 
 struct user {
     char *username;
     char *name;
     Gender gender;
-    char *birth_date;
+    char *age;
     char *account_creation;
     char *pay_method;
     char *account_status;
@@ -23,7 +27,7 @@ void free_user(void *user)
     User u = (User)user;
     free(u->username);
     free(u->name);
-    free(u->birth_date);
+    free(u->age);
     free(u->account_creation);
     free(u->pay_method);
     free(u->account_status);
@@ -56,10 +60,25 @@ void set_user_gender(User u, char *gender)
     }
 }
 
-void set_user_birth_date(User u, char *birth_date)
+void set_user_age(User u, char *birth_date)
 {
-    u->birth_date = malloc(strlen(birth_date) * sizeof(birth_date));
-    strcpy(u->birth_date, birth_date);
+    time_t now;
+    time(&now);
+    struct tm *local = localtime(&now);
+    local->tm_mon++;
+
+    short d, m, y;
+    sscanf(birth_date, "%hd/%hd/%hd", &d, &m, &y);
+
+    short age = local->tm_year - (y - 1900);
+
+    if (local->tm_mon < m || (local->tm_mon == m && local->tm_mday < d)) {
+        age--;
+    }
+
+    u->age = (char *)malloc(AGE_LEN * sizeof(birth_date));
+
+    sprintf(u->age, "%hd", age);
 }
 
 void set_user_account_creation(User u, char *account_creation)
@@ -96,9 +115,9 @@ Gender get_user_gender(User u)
     return u->gender;
 }
 
-char *get_user_birth_date(User u)
+char *get_user_age(User u)
 {
-    return strdup(u->birth_date);
+    return strdup(u->age);
 }
 
 char *get_user_account_creation(User u)
