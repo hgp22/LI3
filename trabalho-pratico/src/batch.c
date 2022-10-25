@@ -1,5 +1,11 @@
 #include "batch.h"
+#include "catalog.h"
+#include "driver.h"
+#include "inputs.h"
+#include "parser_inputs.h"
 #include "parser_query.h"
+#include "ride.h"
+#include "user.h"
 #include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,70 +13,38 @@
 
 int batch(char *path_inputs, char *path_queries)
 {
-    Inputs *input = get_input_file_pointers(path_inputs);
+    Inputs inputs = init_inputs(path_inputs);
 
-    // TODO: parse inputs
+    Catalog catalog = parse_inputs(inputs);
 
-    close_input_files(input);
+    close_inputs(inputs);
 
-    // TODO: generate catalog
+    printf("Users list length: %d\n",
+           g_slist_length(get_catalog_users(catalog)));
+    printf("Drivers list length: %d\n",
+           g_slist_length(get_catalog_drivers(catalog)));
+    printf("Rides list length: %d\n",
+           g_slist_length(get_catalog_rides(catalog)));
 
-    FILE *file_queries = fopen(path_queries, "r");
+    // TODO: generate final catalog
 
-    parse_queries_batch(file_queries);
+    free_catalog(catalog);
+
+    FILE *file_queries = freopen(path_queries, "r", stdin);
+
+    parse_queries_batch();
 
     fclose(file_queries);
 
     return 0;
 }
 
-Inputs *get_input_file_pointers(char *path_inputs)
-{
-    // ? how to handle "./" and "/" before and after path_inputs
-    FILE *file_users = get_file_pointer(path_inputs, "/users.csv");
-    FILE *file_drivers = get_file_pointer(path_inputs, "/drivers.csv");
-    FILE *file_rides = get_file_pointer(path_inputs, "/rides.csv");
-
-    Inputs *inputs = g_new(Inputs, 1);
-
-    inputs->file_users = file_users;
-    inputs->file_drivers = file_drivers;
-    inputs->file_rides = file_rides;
-
-    return inputs;
-}
-
-FILE *get_file_pointer(char *path_inputs, char *input_file)
-{
-    char *path_file =
-        (char *)malloc(strlen(path_inputs) + strlen(input_file) + 1);
-    strcpy(path_file, path_inputs);
-    strcat(path_file, input_file);
-
-    FILE *fp = fopen(path_file, "r");
-    if (fp == NULL) {
-        perror(path_file);
-        exit(1);
-    }
-
-    free(path_file);
-
-    return fp;
-}
-
-void close_input_files(Inputs *input)
-{
-    fclose(input->file_users);
-    fclose(input->file_drivers);
-    fclose(input->file_rides);
-}
-
-int parse_queries_batch(FILE *file_queries)
+int parse_queries_batch()
 {
     char *query = NULL;
     size_t len = 0;
 
-    while (getline(&query, &len, file_queries) != -1) {
+    while (getline(&query, &len, stdin) != -1) {
         parse_query(query);
     }
 
