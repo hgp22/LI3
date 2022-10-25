@@ -18,25 +18,25 @@ Inputs init_inputs(char *path_inputs);
 
 /**
  * @brief Get the inputs users object
- * 
- * @param i 
- * @return FILE* 
+ *
+ * @param i
+ * @return FILE*
  */
 FILE *get_inputs_users(Inputs i);
 
 /**
  * @brief Get the inputs drivers object
- * 
- * @param i 
- * @return FILE* 
+ *
+ * @param i
+ * @return FILE*
  */
 FILE *get_inputs_drivers(Inputs i);
 
 /**
  * @brief Get the inputs rides object
- * 
- * @param i 
- * @return FILE* 
+ *
+ * @param i
+ * @return FILE*
  */
 FILE *get_inputs_rides(Inputs i);
 

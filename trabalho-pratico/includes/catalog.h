@@ -10,10 +10,10 @@
 typedef struct catalog *Catalog;
 
 /**
- * @brief 
- * 
- * @param i 
- * @return Catalog 
+ * @brief
+ *
+ * @param i
+ * @return Catalog
  */
 Catalog init_catalog(Inputs i);
 

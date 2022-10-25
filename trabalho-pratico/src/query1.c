@@ -34,14 +34,16 @@ Query1 init_query1(User u)
     return q;
 }
 
+void free_query1(void *query1)
+{
+    Query1 q = (Query1)query1;
+    free(q->name);
+    free(query1);
+}
+
 void add_score(Query1 q, unsigned short score)
 {
     q->sum_score += score;
-    q->number_trips++;
-}
-
-void add_trip(Query1 q)
-{
     q->number_trips++;
 }
 
@@ -56,7 +58,12 @@ char *query1_to_string(Query1 q)
                               COST + SEMICOLONS + 1) *
                              sizeof(char *));
 
-    float avg_score = q->sum_score / q->number_trips;
+    float avg_score = 0;
+    if (q->number_trips != 0) {
+        avg_score = q->sum_score / q->number_trips;
+    }
+
+    printf("sum_score: %d\navg_score: %f\ntrips: %hu\nmoney: %d\n", q->sum_score, avg_score, q->number_trips, q->total_spent);
 
     sprintf(s, "%s;%c;%d;%f;%d;%d", q->name, q->gender, q->age, avg_score,
             q->number_trips, q->total_spent);

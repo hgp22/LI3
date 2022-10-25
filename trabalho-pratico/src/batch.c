@@ -1,5 +1,6 @@
 #include "batch.h"
 #include "catalog.h"
+#include "catalog2.h"
 #include "driver.h"
 #include "inputs.h"
 #include "parser_inputs.h"
@@ -25,6 +26,8 @@ int batch(char *path_inputs, char *path_queries)
            g_slist_length(get_catalog_drivers(catalog)));
     printf("Rides list length: %d\n",
            g_slist_length(get_catalog_rides(catalog)));
+
+    Catalog2 catalog2 = init_catalog2(catalog);
 
     free_catalog(catalog);
 

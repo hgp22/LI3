@@ -1,5 +1,5 @@
-#include "drivers.h"
 #include "inputs.h"
+#include "drivers.h"
 #include "parser_inputs.h"
 #include "rides.h"
 #include "users.h"
@@ -52,7 +52,7 @@ FILE *get_inputs_drivers(Inputs i)
     return i->file_drivers;
 }
 
-FILE * get_inputs_rides(Inputs i)
+FILE *get_inputs_rides(Inputs i)
 {
     return i->file_rides;
 }
