@@ -1,6 +1,8 @@
+#include "drivers.h"
 #include "inputs.h"
-#include "catalog.h"
 #include "parser_inputs.h"
+#include "rides.h"
+#include "users.h"
 #include <glib.h>
 #include <stdio.h>
 
@@ -32,6 +34,29 @@ Inputs init_inputs(char *path_inputs)
     return inputs;
 }
 
+void close_inputs(Inputs i)
+{
+    fclose(i->file_users);
+    fclose(i->file_drivers);
+    fclose(i->file_rides);
+    free(i);
+}
+
+FILE *get_inputs_users(Inputs i)
+{
+    return i->file_users;
+}
+
+FILE *get_inputs_drivers(Inputs i)
+{
+    return i->file_drivers;
+}
+
+FILE * get_inputs_rides(Inputs i)
+{
+    return i->file_rides;
+}
+
 static FILE *_get_file_pointer(char *path_inputs, char *input_file)
 {
     char *path_file =
@@ -48,23 +73,4 @@ static FILE *_get_file_pointer(char *path_inputs, char *input_file)
     free(path_file);
 
     return fp;
-}
-
-Catalog parse_inputs(Inputs input)
-{
-    Catalog catalog = init_catalog();
-
-    set_catalog_users(catalog, parse_users(input->file_users));
-    set_catalog_drivers(catalog, parse_drivers(input->file_drivers));
-    set_catalog_rides(catalog, parse_rides(input->file_rides));
-
-    return catalog;
-}
-
-void close_inputs(Inputs i)
-{
-    fclose(i->file_users);
-    fclose(i->file_drivers);
-    fclose(i->file_rides);
-    free(i);
 }

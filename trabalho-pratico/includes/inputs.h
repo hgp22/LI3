@@ -1,7 +1,9 @@
 #ifndef __INPUTS_H__
 #define __INPUTS_H__
 
-#include "catalog.h"
+#include "drivers.h"
+#include "rides.h"
+#include "users.h"
 #include <stdio.h>
 
 typedef struct inputs *Inputs;
@@ -15,12 +17,28 @@ typedef struct inputs *Inputs;
 Inputs init_inputs(char *path_inputs);
 
 /**
- * @brief
- *
- * @param input
- * @return Catalog
+ * @brief Get the inputs users object
+ * 
+ * @param i 
+ * @return FILE* 
  */
-Catalog parse_inputs(Inputs input);
+FILE *get_inputs_users(Inputs i);
+
+/**
+ * @brief Get the inputs drivers object
+ * 
+ * @param i 
+ * @return FILE* 
+ */
+FILE *get_inputs_drivers(Inputs i);
+
+/**
+ * @brief Get the inputs rides object
+ * 
+ * @param i 
+ * @return FILE* 
+ */
+FILE *get_inputs_rides(Inputs i);
 
 /**
  * @brief
