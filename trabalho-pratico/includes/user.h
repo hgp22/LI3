@@ -15,11 +15,6 @@ typedef enum field_user {
     U_account_status,
 } Field_user;
 
-typedef enum gender {
-    Male,
-    Female,
-} Gender;
-
 typedef enum account_status {
     Inactive,
     Active,
@@ -105,49 +100,49 @@ char *get_user_name(User u);
 
 /**
  * @brief Get the user username object
- * 
- * @param u 
- * @return char* 
+ *
+ * @param u
+ * @return char*
  */
 char *get_user_username(User u);
 
 /**
  * @brief Get the user gender object
- * 
- * @param u 
- * @return Gender 
+ *
+ * @param u
+ * @return char
  */
-Gender get_user_gender(User u);
+char get_user_gender(User u);
 
 /**
  * @brief Get the user age object
- * 
- * @param u 
- * @return uint8_t 
+ *
+ * @param u
+ * @return uint8_t
  */
 uint8_t get_user_age(User u);
 
 /**
  * @brief Get the user account creation object
- * 
- * @param u 
- * @return short 
+ *
+ * @param u
+ * @return short
  */
 short get_user_account_creation(User u);
 
 /**
  * @brief Get the user pay method object
- * 
- * @param u 
- * @return char* 
+ *
+ * @param u
+ * @return char*
  */
 char *get_user_pay_method(User u);
 
 /**
  * @brief Get the user account status object
- * 
- * @param u 
- * @return Status 
+ *
+ * @param u
+ * @return Status
  */
 Status get_user_account_status(User u);
 

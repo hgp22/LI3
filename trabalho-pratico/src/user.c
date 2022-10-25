@@ -1,17 +1,15 @@
 #include "user.h"
 #include <glib.h>
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-#define AGE_LEN 4
-
 struct user {
     char *username;
     char *name;
-    Gender gender;
+    char gender;
     uint8_t age;
     short account_creation;
     char *pay_method;
@@ -46,16 +44,7 @@ void set_user_name(User u, char *name)
 
 void set_user_gender(User u, char *gender)
 {
-    switch (*gender) {
-        case 'M':
-            u->gender = Male;
-            break;
-        case 'F':
-            u->gender = Female;
-            break;
-        default:
-            break;
-    }
+    u->gender = *gender;
 }
 
 void set_user_age(User u, char *birth_date)
@@ -75,10 +64,6 @@ void set_user_age(User u, char *birth_date)
     }
 
     u->age = age;
-
-    // u->age = (char *)malloc(AGE_LEN * sizeof(birth_date));
-
-    // sprintf(u->age, "%hd", age);
 }
 
 void set_user_account_creation(User u, char *account_creation)
@@ -88,7 +73,7 @@ void set_user_account_creation(User u, char *account_creation)
 
     int months[] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
     int leaps = (y - 1970 + 2) / 4; // works until 2100
-    int days = (y - 1970) * 365 + months[m-1] + d + leaps;
+    int days = (y - 1970) * 365 + months[m - 1] + d + leaps;
 
     u->account_creation = days;
 }
@@ -123,7 +108,7 @@ char *get_user_username(User u)
     return strdup(u->username);
 }
 
-Gender get_user_gender(User u)
+char get_user_gender(User u)
 {
     return u->gender;
 }
