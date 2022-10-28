@@ -13,8 +13,8 @@ struct user {
     char *name;
     char gender;
     uint8_t age;
-    uint8_t account_age;
-    float sum_score; // or unsigned short sum_score;
+    unsigned short account_age;
+    unsigned short sum_score;
     float total_spent;
     unsigned short total_distance;
     unsigned short n_trips;
@@ -22,7 +22,7 @@ struct user {
     Status account_status;
 };
 
-User init_user(void)
+User new_user(void)
 {
     User u = g_new(struct user, 1);
 
@@ -30,7 +30,7 @@ User init_user(void)
     u->total_spent = 0;
     u->total_distance = 0;
     u->n_trips = 0;
-    // do we need to initialize the list?
+    // ? do we need to initialize the list?
 
     return u;
 }
@@ -81,14 +81,7 @@ void set_user_age(User u, char *birth_date)
 
 void set_user_account_age(User u, char *account_creation)
 {
-    short d, m, y;
-    sscanf(account_creation, "%hd/%hd/%hd", &d, &m, &y);
-
-    int months[] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
-    int leaps = (y - 1970 + 2) / 4; // works until 2100
-    int days = (y - 1970) * 365 + months[m - 1] + d + leaps;
-
-    u->account_age = days;
+    u->account_age = date_to_days(account_creation);
 }
 
 void set_user_account_status(User u, char *account_status)
@@ -125,7 +118,7 @@ uint8_t get_user_age(User u)
     return u->age;
 }
 
-short get_user_account_age(User u)
+unsigned short get_user_account_age(User u)
 {
     return u->account_age;
 }
@@ -162,11 +155,12 @@ Status get_user_account_status(User u)
 
 void add_user_ride_data(User u, Ride r)
 {
-    // u->sum_score += get_ride_user_score(r);
-    // u->total_spent += get_ride_cost(r);
-    // u->total_distance += get_ride_distance(r);
-    // u->recent_trips =
-    //     g_list_insert_sorted(u->recent_trips, get_ride_date(r),
-    //     compare_trips);
+    u->sum_score += get_ride_score_user(r);
+    u->total_spent += get_ride_cost(r);
+    u->total_distance += get_ride_distance(r);
+    // ! doubt this works, isn't date lost?
+    unsigned short date = get_ride_date(r);
+    u->recent_trips =
+        g_slist_insert_sorted(u->recent_trips, &date, compare_trips);
     u->n_trips += 1;
 }

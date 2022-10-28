@@ -20,7 +20,7 @@ Users parse_users(FILE *fp)
 
     while (getline(&line, &len, fp) != -1) {
         char *record = line;
-        User user = init_user();
+        User user = new_user();
         for (Field_user field = U_username; field <= U_account_status;
              field++) {
             buff = strsep(&record, ";\n");
@@ -124,7 +124,7 @@ Rides parse_rides(FILE *fp)
 
     while (getline(&line, &len, fp) != -1) {
         char *record = line;
-        Ride ride = init_ride();
+        Ride ride = new_ride();
         for (Field_ride field = R_id; field <= R_comment; field++) {
             buff = strsep(&record, ";\n");
             switch (field) {
@@ -156,7 +156,7 @@ Rides parse_rides(FILE *fp)
                     set_ride_tip(ride, buff);
                     break;
                 case R_comment:
-                    set_ride_comment(ride, buff);
+                    // set_ride_comment(ride, buff);
                     break;
                 default:
                     break;

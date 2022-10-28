@@ -27,7 +27,7 @@ typedef enum account_status {
  *
  * @return User
  */
-User init_user(void);
+User new_user(void);
 
 /**
  * @brief
@@ -120,9 +120,9 @@ uint8_t get_user_age(User u);
  * @brief Get the user account age object
  *
  * @param u
- * @return short
+ * @return unsigned short
  */
-short get_user_account_age(User u);
+unsigned short get_user_account_age(User u);
 
 /**
  * @brief Get the user avg score object

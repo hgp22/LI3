@@ -10,6 +10,14 @@
  * @param b
  * @return gint
  */
-static gint compare_trips(gconstpointer a, gconstpointer b);
+gint compare_trips(gconstpointer a, gconstpointer b);
+
+/**
+ * @brief
+ *
+ * @param date
+ * @return unsigned short
+ */
+unsigned short date_to_days(char *date);
 
 #endif

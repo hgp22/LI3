@@ -1,23 +1,25 @@
 #include "ride.h"
+#include "driver.h"
+#include "utils.h"
 #include <glib.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
 struct ride {
-    char *id;
-    char *date;
+    long id;
+    unsigned short date;
     char *driver;
     char *user;
     char *city;
     uint8_t distance;
     uint8_t score_user;
     uint8_t score_driver;
-    char *tip;
-    char *comment;
+    float cost; // or unsigned short with value multiplied by 100
+    float tip;  // or unsigned short with value multiplied by 100
 };
 
-Ride init_ride(void)
+Ride new_ride(void)
 {
     return g_new(struct ride, 1);
 }
@@ -25,26 +27,21 @@ Ride init_ride(void)
 void free_ride(void *ride)
 {
     Ride r = (Ride)ride;
-    free(r->id);
-    free(r->date);
     free(r->driver);
     free(r->user);
     free(r->city);
-    free(r->tip);
-    free(r->comment);
     free(ride);
 }
 
 void set_ride_id(Ride r, char *id)
 {
-    r->id = malloc(strlen(id) * sizeof(id));
-    strcpy(r->id, id);
+    char *endptr;
+    r->id = (unsigned short)strtol(id, &endptr, 10);
 }
 
 void set_ride_date(Ride r, char *date)
 {
-    r->date = malloc(strlen(date) * sizeof(date));
-    strcpy(r->date, date);
+    r->date = date_to_days(date);
 }
 
 void set_ride_driver(Ride r, char *driver)
@@ -83,26 +80,31 @@ void set_ride_score_driver(Ride r, char *score_driver)
     r->score_driver = (uint8_t)strtol(score_driver, &endptr, 10);
 }
 
+void set_ride_cost(Ride r, Driver d)
+{
+    Car_Class class = get_driver_car_class(d);
+    float base[] = {3.25, 4.00, 5.20};
+    float tax[] = {0.62, 0.79, 0.94};
+    int b = base[class];
+    int t = tax[class];
+    float cost = b + t * r->distance;
+    r->cost = cost;
+}
+
 void set_ride_tip(Ride r, char *tip)
 {
-    r->tip = malloc(strlen(tip) * sizeof(tip));
-    strcpy(r->tip, tip);
+    char *endptr;
+    r->tip = (float)strtol(tip, &endptr, 10);
 }
 
-void set_ride_comment(Ride r, char *comment)
+long get_ride_id(Ride r)
 {
-    r->comment = malloc(strlen(comment) * sizeof(comment));
-    strcpy(r->comment, comment);
+    return r->id;
 }
 
-char *get_ride_id(Ride r)
+unsigned short get_ride_date(Ride r)
 {
-    return strdup(r->id);
-}
-
-char *get_ride_date(Ride r)
-{
-    return strdup(r->date);
+    return r->date;
 }
 
 char *get_ride_driver(Ride r)
@@ -135,12 +137,12 @@ uint8_t get_ride_score_driver(Ride r)
     return r->score_driver;
 }
 
-char *get_ride_tip(Ride r)
+float get_ride_cost(Ride r)
 {
-    return strdup(r->tip);
+    return r->cost;
 }
 
-char *get_ride_comment(Ride r)
+float get_ride_tip(Ride r)
 {
-    return strdup(r->comment);
+    return r->tip;
 }
