@@ -141,9 +141,9 @@ char *get_driver_gender(Driver d);
 
 /**
  * @brief Get the driver car class object
- * 
- * @param d 
- * @return Car_Class 
+ *
+ * @param d
+ * @return Car_Class
  */
 Car_Class get_driver_car_class(Driver d);
 

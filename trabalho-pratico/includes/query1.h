@@ -15,9 +15,9 @@ typedef struct query1 *Query1;
 Query1 init_query1(User u);
 
 /**
- * @brief 
- * 
- * @param query1 
+ * @brief
+ *
+ * @param query1
  */
 void free_query1(void *query1);
 

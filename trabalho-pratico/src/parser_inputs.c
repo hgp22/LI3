@@ -38,10 +38,9 @@ Users parse_users(FILE *fp)
                     set_user_age(user, buff);
                     break;
                 case U_account_creation:
-                    set_user_account_creation(user, buff);
+                    set_user_account_age(user, buff);
                     break;
                 case U_pay_method:
-                    set_user_pay_method(user, buff);
                     break;
                 case U_account_status:
                     set_user_account_status(user, buff);

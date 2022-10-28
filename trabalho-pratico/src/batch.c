@@ -20,14 +20,11 @@ int batch(char *path_inputs, char *path_queries)
 
     close_inputs(inputs);
 
-    printf("Users list length: %d\n",
-           g_slist_length(get_catalog_users(catalog)));
-    printf("Drivers list length: %d\n",
-           g_slist_length(get_catalog_drivers(catalog)));
-    printf("Rides list length: %d\n",
-           g_slist_length(get_catalog_rides(catalog)));
+    printf("Users len: %d\n", g_slist_length(get_catalog_users(catalog)));
+    printf("Drivers len: %d\n", g_slist_length(get_catalog_drivers(catalog)));
+    printf("Rides len: %d\n", g_slist_length(get_catalog_rides(catalog)));
 
-    Catalog2 catalog2 = init_catalog2(catalog);
+    // Catalog2 catalog2 = init_catalog2(catalog);
 
     free_catalog(catalog);
 

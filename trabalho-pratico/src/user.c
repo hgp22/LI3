@@ -1,4 +1,6 @@
 #include "user.h"
+#include "ride.h"
+#include "utils.h"
 #include <glib.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -11,14 +13,26 @@ struct user {
     char *name;
     char gender;
     uint8_t age;
-    short account_creation;
-    char *pay_method;
+    uint8_t account_age;
+    float sum_score; // or unsigned short sum_score;
+    float total_spent;
+    unsigned short total_distance;
+    unsigned short n_trips;
+    GSList *recent_trips;
     Status account_status;
 };
 
 User init_user(void)
 {
-    return g_new(struct user, 1);
+    User u = g_new(struct user, 1);
+
+    u->sum_score = 0;
+    u->total_spent = 0;
+    u->total_distance = 0;
+    u->n_trips = 0;
+    // do we need to initialize the list?
+
+    return u;
 }
 
 void free_user(void *user)
@@ -26,7 +40,6 @@ void free_user(void *user)
     User u = (User)user;
     free(u->username);
     free(u->name);
-    free(u->pay_method);
     free(user);
 }
 
@@ -66,7 +79,7 @@ void set_user_age(User u, char *birth_date)
     u->age = age;
 }
 
-void set_user_account_creation(User u, char *account_creation)
+void set_user_account_age(User u, char *account_creation)
 {
     short d, m, y;
     sscanf(account_creation, "%hd/%hd/%hd", &d, &m, &y);
@@ -75,13 +88,7 @@ void set_user_account_creation(User u, char *account_creation)
     int leaps = (y - 1970 + 2) / 4; // works until 2100
     int days = (y - 1970) * 365 + months[m - 1] + d + leaps;
 
-    u->account_creation = days;
-}
-
-void set_user_pay_method(User u, char *pay_method)
-{
-    u->pay_method = malloc(strlen(pay_method) * sizeof(pay_method));
-    strcpy(u->pay_method, pay_method);
+    u->account_age = days;
 }
 
 void set_user_account_status(User u, char *account_status)
@@ -118,17 +125,48 @@ uint8_t get_user_age(User u)
     return u->age;
 }
 
-short get_user_account_creation(User u)
+short get_user_account_age(User u)
 {
-    return u->account_creation;
+    return u->account_age;
 }
 
-char *get_user_pay_method(User u)
+float get_user_avg_score(User u)
 {
-    return strdup(u->pay_method);
+    return u->sum_score / u->n_trips;
+}
+
+float get_user_total_spent(User u)
+{
+    return u->total_spent;
+}
+
+int get_user_total_distance(User u)
+{
+    return u->total_distance;
+}
+
+float get_user_n_trips(User u)
+{
+    return u->n_trips;
+}
+
+GSList *get_user_trip_dates(User u)
+{
+    return u->recent_trips;
 }
 
 Status get_user_account_status(User u)
 {
     return u->account_status;
+}
+
+void add_user_ride_data(User u, Ride r)
+{
+    // u->sum_score += get_ride_user_score(r);
+    // u->total_spent += get_ride_cost(r);
+    // u->total_distance += get_ride_distance(r);
+    // u->recent_trips =
+    //     g_list_insert_sorted(u->recent_trips, get_ride_date(r),
+    //     compare_trips);
+    u->n_trips += 1;
 }

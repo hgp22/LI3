@@ -1,6 +1,8 @@
 #ifndef __USER_H__
 #define __USER_H__
 
+#include "ride.h"
+#include <glib.h>
 #include <stdint.h>
 
 typedef struct user *User;
@@ -67,20 +69,12 @@ void set_user_gender(User u, char *gender);
 void set_user_age(User u, char *birth_date);
 
 /**
- * @brief Set the user account creation object
+ * @brief Set the user account age object
  *
  * @param u
  * @param account_creation
  */
-void set_user_account_creation(User u, char *account_creation);
-
-/**
- * @brief Set the user pay method object
- *
- * @param u
- * @param pay_method
- */
-void set_user_pay_method(User u, char *pay_method);
+void set_user_account_age(User u, char *account_creation);
 
 /**
  * @brief Set the user account status object
@@ -123,20 +117,52 @@ char get_user_gender(User u);
 uint8_t get_user_age(User u);
 
 /**
- * @brief Get the user account creation object
+ * @brief Get the user account age object
  *
  * @param u
  * @return short
  */
-short get_user_account_creation(User u);
+short get_user_account_age(User u);
 
 /**
- * @brief Get the user pay method object
+ * @brief Get the user avg score object
  *
  * @param u
- * @return char*
+ * @return float
  */
-char *get_user_pay_method(User u);
+float get_user_avg_score(User u);
+
+/**
+ * @brief Get the user total spent object
+ *
+ * @param u
+ * @return float
+ */
+float get_user_total_spent(User u);
+
+/**
+ * @brief Get the user total distance object
+ *
+ * @param u
+ * @return int
+ */
+int get_user_total_distance(User u);
+
+/**
+ * @brief Get the user n trips object
+ *
+ * @param u
+ * @return float
+ */
+float get_user_n_trips(User u);
+
+/**
+ * @brief Get the user trip dates object
+ *
+ * @param u
+ * @return GSList*
+ */
+GSList *get_user_trip_dates(User u);
 
 /**
  * @brief Get the user account status object
@@ -145,5 +171,13 @@ char *get_user_pay_method(User u);
  * @return Status
  */
 Status get_user_account_status(User u);
+
+/**
+ * @brief
+ *
+ * @param u
+ * @param r
+ */
+void add_user_ride_data(User u, Ride r);
 
 #endif

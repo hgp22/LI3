@@ -80,7 +80,7 @@ void set_ride_score_user(Ride r, char *score_user)
 void set_ride_score_driver(Ride r, char *score_driver)
 {
     char *endptr;
-    r->score_driver= (uint8_t)strtol(score_driver, &endptr, 10);
+    r->score_driver = (uint8_t)strtol(score_driver, &endptr, 10);
 }
 
 void set_ride_tip(Ride r, char *tip)

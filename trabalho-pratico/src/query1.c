@@ -63,7 +63,8 @@ char *query1_to_string(Query1 q)
         avg_score = q->sum_score / q->number_trips;
     }
 
-    printf("sum_score: %d\navg_score: %f\ntrips: %hu\nmoney: %d\n", q->sum_score, avg_score, q->number_trips, q->total_spent);
+    printf("sum_score: %d\navg_score: %f\ntrips: %hu\nmoney: %d\n",
+           q->sum_score, avg_score, q->number_trips, q->total_spent);
 
     sprintf(s, "%s;%c;%d;%f;%d;%d", q->name, q->gender, q->age, avg_score,
             q->number_trips, q->total_spent);
