@@ -1,6 +1,8 @@
 #ifndef __RIDE_H__
 #define __RIDE_H__
 
+#include <stdint.h>
+
 typedef struct ride *Ride;
 
 typedef enum field_ride {
@@ -152,27 +154,27 @@ char *get_ride_city(Ride r);
 
 /**
  * @brief Get the ride distance object
- *
- * @param r
- * @return char*
+ * 
+ * @param r 
+ * @return uint8_t 
  */
-char *get_ride_distance(Ride r);
+uint8_t get_ride_distance(Ride r);
 
 /**
  * @brief Get the ride score user object
- *
- * @param r
- * @return char*
+ * 
+ * @param r 
+ * @return uint8_t 
  */
-char *get_ride_score_user(Ride r);
+uint8_t get_ride_score_user(Ride r);
 
 /**
  * @brief Get the ride score driver object
- *
- * @param r
- * @return char*
+ * 
+ * @param r 
+ * @return uint8_t 
  */
-char *get_ride_score_driver(Ride r);
+uint8_t get_ride_score_driver(Ride r);
 
 /**
  * @brief Get the ride tip object

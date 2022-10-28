@@ -15,6 +15,12 @@ typedef enum field_driver {
     D_account_status,
 } Field_driver;
 
+typedef enum car_class {
+    Basic,
+    Green,
+    Premium,
+} Car_Class;
+
 /**
  * @brief
  *
@@ -135,11 +141,11 @@ char *get_driver_gender(Driver d);
 
 /**
  * @brief Get the driver car class object
- *
- * @param d
- * @return char*
+ * 
+ * @param d 
+ * @return Car_Class 
  */
-char *get_driver_car_class(Driver d);
+Car_Class get_driver_car_class(Driver d);
 
 /**
  * @brief Get the driver license plate object

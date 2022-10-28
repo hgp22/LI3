@@ -8,7 +8,7 @@ struct driver {
     char *name;
     char *birth_date;
     char *gender;
-    char *car_class;
+    Car_Class car_class;
     char *license_plate;
     char *city;
     char *account_creation;
@@ -27,7 +27,6 @@ void free_driver(void *driver)
     free(d->name);
     free(d->birth_date);
     free(d->gender);
-    free(d->car_class);
     free(d->license_plate);
     free(d->city);
     free(d->account_creation);
@@ -61,8 +60,19 @@ void set_driver_gender(Driver d, char *gender)
 
 void set_driver_car_class(Driver d, char *car_class)
 {
-    d->car_class = malloc(strlen(car_class) * sizeof(car_class));
-    strcpy(d->car_class, car_class);
+    switch (car_class[0]) {
+        case 'b':
+            d->car_class = Basic;
+            break;
+        case 'g':
+            d->car_class = Green;
+            break;
+        case 'p':
+            d->car_class = Premium;
+            break;
+        default:
+            break;
+    }
 }
 
 void set_driver_license_plate(Driver d, char *license_plate)
@@ -110,9 +120,9 @@ char *get_driver_gender(Driver d)
     return strdup(d->gender);
 }
 
-char *get_driver_car_class(Driver d)
+Car_Class get_driver_car_class(Driver d)
 {
-    return strdup(d->car_class);
+    return d->car_class;
 }
 
 char *get_driver_license_plate(Driver d)
