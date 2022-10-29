@@ -9,19 +9,20 @@ struct catalog2 {
 Catalog2 init_catalog2(Catalog c)
 {
     Catalog2 c2 = g_new(struct catalog2, 1);
+    /*
+        c2->query1 = g_hash_table_new(g_str_hash, g_str_equal);
 
-    c2->query1 = g_hash_table_new(g_str_hash, g_str_equal);
+        g_slist_foreach(get_catalog_users(c), (GFunc)insert_user_hash,
+       c2->query1);
 
-    g_slist_foreach(get_catalog_users(c), (GFunc)insert_user_hash, c2->query1);
+        printf("%s\n",
+               query1_to_string(g_hash_table_lookup(c2->query1, "MiTeixeira")));
 
-    printf("%s\n",
-           query1_to_string(g_hash_table_lookup(c2->query1, "MiTeixeira")));
+        g_slist_foreach(get_catalog_rides(c), (GFunc)update_query1, c2->query1);
 
-    g_slist_foreach(get_catalog_rides(c), (GFunc)update_query1, c2->query1);
-
-    printf("%s\n",
-           query1_to_string(g_hash_table_lookup(c2->query1, "MiTeixeira")));
-
+        printf("%s\n",
+               query1_to_string(g_hash_table_lookup(c2->query1, "MiTeixeira")));
+    */
     return c2;
 }
 

@@ -4,15 +4,22 @@
 #include "user.h"
 #include <glib.h>
 
-typedef GSList *Users;
+typedef GHashTable *Users;
+
+/**
+ * @brief
+ *
+ * @return Users
+ */
+Users new_users(void);
 
 /**
  * @brief
  *
  * @param users
  * @param user
- * @return Users
+ * @return gboolean
  */
-Users insert_user(Users users, User user);
+gboolean insert_user(Users users, User user);
 
 #endif

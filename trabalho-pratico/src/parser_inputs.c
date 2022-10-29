@@ -14,7 +14,7 @@ Users parse_users(FILE *fp)
     char *line = NULL;
     size_t len = 0;
     char *buff = NULL;
-    Users users = NULL;
+    Users users = new_users();
 
     getline(&line, &len, fp); // Remove header
 
@@ -50,7 +50,7 @@ Users parse_users(FILE *fp)
             }
         }
 
-        users = insert_user(users, user);
+        insert_user(users, user);
     }
 
     free(line);

@@ -28,7 +28,7 @@ Catalog init_catalog(Inputs i)
 
 void free_catalog(Catalog c)
 {
-    g_slist_free_full(c->users, free_user);
+    g_hash_table_destroy(c->users);
     g_slist_free_full(c->drivers, free_driver);
     g_slist_free_full(c->rides, free_ride);
     free(c);
