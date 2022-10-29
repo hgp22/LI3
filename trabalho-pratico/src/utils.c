@@ -2,6 +2,7 @@
 #include <glib.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
 // substitute with pre-defined glib function
@@ -42,4 +43,15 @@ uint8_t date_to_age(char *date)
     }
 
     return age;
+}
+
+char *ftoa_no_trailing_z(float f)
+{
+    char *s = malloc(sizeof(char *) * 16);
+    sprintf(s, "%.3f", f);
+    size_t len = strlen(s);
+    for (int i = len - 1; s[i] == '0' || s[i] == '.'; i--) {
+        s[i] = '\0';
+    }
+    return s;
 }

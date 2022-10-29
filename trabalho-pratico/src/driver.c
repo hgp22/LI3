@@ -165,7 +165,7 @@ GSList *get_driver_trip_dates(Driver d)
 void add_driver_ride_data(Driver d, Ride r)
 {
     d->sum_score += get_ride_score_user(r);
-    d->total_earned += get_ride_cost(r);
+    d->total_earned += get_ride_cost(r) + get_ride_tip(r);
     // ! doubt this works, isn't date lost?
     // unsigned short date = get_ride_date(r);
     // d->recent_trips = g_slist_insert_sorted(d->recent_trips, &date,

@@ -150,7 +150,7 @@ GSList *get_user_trip_dates(User u)
 void add_user_ride_data(User u, Ride r)
 {
     u->sum_score += get_ride_score_user(r);
-    u->total_spent += get_ride_cost(r);
+    u->total_spent += get_ride_cost(r) + get_ride_tip(r);
     u->total_distance += get_ride_distance(r);
     // ! doubt this works, isn't date lost?
     // unsigned short date = get_ride_date(r);

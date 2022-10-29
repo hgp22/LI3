@@ -92,7 +92,7 @@ void set_ride_cost(Ride r, Driver d)
 void set_ride_tip(Ride r, char *tip)
 {
     char *endptr;
-    r->tip = (float)strtol(tip, &endptr, 10);
+    r->tip = (float)strtof(tip, &endptr);
 }
 
 long get_ride_id(Ride r)
