@@ -48,7 +48,7 @@ void free_driver(void *driver)
 void set_driver_id(Driver d, char *id)
 {
     char *endptr;
-    d->id = (unsigned short)strtol(id, &endptr, 10);
+    d->id = strtol(id, &endptr, 10);
 }
 
 void set_driver_name(Driver d, char *name)

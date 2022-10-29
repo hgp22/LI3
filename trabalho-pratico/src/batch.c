@@ -21,7 +21,7 @@ int batch(char *path_inputs, char *path_queries)
     close_inputs(inputs);
 
     printf("Users len: %d\n", g_hash_table_size(get_catalog_users(catalog)));
-    printf("Drivers len: %d\n", g_slist_length(get_catalog_drivers(catalog)));
+    printf("Drivrs len: %d\n", g_hash_table_size(get_catalog_drivers(catalog)));
     printf("Rides len: %d\n", g_slist_length(get_catalog_rides(catalog)));
 
     // Catalog2 catalog2 = init_catalog2(catalog);

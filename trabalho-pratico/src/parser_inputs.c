@@ -63,7 +63,7 @@ Drivers parse_drivers(FILE *fp)
     char *line = NULL;
     size_t len = 0;
     char *buff = NULL;
-    Drivers drivers = NULL;
+    Drivers drivers = new_drivers();
 
     getline(&line, &len, fp); // Remove header
 
@@ -103,7 +103,7 @@ Drivers parse_drivers(FILE *fp)
             }
         }
 
-        drivers = insert_driver(drivers, driver);
+        insert_driver(drivers, driver);
     }
 
     free(line);

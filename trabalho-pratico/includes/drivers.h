@@ -4,15 +4,22 @@
 #include "driver.h"
 #include <glib.h>
 
-typedef GSList *Drivers;
+typedef GHashTable *Drivers;
+
+/**
+ * @brief
+ *
+ * @return Drivers
+ */
+Drivers new_drivers(void);
 
 /**
  * @brief
  *
  * @param drivers
  * @param driver
- * @return Drivers
+ * @return gboolean
  */
-Drivers insert_driver(Drivers drivers, Driver driver);
+gboolean insert_driver(Drivers drivers, Driver driver);
 
 #endif

@@ -29,7 +29,7 @@ Catalog init_catalog(Inputs i)
 void free_catalog(Catalog c)
 {
     g_hash_table_destroy(c->users);
-    g_slist_free_full(c->drivers, free_driver);
+    g_hash_table_destroy(c->drivers);
     g_slist_free_full(c->rides, free_ride);
     free(c);
 }
