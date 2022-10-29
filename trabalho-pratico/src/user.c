@@ -128,12 +128,12 @@ float get_user_total_spent(User u)
     return u->total_spent;
 }
 
-int get_user_total_distance(User u)
+unsigned short get_user_total_distance(User u)
 {
     return u->total_distance;
 }
 
-float get_user_n_trips(User u)
+unsigned short get_user_n_trips(User u)
 {
     return u->n_trips;
 }

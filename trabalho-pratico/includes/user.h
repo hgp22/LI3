@@ -123,6 +123,14 @@ uint8_t get_user_age(User u);
 unsigned short get_user_account_age(User u);
 
 /**
+ * @brief Get the user account status object
+ *
+ * @param u
+ * @return Status
+ */
+Status get_user_account_status(User u);
+
+/**
  * @brief Get the user avg score object
  *
  * @param u
@@ -142,17 +150,17 @@ float get_user_total_spent(User u);
  * @brief Get the user total distance object
  *
  * @param u
- * @return int
+ * @return unsigned short
  */
-int get_user_total_distance(User u);
+unsigned short get_user_total_distance(User u);
 
 /**
  * @brief Get the user n trips object
  *
  * @param u
- * @return float
+ * @return unsigned short
  */
-float get_user_n_trips(User u);
+unsigned short get_user_n_trips(User u);
 
 /**
  * @brief Get the user trip dates object
@@ -161,22 +169,6 @@ float get_user_n_trips(User u);
  * @return GSList*
  */
 GSList *get_user_trip_dates(User u);
-
-/**
- * @brief Get the user account status object
- *
- * @param u
- * @return Status
- */
-Status get_user_account_status(User u);
-
-/**
- * @brief
- *
- * @param u
- * @param r
- */
-void add_user_ride_data(User u, Ride r);
 
 /**
  * @brief

@@ -155,6 +155,30 @@ unsigned short get_driver_account_age(Driver d);
 Status get_driver_account_status(Driver d);
 
 /**
+ * @brief Get the driver avg score object
+ *
+ * @param d
+ * @return float
+ */
+float get_driver_avg_score(Driver d);
+
+/**
+ * @brief Get the driver total earned object
+ *
+ * @param d
+ * @return float
+ */
+float get_driver_total_earned(Driver d);
+
+/**
+ * @brief Get the driver n trips object
+ *
+ * @param d
+ * @return unsigned short
+ */
+unsigned short get_driver_n_trips(Driver d);
+
+/**
  * @brief Get the driver trip dates object
  *
  * @param d

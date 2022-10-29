@@ -27,6 +27,7 @@ Catalog init_catalog(Inputs i)
         long d_id = get_ride_driver(iterator->data); // ? use gint
         Driver d = g_hash_table_lookup(c->drivers, &d_id);
         set_ride_cost(iterator->data, d);
+        add_driver_ride_data(d, iterator->data);
     }
 
     return c;
