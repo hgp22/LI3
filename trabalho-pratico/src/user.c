@@ -6,18 +6,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum account_status {
-    Inactive,
-    Active,
-};
-
 struct user {
     char *username;
     char *name;
     char gender;
     uint8_t age;
     unsigned short account_age;
-    Status account_status;
+    U_Status account_status;
     unsigned short sum_score;
     float total_spent;
     unsigned short total_distance;
@@ -78,10 +73,10 @@ void set_user_account_status(User u, char *account_status)
 {
     switch (account_status[0]) {
         case 'i':
-            u->account_status = Inactive;
+            u->account_status = U_Inactive;
             break;
         case 'a':
-            u->account_status = Active;
+            u->account_status = U_Active;
             break;
         default:
             break;
@@ -113,7 +108,7 @@ unsigned short get_user_account_age(User u)
     return u->account_age;
 }
 
-Status get_user_account_status(User u)
+U_Status get_user_account_status(User u)
 {
     return u->account_status;
 }

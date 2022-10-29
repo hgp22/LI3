@@ -18,7 +18,10 @@ typedef enum field_user {
     U_account_status,
 } Field_user;
 
-typedef enum account_status Status;
+typedef enum u_account_status {
+    U_Inactive,
+    U_Active,
+} U_Status;
 
 /**
  * @brief
@@ -126,9 +129,9 @@ unsigned short get_user_account_age(User u);
  * @brief Get the user account status object
  *
  * @param u
- * @return Status
+ * @return U_Status
  */
-Status get_user_account_status(User u);
+U_Status get_user_account_status(User u);
 
 /**
  * @brief Get the user avg score object

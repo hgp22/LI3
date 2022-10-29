@@ -5,7 +5,7 @@
 #include <string.h>
 #include <time.h>
 
-// substitute with pre-defined glib function
+// ? substitute with pre-defined glib function
 gint compare_trips(gconstpointer a, gconstpointer b)
 {
     // unsigned short date_a = (unsigned short)a;

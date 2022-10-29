@@ -6,11 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum account_status {
-    Inactive,
-    Active,
-};
-
 struct driver {
     long id;
     char *name;
@@ -18,7 +13,7 @@ struct driver {
     uint8_t age;
     Car_Class car_class;
     unsigned short account_age;
-    Status account_status;
+    D_Status account_status;
     unsigned short sum_score;
     float total_earned;
     unsigned short n_trips;
@@ -93,10 +88,10 @@ void set_driver_account_status(Driver d, char *account_status)
 {
     switch (account_status[0]) {
         case 'i':
-            d->account_status = Inactive;
+            d->account_status = D_Inactive;
             break;
         case 'a':
-            d->account_status = Active;
+            d->account_status = D_Active;
             break;
         default:
             break;
@@ -133,7 +128,7 @@ unsigned short get_driver_account_age(Driver d)
     return d->account_age;
 }
 
-Status get_driver_account_status(Driver d)
+D_Status get_driver_account_status(Driver d)
 {
     return d->account_status;
 }

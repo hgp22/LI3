@@ -26,7 +26,10 @@ typedef enum car_class {
     Premium,
 } Car_Class;
 
-typedef enum account_status Status;
+typedef enum d_account_status {
+    D_Inactive,
+    D_Active,
+} D_Status;
 
 /**
  * @brief
@@ -150,9 +153,9 @@ unsigned short get_driver_account_age(Driver d);
  * @brief Get the driver account status object
  *
  * @param d
- * @return Status
+ * @return D_Status
  */
-Status get_driver_account_status(Driver d);
+D_Status get_driver_account_status(Driver d);
 
 /**
  * @brief Get the driver avg score object
