@@ -134,9 +134,9 @@ unsigned short get_ride_date(Ride r);
  * @brief Get the ride driver object
  *
  * @param r
- * @return char*
+ * @return long
  */
-char *get_ride_driver(Ride r);
+long get_ride_driver(Ride r);
 
 /**
  * @brief Get the ride user object

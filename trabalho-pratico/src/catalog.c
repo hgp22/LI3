@@ -17,13 +17,19 @@ struct catalog {
 
 Catalog init_catalog(Inputs i)
 {
-    Catalog catalog = g_new(struct catalog, 1);
+    Catalog c = g_new(struct catalog, 1);
 
-    catalog->users = parse_users(get_inputs_users(i));
-    catalog->drivers = parse_drivers(get_inputs_drivers(i));
-    catalog->rides = parse_rides(get_inputs_rides(i));
+    c->users = parse_users(get_inputs_users(i));
+    c->drivers = parse_drivers(get_inputs_drivers(i));
+    c->rides = parse_rides(get_inputs_rides(i));
 
-    return catalog;
+    for (Rides iterator = c->rides; iterator; iterator = iterator->next) {
+        long d_id = get_ride_driver(iterator->data); // ? use gint
+        Driver d = g_hash_table_lookup(c->drivers, &d_id);
+        set_ride_cost(iterator->data, d);
+    }
+
+    return c;
 }
 
 void free_catalog(Catalog c)

@@ -9,7 +9,7 @@
 struct ride {
     long id;
     unsigned short date;
-    char *driver;
+    long driver;
     char *user;
     char *city;
     uint8_t distance;
@@ -27,7 +27,6 @@ Ride new_ride(void)
 void free_ride(void *ride)
 {
     Ride r = (Ride)ride;
-    free(r->driver);
     free(r->user);
     free(r->city);
     free(ride);
@@ -36,7 +35,7 @@ void free_ride(void *ride)
 void set_ride_id(Ride r, char *id)
 {
     char *endptr;
-    r->id = (unsigned short)strtol(id, &endptr, 10);
+    r->id = strtol(id, &endptr, 10);
 }
 
 void set_ride_date(Ride r, char *date)
@@ -46,8 +45,8 @@ void set_ride_date(Ride r, char *date)
 
 void set_ride_driver(Ride r, char *driver)
 {
-    r->driver = malloc(strlen(driver) * sizeof(driver));
-    strcpy(r->driver, driver);
+    char *endptr;
+    r->driver = strtol(driver, &endptr, 10);
 }
 
 void set_ride_user(Ride r, char *user)
@@ -85,10 +84,9 @@ void set_ride_cost(Ride r, Driver d)
     Car_Class class = get_driver_car_class(d);
     float base[] = {3.25, 4.00, 5.20};
     float tax[] = {0.62, 0.79, 0.94};
-    int b = base[class];
-    int t = tax[class];
-    float cost = b + t * r->distance;
-    r->cost = cost;
+    float b = base[class];
+    float t = tax[class];
+    r->cost = b + t * r->distance;
 }
 
 void set_ride_tip(Ride r, char *tip)
@@ -107,9 +105,9 @@ unsigned short get_ride_date(Ride r)
     return r->date;
 }
 
-char *get_ride_driver(Ride r)
+long get_ride_driver(Ride r)
 {
-    return strdup(r->driver);
+    return r->driver;
 }
 
 char *get_ride_user(Ride r)
