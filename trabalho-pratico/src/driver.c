@@ -140,7 +140,7 @@ Status get_driver_account_status(Driver d)
 
 float get_driver_avg_score(Driver d)
 {
-    return d->sum_score / d->n_trips;
+    return (float)d->sum_score / d->n_trips;
 }
 
 float get_driver_total_earned(Driver d)
@@ -164,6 +164,7 @@ void add_driver_ride_data(Driver d, Ride r)
     d->total_earned += get_ride_cost(r);
     // ! doubt this works, isn't date lost?
     // unsigned short date = get_ride_date(r);
-    // d->recent_trips = g_slist_insert_sorted(d->recent_trips, &date, compare_trips);
+    // d->recent_trips = g_slist_insert_sorted(d->recent_trips, &date,
+    // compare_trips);
     d->n_trips += 1;
 }

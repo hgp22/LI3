@@ -28,6 +28,8 @@ Catalog init_catalog(Inputs i)
         Driver d = g_hash_table_lookup(c->drivers, &d_id);
         set_ride_cost(iterator->data, d);
         add_driver_ride_data(d, iterator->data);
+        User u = g_hash_table_lookup(c->users, get_ride_user(iterator->data));
+        add_user_ride_data(u, iterator->data);
     }
 
     return c;

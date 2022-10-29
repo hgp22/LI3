@@ -120,7 +120,7 @@ Status get_user_account_status(User u)
 
 float get_user_avg_score(User u)
 {
-    return u->sum_score / u->n_trips;
+    return (float)u->sum_score / u->n_trips;
 }
 
 float get_user_total_spent(User u)
@@ -149,8 +149,8 @@ void add_user_ride_data(User u, Ride r)
     u->total_spent += get_ride_cost(r);
     u->total_distance += get_ride_distance(r);
     // ! doubt this works, isn't date lost?
-    unsigned short date = get_ride_date(r);
-    u->recent_trips =
-        g_slist_insert_sorted(u->recent_trips, &date, compare_trips);
+    // unsigned short date = get_ride_date(r);
+    // u->recent_trips = g_slist_insert_sorted(u->recent_trips, &date,
+    // compare_trips);
     u->n_trips += 1;
 }
