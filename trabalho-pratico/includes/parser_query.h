@@ -1,12 +1,15 @@
 #ifndef __PARSER_QUERY_H__
 #define __PARSER_QUERY_H__
 
+#include "catalog.h"
+
 /**
- * @brief Parse query line
+ * @brief
  *
- * @param query Query string
- * @return int Control integer
+ * @param c
+ * @param query
+ * @return int
  */
-int parse_query(char *query);
+int parse_query(Catalog c, char *query);
 
 #endif

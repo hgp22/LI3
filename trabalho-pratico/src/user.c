@@ -120,7 +120,11 @@ Status get_user_account_status(User u)
 
 float get_user_avg_score(User u)
 {
-    return (float)u->sum_score / u->n_trips;
+    float avg_score = 0;
+    if (u->n_trips != 0) {
+        avg_score = (float)u->sum_score / u->n_trips;
+    }
+    return avg_score;
 }
 
 float get_user_total_spent(User u)

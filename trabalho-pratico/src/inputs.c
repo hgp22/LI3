@@ -15,9 +15,9 @@ struct inputs {
 /**
  * @brief Get the file pointer object
  *
- * @param path_inputs
- * @param input_file
- * @return FILE*
+ * @param path_inputs String with path do inputs directory
+ * @param input_file Input file name
+ * @return FILE* File pointer to input file
  */
 static FILE *_get_file_pointer(char *path_inputs, char *input_file);
 

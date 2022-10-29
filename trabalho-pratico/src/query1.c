@@ -1,4 +1,5 @@
 #include "query1.h"
+#include "driver.h"
 #include "user.h"
 #include <glib.h>
 #include <stdint.h>
@@ -11,63 +12,28 @@
 #define COST 9
 #define SEMICOLONS 5
 
-struct query1 {
-    char *name;
-    char gender;
-    uint8_t age;
-    int sum_score;
-    unsigned short number_trips;
-    int total_spent;
-};
-
-Query1 init_query1(User u)
+char *user_to_q1_string(User u)
 {
-    Query1 q = g_new(struct query1, 1);
+    char *s = malloc((strlen(get_user_name(u)) + GENDER + AGE + SCORE + TRIPS +
+                      COST + SEMICOLONS + 1) *
+                     sizeof(char *));
 
-    q->name = get_user_name(u);
-    q->gender = get_user_gender(u);
-    q->age = get_user_age(u);
-    q->sum_score = 0;
-    q->number_trips = 0;
-    q->total_spent = 0;
+    sprintf(s, "%s;%c;%d;%.3f;%hu;%.3f", get_user_name(u), get_user_gender(u),
+            get_user_age(u), get_user_avg_score(u), get_user_n_trips(u),
+            get_user_total_spent(u));
 
-    return q;
+    return s;
 }
 
-void free_query1(void *query1)
+char *driver_to_q1_string(Driver d)
 {
-    Query1 q = (Query1)query1;
-    free(q->name);
-    free(query1);
-}
+    char *s = malloc((strlen(get_driver_name(d)) + GENDER + AGE + SCORE +
+                      TRIPS + COST + SEMICOLONS + 1) *
+                     sizeof(char *));
 
-void add_score(Query1 q, unsigned short score)
-{
-    q->sum_score += score;
-    q->number_trips++;
-}
-
-void add_money(Query1 q, int money)
-{
-    q->total_spent += money;
-}
-
-char *query1_to_string(Query1 q)
-{
-    char *s = (char *)malloc((strlen(q->name) + GENDER + AGE + SCORE + TRIPS +
-                              COST + SEMICOLONS + 1) *
-                             sizeof(char *));
-
-    float avg_score = 0;
-    if (q->number_trips != 0) {
-        avg_score = q->sum_score / q->number_trips;
-    }
-
-    printf("sum_score: %d\navg_score: %f\ntrips: %hu\nmoney: %d\n",
-           q->sum_score, avg_score, q->number_trips, q->total_spent);
-
-    sprintf(s, "%s;%c;%d;%f;%d;%d", q->name, q->gender, q->age, avg_score,
-            q->number_trips, q->total_spent);
+    sprintf(s, "%s;%c;%d;%.3f;%hu;%.3f", get_driver_name(d),
+            get_driver_gender(d), get_driver_age(d), get_driver_avg_score(d),
+            get_driver_n_trips(d), get_driver_total_earned(d));
 
     return s;
 }

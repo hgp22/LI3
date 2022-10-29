@@ -140,7 +140,11 @@ Status get_driver_account_status(Driver d)
 
 float get_driver_avg_score(Driver d)
 {
-    return (float)d->sum_score / d->n_trips;
+    float avg_score = 0;
+    if (d->n_trips != 0) {
+        avg_score = (float)d->sum_score / d->n_trips;
+    }
+    return avg_score;
 }
 
 float get_driver_total_earned(Driver d)
