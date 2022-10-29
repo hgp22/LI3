@@ -1,6 +1,8 @@
 #include "utils.h"
 #include <glib.h>
+#include <stdint.h>
 #include <stdio.h>
+#include <time.h>
 
 // substitute with pre-defined glib function
 gint compare_trips(gconstpointer a, gconstpointer b)
@@ -21,4 +23,23 @@ unsigned short date_to_days(char *date)
     unsigned short days = (y - 1970) * 365 + months[m - 1] + d + leaps;
 
     return days;
+}
+
+uint8_t date_to_age(char *date)
+{
+    time_t now;
+    time(&now);
+    struct tm *local = localtime(&now);
+    local->tm_mon++;
+
+    short d, m, y;
+    sscanf(date, "%hd/%hd/%hd", &d, &m, &y);
+
+    uint8_t age = local->tm_year - (y - 1900);
+
+    if (local->tm_mon < m || (local->tm_mon == m && local->tm_mday < d)) {
+        age--;
+    }
+
+    return age;
 }

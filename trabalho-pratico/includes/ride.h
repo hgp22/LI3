@@ -1,8 +1,9 @@
 #ifndef __RIDE_H__
 #define __RIDE_H__
 
-#include "driver.h"
 #include <stdint.h>
+
+typedef struct driver *Driver;
 
 typedef struct ride *Ride;
 

@@ -1,7 +1,12 @@
 #ifndef __DRIVER_H__
 #define __DRIVER_H__
 
+#include <glib.h>
+#include <stdint.h>
+
 typedef struct driver *Driver;
+
+typedef struct ride *Ride;
 
 typedef enum field_driver {
     D_id,
@@ -21,12 +26,14 @@ typedef enum car_class {
     Premium,
 } Car_Class;
 
+typedef enum account_status Status;
+
 /**
  * @brief
  *
  * @return Driver
  */
-Driver init_driver(void);
+Driver new_driver(void);
 
 /**
  * @brief
@@ -52,20 +59,20 @@ void set_driver_id(Driver d, char *id);
 void set_driver_name(Driver d, char *name);
 
 /**
- * @brief Set the driver birth date object
- *
- * @param d
- * @param birth_date
- */
-void set_driver_birth_date(Driver d, char *birth_date);
-
-/**
  * @brief Set the driver gend object
  *
  * @param d
  * @param gender
  */
 void set_driver_gender(Driver d, char *gender);
+
+/**
+ * @brief Set the driver age object
+ *
+ * @param d
+ * @param birth_date
+ */
+void set_driver_age(Driver d, char *birth_date);
 
 /**
  * @brief Set the driver car class object
@@ -76,28 +83,12 @@ void set_driver_gender(Driver d, char *gender);
 void set_driver_car_class(Driver d, char *car_class);
 
 /**
- * @brief Set the driver license plate object
- *
- * @param d
- * @param license_plate
- */
-void set_driver_license_plate(Driver d, char *license_plate);
-
-/**
- * @brief Set the driver city object
- *
- * @param d
- * @param city
- */
-void set_driver_city(Driver d, char *city);
-
-/**
- * @brief Set the driver account creation object
+ * @brief Set the driver account age object
  *
  * @param d
  * @param account_creation
  */
-void set_driver_account_creation(Driver d, char *account_creation);
+void set_driver_account_age(Driver d, char *account_creation);
 
 /**
  * @brief Set the driver account status object
@@ -111,9 +102,9 @@ void set_driver_account_status(Driver d, char *account_status);
  * @brief Get the driver id object
  *
  * @param d
- * @return char*
+ * @return long
  */
-char *get_driver_id(Driver d);
+long get_driver_id(Driver d);
 
 /**
  * @brief Get the driver name object
@@ -124,20 +115,20 @@ char *get_driver_id(Driver d);
 char *get_driver_name(Driver d);
 
 /**
- * @brief Get the driver birth date object
- *
- * @param d
- * @return char*
- */
-char *get_driver_birth_date(Driver d);
-
-/**
  * @brief Get the driver gender object
  *
  * @param d
- * @return char*
+ * @return char
  */
-char *get_driver_gender(Driver d);
+char get_driver_gender(Driver d);
+
+/**
+ * @brief Get the driver age object
+ *
+ * @param d
+ * @return uint8_t
+ */
+uint8_t get_driver_age(Driver d);
 
 /**
  * @brief Get the driver car class object
@@ -148,35 +139,35 @@ char *get_driver_gender(Driver d);
 Car_Class get_driver_car_class(Driver d);
 
 /**
- * @brief Get the driver license plate object
+ * @brief Get the driver account age object
  *
  * @param d
- * @return char*
+ * @return unsigned short
  */
-char *get_driver_license_plate(Driver d);
-
-/**
- * @brief Get the driver city object
- *
- * @param d
- * @return char*
- */
-char *get_driver_city(Driver d);
-
-/**
- * @brief Get the driver account creation object
- *
- * @param d
- * @return char*
- */
-char *get_driver_account_creation(Driver d);
+unsigned short get_driver_account_age(Driver d);
 
 /**
  * @brief Get the driver account status object
  *
  * @param d
- * @return char*
+ * @return Status
  */
-char *get_driver_account_status(Driver d);
+Status get_driver_account_status(Driver d);
+
+/**
+ * @brief Get the driver trip dates object
+ *
+ * @param d
+ * @return GSList*
+ */
+GSList *get_driver_trip_dates(Driver d);
+
+/**
+ * @brief
+ *
+ * @param d
+ * @param r
+ */
+void add_driver_ride_data(Driver d, Ride r);
 
 #endif

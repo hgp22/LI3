@@ -69,7 +69,7 @@ Drivers parse_drivers(FILE *fp)
 
     while (getline(&line, &len, fp) != -1) {
         char *record = line;
-        Driver driver = init_driver();
+        Driver driver = new_driver();
         for (Field_driver field = D_id; field <= D_account_status; field++) {
             buff = strsep(&record, ";\n");
             switch (field) {
@@ -80,7 +80,7 @@ Drivers parse_drivers(FILE *fp)
                     set_driver_name(driver, buff);
                     break;
                 case D_birth_date:
-                    set_driver_birth_date(driver, buff);
+                    set_driver_age(driver, buff);
                     break;
                 case D_gender:
                     set_driver_gender(driver, buff);
@@ -89,13 +89,11 @@ Drivers parse_drivers(FILE *fp)
                     set_driver_car_class(driver, buff);
                     break;
                 case D_license_plate:
-                    set_driver_license_plate(driver, buff);
                     break;
                 case D_city:
-                    set_driver_city(driver, buff);
                     break;
                 case D_account_creation:
-                    set_driver_account_creation(driver, buff);
+                    set_driver_account_age(driver, buff);
                     break;
                 case D_account_status:
                     set_driver_account_status(driver, buff);
@@ -156,7 +154,6 @@ Rides parse_rides(FILE *fp)
                     set_ride_tip(ride, buff);
                     break;
                 case R_comment:
-                    // set_ride_comment(ride, buff);
                     break;
                 default:
                     break;

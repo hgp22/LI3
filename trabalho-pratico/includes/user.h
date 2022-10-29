@@ -1,11 +1,12 @@
 #ifndef __USER_H__
 #define __USER_H__
 
-#include "ride.h"
 #include <glib.h>
 #include <stdint.h>
 
 typedef struct user *User;
+
+typedef struct ride *Ride;
 
 typedef enum field_user {
     U_username,
@@ -17,10 +18,7 @@ typedef enum field_user {
     U_account_status,
 } Field_user;
 
-typedef enum account_status {
-    Inactive,
-    Active,
-} Status;
+typedef enum account_status Status;
 
 /**
  * @brief
@@ -171,6 +169,14 @@ GSList *get_user_trip_dates(User u);
  * @return Status
  */
 Status get_user_account_status(User u);
+
+/**
+ * @brief
+ *
+ * @param u
+ * @param r
+ */
+void add_user_ride_data(User u, Ride r);
 
 /**
  * @brief

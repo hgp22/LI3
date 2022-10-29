@@ -3,10 +3,13 @@
 #include "utils.h"
 #include <glib.h>
 #include <stdint.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
+
+enum account_status {
+    Inactive,
+    Active,
+};
 
 struct user {
     char *username;
@@ -14,12 +17,12 @@ struct user {
     char gender;
     uint8_t age;
     unsigned short account_age;
+    Status account_status;
     unsigned short sum_score;
     float total_spent;
     unsigned short total_distance;
     unsigned short n_trips;
     GSList *recent_trips;
-    Status account_status;
 };
 
 User new_user(void)
@@ -40,6 +43,7 @@ void free_user(void *user)
     User u = (User)user;
     free(u->username);
     free(u->name);
+    // free tips dates list
     free(user);
 }
 
@@ -62,21 +66,7 @@ void set_user_gender(User u, char *gender)
 
 void set_user_age(User u, char *birth_date)
 {
-    time_t now;
-    time(&now);
-    struct tm *local = localtime(&now);
-    local->tm_mon++;
-
-    short d, m, y;
-    sscanf(birth_date, "%hd/%hd/%hd", &d, &m, &y);
-
-    uint8_t age = local->tm_year - (y - 1900);
-
-    if (local->tm_mon < m || (local->tm_mon == m && local->tm_mday < d)) {
-        age--;
-    }
-
-    u->age = age;
+    u->age = date_to_age(birth_date);
 }
 
 void set_user_account_age(User u, char *account_creation)
@@ -123,6 +113,11 @@ unsigned short get_user_account_age(User u)
     return u->account_age;
 }
 
+Status get_user_account_status(User u)
+{
+    return u->account_status;
+}
+
 float get_user_avg_score(User u)
 {
     return u->sum_score / u->n_trips;
@@ -146,11 +141,6 @@ float get_user_n_trips(User u)
 GSList *get_user_trip_dates(User u)
 {
     return u->recent_trips;
-}
-
-Status get_user_account_status(User u)
-{
-    return u->account_status;
 }
 
 void add_user_ride_data(User u, Ride r)

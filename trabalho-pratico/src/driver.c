@@ -1,43 +1,54 @@
 #include "driver.h"
+#include "ride.h"
+#include "utils.h"
 #include <glib.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
-struct driver {
-    char *id;
-    char *name;
-    char *birth_date;
-    char *gender;
-    Car_Class car_class;
-    char *license_plate;
-    char *city;
-    char *account_creation;
-    char *account_status;
+enum account_status {
+    Inactive,
+    Active,
 };
 
-Driver init_driver(void)
+struct driver {
+    long id;
+    char *name;
+    char gender;
+    uint8_t age;
+    Car_Class car_class;
+    unsigned short account_age;
+    Status account_status;
+    unsigned short sum_score;
+    float total_earned;
+    unsigned short n_trips;
+    GSList *recent_trips;
+};
+
+Driver new_driver(void)
 {
-    return g_new(struct driver, 1);
+    Driver d = g_new(struct driver, 1);
+
+    d->sum_score = 0;
+    d->total_earned = 0;
+    d->n_trips = 0;
+    // ? do we need to initialize the list?
+
+    return d;
 }
 
 void free_driver(void *driver)
 {
     Driver d = (Driver)driver;
-    free(d->id);
     free(d->name);
-    free(d->birth_date);
-    free(d->gender);
-    free(d->license_plate);
-    free(d->city);
-    free(d->account_creation);
-    free(d->account_status);
+    // trips dates list
     free(driver);
 }
 
 void set_driver_id(Driver d, char *id)
 {
-    d->id = malloc(strlen(id) * sizeof(id));
-    strcpy(d->id, id);
+    char *endptr;
+    d->id = (unsigned short)strtol(id, &endptr, 10);
 }
 
 void set_driver_name(Driver d, char *name)
@@ -46,16 +57,14 @@ void set_driver_name(Driver d, char *name)
     strcpy(d->name, name);
 }
 
-void set_driver_birth_date(Driver d, char *birth_date)
-{
-    d->birth_date = malloc(strlen(birth_date) * sizeof(birth_date));
-    strcpy(d->birth_date, birth_date);
-}
-
 void set_driver_gender(Driver d, char *gender)
 {
-    d->gender = malloc(strlen(gender) * sizeof(gender));
-    strcpy(d->gender, gender);
+    d->gender = *gender;
+}
+
+void set_driver_age(Driver d, char *birth_date)
+{
+    d->age = date_to_age(birth_date);
 }
 
 void set_driver_car_class(Driver d, char *car_class)
@@ -75,34 +84,28 @@ void set_driver_car_class(Driver d, char *car_class)
     }
 }
 
-void set_driver_license_plate(Driver d, char *license_plate)
+void set_driver_account_age(Driver d, char *account_creation)
 {
-    d->license_plate = malloc(strlen(license_plate) * sizeof(license_plate));
-    strcpy(d->license_plate, license_plate);
-}
-
-void set_driver_city(Driver d, char *city)
-{
-    d->city = malloc(strlen(city) * sizeof(city));
-    strcpy(d->city, city);
-}
-
-void set_driver_account_creation(Driver d, char *account_creation)
-{
-    d->account_creation =
-        malloc(strlen(account_creation) * sizeof(account_creation));
-    strcpy(d->account_creation, account_creation);
+    d->account_age = date_to_days(account_creation);
 }
 
 void set_driver_account_status(Driver d, char *account_status)
 {
-    d->account_status = malloc(strlen(account_status) * sizeof(account_status));
-    strcpy(d->account_status, account_status);
+    switch (account_status[0]) {
+        case 'i':
+            d->account_status = Inactive;
+            break;
+        case 'a':
+            d->account_status = Active;
+            break;
+        default:
+            break;
+    }
 }
 
-char *get_driver_id(Driver d)
+long get_driver_id(Driver d)
 {
-    return strdup(d->id);
+    return d->id;
 }
 
 char *get_driver_name(Driver d)
@@ -110,14 +113,14 @@ char *get_driver_name(Driver d)
     return strdup(d->name);
 }
 
-char *get_driver_birth_date(Driver d)
+char get_driver_gender(Driver d)
 {
-    return strdup(d->birth_date);
+    return d->gender;
 }
 
-char *get_driver_gender(Driver d)
+uint8_t get_driver_age(Driver d)
 {
-    return strdup(d->gender);
+    return d->age;
 }
 
 Car_Class get_driver_car_class(Driver d)
@@ -125,22 +128,28 @@ Car_Class get_driver_car_class(Driver d)
     return d->car_class;
 }
 
-char *get_driver_license_plate(Driver d)
+unsigned short get_driver_account_age(Driver d)
 {
-    return strdup(d->license_plate);
+    return d->account_age;
 }
 
-char *get_driver_city(Driver d)
+Status get_driver_account_status(Driver d)
 {
-    return strdup(d->city);
+    return d->account_status;
 }
 
-char *get_driver_account_creation(Driver d)
+GSList *get_driver_trip_dates(Driver d)
 {
-    return strdup(d->account_creation);
+    return d->recent_trips;
 }
 
-char *get_driver_account_status(Driver d)
+void add_driver_ride_data(Driver d, Ride r)
 {
-    return strdup(d->account_status);
+    d->sum_score += get_ride_score_user(r);
+    d->total_earned += get_ride_cost(r);
+    // ! doubt this works, isn't date lost?
+    unsigned short date = get_ride_date(r);
+    d->recent_trips =
+        g_slist_insert_sorted(d->recent_trips, &date, compare_trips);
+    d->n_trips += 1;
 }
