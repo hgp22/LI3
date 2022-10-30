@@ -27,7 +27,7 @@ Driver new_driver(void)
     d->sum_score = 0;
     d->total_earned = 0;
     d->n_trips = 0;
-    // ? do we need to initialize the list?
+    d->recent_trips = NULL;
 
     return d;
 }
@@ -36,7 +36,7 @@ void free_driver(void *driver)
 {
     Driver d = (Driver)driver;
     free(d->name);
-    // trips dates list
+    g_slist_free(g_steal_pointer(&d->recent_trips));
     free(driver);
 }
 
@@ -161,9 +161,8 @@ void add_driver_ride_data(Driver d, Ride r)
 {
     d->sum_score += get_ride_score_driver(r);
     d->total_earned += get_ride_cost(r) + get_ride_tip(r);
-    // ! doubt this works, isn't date lost?
-    // unsigned short date = get_ride_date(r);
-    // d->recent_trips = g_slist_insert_sorted(d->recent_trips, &date,
-    // compare_trips);
+    d->recent_trips = g_slist_insert_sorted(d->recent_trips,
+                                            GINT_TO_POINTER(get_ride_date(r)),
+                                            (GCompareFunc)compare_trips);
     d->n_trips += 1;
 }

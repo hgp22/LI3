@@ -28,7 +28,7 @@ User new_user(void)
     u->total_spent = 0;
     u->total_distance = 0;
     u->n_trips = 0;
-    // ? do we need to initialize the list?
+    u->recent_trips = NULL;
 
     return u;
 }
@@ -38,7 +38,7 @@ void free_user(void *user)
     User u = (User)user;
     free(u->username);
     free(u->name);
-    // free tips dates list
+    g_slist_free(g_steal_pointer(&u->recent_trips));
     free(user);
 }
 
@@ -147,9 +147,8 @@ void add_user_ride_data(User u, Ride r)
     u->sum_score += get_ride_score_user(r);
     u->total_spent += get_ride_cost(r) + get_ride_tip(r);
     u->total_distance += get_ride_distance(r);
-    // ! doubt this works, isn't date lost?
-    // unsigned short date = get_ride_date(r);
-    // u->recent_trips = g_slist_insert_sorted(u->recent_trips, &date,
-    // compare_trips);
+    u->recent_trips = g_slist_insert_sorted(u->recent_trips,
+                                            GINT_TO_POINTER(get_ride_date(r)),
+                                            (GCompareFunc)compare_trips);
     u->n_trips += 1;
 }

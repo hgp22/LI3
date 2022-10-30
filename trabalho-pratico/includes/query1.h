@@ -1,15 +1,16 @@
 #ifndef __QUERY1_H__
 #define __QUERY1_H__
 
+#include "catalog.h"
 #include "driver.h"
 #include "user.h"
 #include <stdint.h>
 
 /**
- * @brief 
- * 
- * @param c 
- * @param id 
+ * @brief
+ *
+ * @param c
+ * @param id
  */
 void query1(Catalog c, char *id);
 

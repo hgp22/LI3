@@ -11,7 +11,7 @@
  * @param b
  * @return gint
  */
-gint compare_trips(gconstpointer a, gconstpointer b);
+gint compare_trips(gpointer a, gpointer b);
 
 /**
  * @brief

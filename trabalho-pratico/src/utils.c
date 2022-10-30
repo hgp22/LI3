@@ -6,12 +6,13 @@
 #include <time.h>
 
 // ? substitute with pre-defined glib function
-gint compare_trips(gconstpointer a, gconstpointer b)
+// doesn't seem to exist
+// this is copyed from the IBM tutorial where
+// they used a different function signature
+// gint compare_trips(gconstpointer a, gconstpointer b)
+gint compare_trips(gpointer a, gpointer b)
 {
-    // unsigned short date_a = (unsigned short)a;
-    // unsigned short date_b = (unsigned short)b;
-    // return date_b - date_a;
-    return b - a;
+    return GPOINTER_TO_INT(b) - GPOINTER_TO_INT(a);
 }
 
 unsigned short date_to_days(char *date)
