@@ -161,17 +161,17 @@ D_Status get_driver_account_status(Driver d);
  * @brief Get the driver avg score object
  *
  * @param d
- * @return float
+ * @return double
  */
-float get_driver_avg_score(Driver d);
+double get_driver_avg_score(Driver d);
 
 /**
  * @brief Get the driver total earned object
  *
  * @param d
- * @return float
+ * @return double
  */
-float get_driver_total_earned(Driver d);
+double get_driver_total_earned(Driver d);
 
 /**
  * @brief Get the driver n trips object

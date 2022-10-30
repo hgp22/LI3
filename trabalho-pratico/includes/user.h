@@ -137,17 +137,17 @@ U_Status get_user_account_status(User u);
  * @brief Get the user avg score object
  *
  * @param u
- * @return float
+ * @return double
  */
-float get_user_avg_score(User u);
+double get_user_avg_score(User u);
 
 /**
  * @brief Get the user total spent object
  *
  * @param u
- * @return float
+ * @return double
  */
-float get_user_total_spent(User u);
+double get_user_total_spent(User u);
 
 /**
  * @brief Get the user total distance object

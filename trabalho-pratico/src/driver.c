@@ -15,7 +15,7 @@ struct driver {
     unsigned short account_age;
     D_Status account_status;
     unsigned short sum_score;
-    float total_earned;
+    double total_earned;
     unsigned short n_trips;
     GSList *recent_trips;
 };
@@ -133,16 +133,16 @@ D_Status get_driver_account_status(Driver d)
     return d->account_status;
 }
 
-float get_driver_avg_score(Driver d)
+double get_driver_avg_score(Driver d)
 {
-    float avg_score = 0;
+    double avg_score = 0;
     if (d->n_trips != 0) {
-        avg_score = (float)d->sum_score / d->n_trips;
+        avg_score = (double)d->sum_score / d->n_trips;
     }
     return avg_score;
 }
 
-float get_driver_total_earned(Driver d)
+double get_driver_total_earned(Driver d)
 {
     return d->total_earned;
 }

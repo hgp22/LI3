@@ -14,7 +14,7 @@ struct user {
     unsigned short account_age;
     U_Status account_status;
     unsigned short sum_score;
-    float total_spent;
+    double total_spent;
     unsigned short total_distance;
     unsigned short n_trips;
     GSList *recent_trips;
@@ -113,16 +113,16 @@ U_Status get_user_account_status(User u)
     return u->account_status;
 }
 
-float get_user_avg_score(User u)
+double get_user_avg_score(User u)
 {
-    float avg_score = 0;
+    double avg_score = 0;
     if (u->n_trips != 0) {
-        avg_score = (float)u->sum_score / u->n_trips;
+        avg_score = (double)u->sum_score / u->n_trips;
     }
     return avg_score;
 }
 
-float get_user_total_spent(User u)
+double get_user_total_spent(User u)
 {
     return u->total_spent;
 }

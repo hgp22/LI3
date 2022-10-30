@@ -184,7 +184,7 @@ uint8_t get_ride_score_driver(Ride r);
  * @param r
  * @return float
  */
-float get_ride_cost(Ride r);
+double get_ride_cost(Ride r);
 
 /**
  * @brief Get the ride tip object
@@ -192,6 +192,6 @@ float get_ride_cost(Ride r);
  * @param r
  * @return float
  */
-float get_ride_tip(Ride r);
+double get_ride_tip(Ride r);
 
 #endif

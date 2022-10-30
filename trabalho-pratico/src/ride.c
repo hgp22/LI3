@@ -15,8 +15,8 @@ struct ride {
     uint8_t distance;
     uint8_t score_user;
     uint8_t score_driver;
-    float cost; // or unsigned short with value multiplied by 100
-    float tip;  // or unsigned short with value multiplied by 100
+    double cost; // or unsigned short with value multiplied by 100
+    double tip;  // or unsigned short with value multiplied by 100
 };
 
 Ride new_ride(void)
@@ -82,10 +82,10 @@ void set_ride_score_driver(Ride r, char *score_driver)
 void set_ride_cost(Ride r, Driver d)
 {
     Car_Class class = get_driver_car_class(d);
-    float base[] = {3.25, 4.00, 5.20};
-    float tax[] = {0.62, 0.79, 0.94};
-    float b = base[class];
-    float t = tax[class];
+    double base[] = {3.25, 4.00, 5.20};
+    double tax[] = {0.62, 0.79, 0.94};
+    double b = base[class];
+    double t = tax[class];
     r->cost = b + t * r->distance;
 }
 
@@ -135,12 +135,12 @@ uint8_t get_ride_score_driver(Ride r)
     return r->score_driver;
 }
 
-float get_ride_cost(Ride r)
+double get_ride_cost(Ride r)
 {
     return r->cost;
 }
 
-float get_ride_tip(Ride r)
+double get_ride_tip(Ride r)
 {
     return r->tip;
 }
