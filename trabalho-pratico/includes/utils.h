@@ -29,12 +29,4 @@ unsigned short date_to_days(char *date);
  */
 uint8_t date_to_age(char *date);
 
-/**
- * @brief
- *
- * @param f
- * @return char*
- */
-char *ftoa_no_trailing_z(float f);
-
 #endif

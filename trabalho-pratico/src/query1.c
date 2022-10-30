@@ -46,15 +46,10 @@ static char *_user_to_q1_string(User u)
         (strlen(name) + GENDER + AGE + SCORE + TRIPS + MONEY + SEMICOLONS + 1) *
         sizeof(char *));
 
-    char *avg_score = ftoa_no_trailing_z(get_user_avg_score(u));
-    char *total_spent = ftoa_no_trailing_z(get_user_total_spent(u));
-
-    sprintf(s, "%s;%c;%d;%s;%hu;%s", name, get_user_gender(u), get_user_age(u),
-            avg_score, get_user_n_trips(u), total_spent);
+    sprintf(s, "%s;%c;%d;%.3f;%hu;%.3f", name, get_user_gender(u), get_user_age(u),
+            get_user_avg_score(u), get_user_n_trips(u), get_user_total_spent(u));
 
     free(name);
-    free(avg_score);
-    free(total_spent);
 
     return s;
 }
@@ -67,15 +62,10 @@ static char *_driver_to_q1_string(Driver d)
         (strlen(name) + GENDER + AGE + SCORE + TRIPS + MONEY + SEMICOLONS + 1) *
         sizeof(char *));
 
-    char *total_earned = ftoa_no_trailing_z(get_driver_total_earned(d));
-    char *avg_score = ftoa_no_trailing_z(get_driver_avg_score(d));
-
-    sprintf(s, "%s;%c;%d;%s;%hu;%s", name, get_driver_gender(d),
-            get_driver_age(d), avg_score, get_driver_n_trips(d), total_earned);
+    sprintf(s, "%s;%c;%d;%.3f;%hu;%.3f", name, get_driver_gender(d),
+            get_driver_age(d), get_driver_avg_score(d), get_driver_n_trips(d), get_driver_total_earned(d));
 
     free(name);
-    free(avg_score);
-    free(total_earned);
 
     return s;
 }
