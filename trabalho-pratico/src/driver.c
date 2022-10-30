@@ -17,7 +17,7 @@ struct driver {
     unsigned short sum_score;
     double total_earned;
     unsigned short n_trips;
-    GSList *recent_trips;
+    unsigned short last_ride_date;
 };
 
 Driver new_driver(void)
@@ -27,7 +27,7 @@ Driver new_driver(void)
     d->sum_score = 0;
     d->total_earned = 0;
     d->n_trips = 0;
-    d->recent_trips = NULL;
+    d->last_ride_date = 0;
 
     return d;
 }
@@ -36,7 +36,6 @@ void free_driver(void *driver)
 {
     Driver d = (Driver)driver;
     free(d->name);
-    g_slist_free(g_steal_pointer(&d->recent_trips));
     free(driver);
 }
 
@@ -152,17 +151,18 @@ unsigned short get_driver_n_trips(Driver d)
     return d->n_trips;
 }
 
-GSList *get_driver_trip_dates(Driver d)
+unsigned short get_driver_last_ride_date(Driver d)
 {
-    return d->recent_trips;
+    return d->last_ride_date;
 }
 
 void add_driver_ride_data(Driver d, Ride r)
 {
     d->sum_score += get_ride_score_driver(r);
     d->total_earned += get_ride_cost(r) + get_ride_tip(r);
-    d->recent_trips = g_slist_insert_sorted(d->recent_trips,
-                                            GINT_TO_POINTER(get_ride_date(r)),
-                                            (GCompareFunc)compare_trips);
+    unsigned short ride_date = get_ride_date(r);
+    if (ride_date > d->last_ride_date) {
+        d->last_ride_date = ride_date;
+    }
     d->n_trips += 1;
 }

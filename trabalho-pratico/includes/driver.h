@@ -182,12 +182,12 @@ double get_driver_total_earned(Driver d);
 unsigned short get_driver_n_trips(Driver d);
 
 /**
- * @brief Get the driver trip dates object
+ * @brief Get the driver last ride date object
  *
  * @param d
- * @return GSList*
+ * @return unsigned short
  */
-GSList *get_driver_trip_dates(Driver d);
+unsigned short get_driver_last_ride_date(Driver d);
 
 /**
  * @brief

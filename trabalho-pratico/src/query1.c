@@ -46,8 +46,9 @@ static char *_user_to_q1_string(User u)
         (strlen(name) + GENDER + AGE + SCORE + TRIPS + MONEY + SEMICOLONS + 1) *
         sizeof(char *));
 
-    sprintf(s, "%s;%c;%d;%.3f;%hu;%.3f", name, get_user_gender(u), get_user_age(u),
-            get_user_avg_score(u), get_user_n_trips(u), get_user_total_spent(u));
+    sprintf(s, "%s;%c;%d;%.3f;%hu;%.3f", name, get_user_gender(u),
+            get_user_age(u), get_user_avg_score(u), get_user_n_trips(u),
+            get_user_total_spent(u));
 
     free(name);
 
@@ -63,7 +64,8 @@ static char *_driver_to_q1_string(Driver d)
         sizeof(char *));
 
     sprintf(s, "%s;%c;%d;%.3f;%hu;%.3f", name, get_driver_gender(d),
-            get_driver_age(d), get_driver_avg_score(d), get_driver_n_trips(d), get_driver_total_earned(d));
+            get_driver_age(d), get_driver_avg_score(d), get_driver_n_trips(d),
+            get_driver_total_earned(d));
 
     free(name);
 

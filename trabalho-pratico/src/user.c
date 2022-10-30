@@ -17,7 +17,7 @@ struct user {
     double total_spent;
     unsigned short total_distance;
     unsigned short n_trips;
-    GSList *recent_trips;
+    unsigned short last_ride_date;
 };
 
 User new_user(void)
@@ -28,7 +28,7 @@ User new_user(void)
     u->total_spent = 0;
     u->total_distance = 0;
     u->n_trips = 0;
-    u->recent_trips = NULL;
+    u->last_ride_date = 0;
 
     return u;
 }
@@ -38,7 +38,6 @@ void free_user(void *user)
     User u = (User)user;
     free(u->username);
     free(u->name);
-    g_slist_free(g_steal_pointer(&u->recent_trips));
     free(user);
 }
 
@@ -137,9 +136,9 @@ unsigned short get_user_n_trips(User u)
     return u->n_trips;
 }
 
-GSList *get_user_trip_dates(User u)
+unsigned short get_user_last_ride_date(User u)
 {
-    return u->recent_trips;
+    return u->last_ride_date;
 }
 
 void add_user_ride_data(User u, Ride r)
@@ -147,8 +146,9 @@ void add_user_ride_data(User u, Ride r)
     u->sum_score += get_ride_score_user(r);
     u->total_spent += get_ride_cost(r) + get_ride_tip(r);
     u->total_distance += get_ride_distance(r);
-    u->recent_trips = g_slist_insert_sorted(u->recent_trips,
-                                            GINT_TO_POINTER(get_ride_date(r)),
-                                            (GCompareFunc)compare_trips);
+    unsigned short ride_date = get_ride_date(r);
+    if (ride_date > u->last_ride_date) {
+        u->last_ride_date = ride_date;
+    }
     u->n_trips += 1;
 }

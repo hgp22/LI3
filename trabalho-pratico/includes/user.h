@@ -166,12 +166,12 @@ unsigned short get_user_total_distance(User u);
 unsigned short get_user_n_trips(User u);
 
 /**
- * @brief Get the user trip dates object
+ * @brief Get the user last ride date object
  *
  * @param u
- * @return GSList*
+ * @return unsigned short
  */
-GSList *get_user_trip_dates(User u);
+unsigned short get_user_last_ride_date(User u);
 
 /**
  * @brief
