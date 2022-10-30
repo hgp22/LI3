@@ -3,7 +3,10 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
+
+#define D 9
+#define M 10
+#define Y 2022
 
 // ? substitute with pre-defined glib function
 // doesn't seem to exist
@@ -29,17 +32,12 @@ unsigned short date_to_days(char *date)
 
 uint8_t date_to_age(char *date)
 {
-    time_t now;
-    time(&now);
-    struct tm *local = localtime(&now);
-    local->tm_mon++;
-
     short d, m, y;
     sscanf(date, "%hd/%hd/%hd", &d, &m, &y);
 
-    uint8_t age = local->tm_year - (y - 1900);
+    uint8_t age = Y - y;
 
-    if (local->tm_mon < m || (local->tm_mon == m && local->tm_mday < d)) {
+    if (M < m || (M == m && D < d)) {
         age--;
     }
 
