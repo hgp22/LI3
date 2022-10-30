@@ -47,8 +47,8 @@ uint8_t date_to_age(char *date)
 
 char *ftoa_no_trailing_z(float f)
 {
-    char *s = malloc(sizeof(char *) * 16);
-    sprintf(s, "%.3f", f);
+    char *s = malloc(16 * sizeof(char *));
+    sprintf(s, "%.3f", ((int)(f * 1000.0)) / 1000.0);
     size_t len = strlen(s);
     for (int i = len - 1; s[i] == '0' || s[i] == '.'; i--) {
         s[i] = '\0';
