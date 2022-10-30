@@ -2,20 +2,6 @@
 #include "user.h"
 #include <glib.h>
 
-/**
- * @brief
- *
- * @param data
- */
-static void _key_destroyed(gpointer data);
-
-/**
- * @brief
- *
- * @param data
- */
-static void _value_destroyed(gpointer data);
-
 Users new_users(void)
 {
     return g_hash_table_new_full(g_str_hash, g_str_equal,

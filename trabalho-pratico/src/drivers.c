@@ -2,20 +2,6 @@
 #include "driver.h"
 #include <glib.h>
 
-/**
- * @brief
- *
- * @param data
- */
-static void _key_destroyed(gpointer data);
-
-/**
- * @brief
- *
- * @param data
- */
-static void _value_destroyed(gpointer data);
-
 Drivers new_drivers(void)
 {
     return g_hash_table_new_full(g_int_hash, g_int_equal,

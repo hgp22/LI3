@@ -22,4 +22,18 @@ Users new_users(void);
  */
 gboolean insert_user(Users users, User user);
 
+/**
+ * @brief
+ *
+ * @param data
+ */
+static void _key_destroyed(gpointer data);
+
+/**
+ * @brief
+ *
+ * @param data
+ */
+static void _value_destroyed(gpointer data);
+
 #endif

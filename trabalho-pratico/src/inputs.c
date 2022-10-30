@@ -12,15 +12,6 @@ struct inputs {
     FILE *file_rides;
 };
 
-/**
- * @brief Get the file pointer object
- *
- * @param path_inputs String with path do inputs directory
- * @param input_file Input file name
- * @return FILE* File pointer to input file
- */
-static FILE *_get_file_pointer(char *path_inputs, char *input_file);
-
 Inputs init_inputs(char *path_inputs)
 {
     // ? how to handle "./" and "/" before and after path_inputs

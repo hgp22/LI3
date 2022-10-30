@@ -22,4 +22,18 @@ Drivers new_drivers(void);
  */
 gboolean insert_driver(Drivers drivers, Driver driver);
 
+/**
+ * @brief
+ *
+ * @param data
+ */
+static void _key_destroyed(gpointer data);
+
+/**
+ * @brief
+ *
+ * @param data
+ */
+static void _value_destroyed(gpointer data);
+
 #endif

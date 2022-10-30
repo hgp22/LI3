@@ -1,5 +1,6 @@
-#include "query1.h"
+#include "catalog.h"
 #include "driver.h"
+#include "query1.h"
 #include "user.h"
 #include "utils.h"
 #include <glib.h>
@@ -13,7 +14,31 @@
 #define MONEY 16
 #define SEMICOLONS 5
 
-char *user_to_q1_string(User u)
+// ! remove IO from function
+void query1(Catalog c, char *id)
+{
+    char *endptr;
+    long driver = strtol(id, &endptr, 10);
+
+    if (*endptr != '\0') {
+        User u = g_hash_table_lookup(get_catalog_users(c), id);
+        if (u != NULL && get_user_account_status(u)) {
+            char *q1_answer = _user_to_q1_string(u);
+            printf("%s\n", q1_answer);
+            free(q1_answer);
+        }
+    }
+    else {
+        Driver d = g_hash_table_lookup(get_catalog_drivers(c), &driver);
+        if (d != NULL && get_driver_account_status(d)) {
+            char *q1_answer = _driver_to_q1_string(d);
+            printf("%s\n", q1_answer);
+            free(q1_answer);
+        }
+    }
+}
+
+static char *_user_to_q1_string(User u)
 {
     char *name = get_user_name(u);
 
@@ -35,7 +60,7 @@ char *user_to_q1_string(User u)
     return s;
 }
 
-char *driver_to_q1_string(Driver d)
+static char *_driver_to_q1_string(Driver d)
 {
     char *name = get_driver_name(d);
 
