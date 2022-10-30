@@ -1,6 +1,6 @@
+#include "parser_query.h"
 #include "catalog.h"
 #include "driver.h"
-#include "parser_query.h"
 #include "query1.h"
 #include "user.h"
 #include <glib.h>
@@ -19,13 +19,17 @@ int parse_query(Catalog c, char *query)
             if (*endptr != '\0') {
                 User u = g_hash_table_lookup(get_catalog_users(c), user);
                 if (u != NULL && get_user_account_status(u)) {
-                    printf("%s\n", user_to_q1_string(u));
+                    char *q1_answer = user_to_q1_string(u);
+                    printf("%s\n", q1_answer);
+                    free(q1_answer);
                 }
             }
             else {
                 Driver d = g_hash_table_lookup(get_catalog_drivers(c), &driver);
                 if (d != NULL && get_driver_account_status(d)) {
-                    printf("%s\n", driver_to_q1_string(d));
+                    char *q1_answer = driver_to_q1_string(d);
+                    printf("%s\n", q1_answer);
+                    free(q1_answer);
                 }
             }
             break;

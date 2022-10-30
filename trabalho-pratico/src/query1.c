@@ -15,26 +15,44 @@
 
 char *user_to_q1_string(User u)
 {
-    char *s = malloc((strlen(get_user_name(u)) + GENDER + AGE + SCORE + TRIPS +
+    char *name = get_user_name(u);
+
+    char *s = malloc((strlen(name) + GENDER + AGE + SCORE + TRIPS +
                       MONEY + SEMICOLONS + 1) *
                      sizeof(char *));
 
-    sprintf(s, "%s;%c;%d;%.4g;%hu;%s", get_user_name(u), get_user_gender(u),
-            get_user_age(u), get_user_avg_score(u), get_user_n_trips(u),
-            ftoa_no_trailing_z(get_user_total_spent(u)));
+    char *avg_score = ftoa_no_trailing_z(get_user_avg_score(u));
+    char *total_spent = ftoa_no_trailing_z(get_user_total_spent(u));
+
+    sprintf(s, "%s;%c;%d;%s;%hu;%s", name, get_user_gender(u),
+            get_user_age(u), avg_score,
+            get_user_n_trips(u), total_spent);
+
+    free(name);
+    free(avg_score);
+    free(total_spent);
 
     return s;
 }
 
 char *driver_to_q1_string(Driver d)
 {
-    char *s = malloc((strlen(get_driver_name(d)) + GENDER + AGE + SCORE +
+    char *name = get_driver_name(d);
+
+    char *s = malloc((strlen(name) + GENDER + AGE + SCORE +
                       TRIPS + MONEY + SEMICOLONS + 1) *
                      sizeof(char *));
 
-    sprintf(s, "%s;%c;%d;%.4g;%hu;%s", get_driver_name(d), get_driver_gender(d),
-            get_driver_age(d), get_driver_avg_score(d), get_driver_n_trips(d),
-            ftoa_no_trailing_z(get_driver_total_earned(d)));
+    char *total_earned = ftoa_no_trailing_z(get_driver_total_earned(d));
+    char *avg_score = ftoa_no_trailing_z(get_driver_avg_score(d));
+
+    sprintf(s, "%s;%c;%d;%s;%hu;%s", name, get_driver_gender(d),
+            get_driver_age(d), avg_score,
+            get_driver_n_trips(d), total_earned);
+
+    free(name);
+    free(avg_score);
+    free(total_earned);
 
     return s;
 }
