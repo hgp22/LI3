@@ -9,9 +9,9 @@ Users new_users(void)
                                  (GDestroyNotify)_value_destroyed);
 }
 
-gboolean insert_user(Users users, char *username, User user)
+gboolean insert_user(Users users, User u)
 {
-    return g_hash_table_insert(users, username, user);
+    return g_hash_table_insert(users, get_user_username(u), u);
 }
 
 User get_user(Users users, char *username)

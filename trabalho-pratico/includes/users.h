@@ -19,10 +19,10 @@ Users new_users(void);
  * @brief
  *
  * @param users
- * @param user
+ * @param u
  * @return gboolean
  */
-gboolean insert_user(Users users, char *username, User user);
+gboolean insert_user(Users users, User u);
 
 /**
  * @brief Get the user object

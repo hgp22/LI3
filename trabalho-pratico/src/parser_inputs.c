@@ -13,7 +13,6 @@ Users parse_users(FILE *fp)
 {
     char *line = NULL;
     size_t len = 0;
-    char *username = NULL;
     Users users = new_users();
 
     getline(&line, &len, fp); // Remove header
@@ -26,7 +25,7 @@ Users parse_users(FILE *fp)
             char *buff = strsep(&record, ";\n");
             switch (field) {
                 case U_username:
-                    username = strdup(buff);
+                    set_user_username(user, buff);
                     break;
                 case U_name:
                     set_user_name(user, buff);
@@ -50,7 +49,7 @@ Users parse_users(FILE *fp)
             }
         }
 
-        insert_user(users, username, user);
+        insert_user(users, user);
     }
 
     free(line);
@@ -62,7 +61,6 @@ Drivers parse_drivers(FILE *fp)
 {
     char *line = NULL;
     size_t len = 0;
-    long id;
     Drivers drivers = new_drivers();
 
     getline(&line, &len, fp); // Remove header
@@ -74,8 +72,7 @@ Drivers parse_drivers(FILE *fp)
             char *buff = strsep(&record, ";\n");
             switch (field) {
                 case D_id:
-                    char *endptr;
-                    id = strtol(buff, &endptr, 10);
+                    set_driver_id(driver, buff);
                     break;
                 case D_name:
                     set_driver_name(driver, buff);
@@ -104,7 +101,7 @@ Drivers parse_drivers(FILE *fp)
             }
         }
 
-        insert_driver(drivers, id, driver);
+        insert_driver(drivers, driver);
     }
 
     free(line);

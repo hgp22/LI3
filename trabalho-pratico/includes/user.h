@@ -24,6 +24,14 @@ typedef enum u_account_status {
 } U_Status;
 
 /**
+ * @brief Set the user username object
+ * 
+ * @param u 
+ * @param username 
+ */
+void set_user_username(User u, char *username);
+
+/**
  * @brief
  *
  * @return User
@@ -76,6 +84,14 @@ void set_user_account_age(User u, char *account_creation);
  * @param account_status
  */
 void set_user_account_status(User u, char *account_status);
+
+/**
+ * @brief Get the user username object
+ * 
+ * @param u 
+ * @return char* 
+ */
+char *get_user_username(User u);
 
 /**
  * @brief Get the user name object

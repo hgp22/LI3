@@ -9,11 +9,11 @@ Drivers new_drivers(void)
                                  (GDestroyNotify)_value_destroyed);
 }
 
-gboolean insert_driver(Drivers drivers, long id, Driver driver)
+gboolean insert_driver(Drivers drivers, Driver d)
 {
     gint *k_id = g_new(gint, 1);
-    *k_id = id;
-    return g_hash_table_insert(drivers, k_id, driver);
+    *k_id = get_driver_id(d);
+    return g_hash_table_insert(drivers, k_id, d);
 }
 
 Driver get_driver(Drivers drivers, long id)

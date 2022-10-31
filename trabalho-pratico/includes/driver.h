@@ -46,6 +46,14 @@ Driver new_driver(void);
 void free_driver(void *driver);
 
 /**
+ * @brief Set the driver id object
+ * 
+ * @param d 
+ * @param id 
+ */
+void set_driver_id(Driver d, char *id);
+
+/**
  * @brief Set the driver name object
  *
  * @param d
@@ -92,6 +100,14 @@ void set_driver_account_age(Driver d, char *account_creation);
  * @param account_status
  */
 void set_driver_account_status(Driver d, char *account_status);
+
+/**
+ * @brief Get the driver id object
+ * 
+ * @param d 
+ * @return long 
+ */
+long get_driver_id(Driver d);
 
 /**
  * @brief Get the driver name object

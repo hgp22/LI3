@@ -17,10 +17,10 @@ Drivers new_drivers(void);
  * @brief
  *
  * @param drivers
- * @param driver
+ * @param d
  * @return gboolean
  */
-gboolean insert_driver(Drivers drivers, long id, Driver driver);
+gboolean insert_driver(Drivers drivers, Driver d);
 
 /**
  * @brief Get the driver object
