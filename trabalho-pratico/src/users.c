@@ -14,6 +14,11 @@ gboolean insert_user(Users users, char *username, User user)
     return g_hash_table_insert(users, username, user);
 }
 
+User get_user(Users users, char *username)
+{
+    return g_hash_table_lookup(users, username);
+}
+
 static void _key_destroyed(gpointer data)
 {
     g_free(data);

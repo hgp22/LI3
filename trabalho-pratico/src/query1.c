@@ -3,7 +3,6 @@
 #include "driver.h"
 #include "user.h"
 #include "utils.h"
-#include <glib.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -21,7 +20,7 @@ void query1(Catalog c, char *id)
     long driver = strtol(id, &endptr, 10);
 
     if (*endptr != '\0') {
-        User u = g_hash_table_lookup(get_catalog_users(c), id);
+        User u = get_catalog_user(c, id);
         if (u != NULL && get_user_account_status(u)) {
             char *q1_answer = _user_to_q1_string(u);
             printf("%s\n", q1_answer);
@@ -29,7 +28,7 @@ void query1(Catalog c, char *id)
         }
     }
     else {
-        Driver d = g_hash_table_lookup(get_catalog_drivers(c), &driver);
+        Driver d = get_catalog_driver(c, driver);
         if (d != NULL && get_driver_account_status(d)) {
             char *q1_answer = _driver_to_q1_string(d);
             printf("%s\n", q1_answer);

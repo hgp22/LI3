@@ -25,11 +25,11 @@ Catalog init_catalog(Inputs i)
 
     for (Rides iterator = c->rides; iterator; iterator = iterator->next) {
         long d_id = get_ride_driver(iterator->data); // ? use gint
-        Driver d = g_hash_table_lookup(c->drivers, &d_id);
+        Driver d = get_driver(c->drivers, d_id);
         set_ride_cost(iterator->data, d);
         add_driver_ride_data(d, iterator->data);
         char *username = get_ride_user(iterator->data);
-        User u = g_hash_table_lookup(c->users, username);
+        User u = get_user(c->users, username);
         free(username);
         add_user_ride_data(u, iterator->data);
     }
@@ -58,4 +58,14 @@ Drivers get_catalog_drivers(Catalog c)
 Rides get_catalog_rides(Catalog c)
 {
     return c->rides;
+}
+
+User get_catalog_user(Catalog c, char *username)
+{
+    return get_user(c->users, username);
+}
+
+Driver get_catalog_driver(Catalog c, long id)
+{
+    return get_driver(c->drivers, id);
 }

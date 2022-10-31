@@ -23,6 +23,15 @@ Drivers new_drivers(void);
 gboolean insert_driver(Drivers drivers, long id, Driver driver);
 
 /**
+ * @brief Get the driver object
+ * 
+ * @param drivers 
+ * @param id 
+ * @return Driver 
+ */
+Driver get_driver(Drivers drivers, long id);
+
+/**
  * @brief
  *
  * @param data

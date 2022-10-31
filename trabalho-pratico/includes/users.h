@@ -6,6 +6,8 @@
 
 typedef GHashTable *Users;
 
+typedef struct catalog *Catalog;
+
 /**
  * @brief
  *
@@ -21,6 +23,15 @@ Users new_users(void);
  * @return gboolean
  */
 gboolean insert_user(Users users, char *username, User user);
+
+/**
+ * @brief Get the user object
+ * 
+ * @param users 
+ * @param username 
+ * @return User 
+ */
+User get_user(Users users, char *username);
 
 /**
  * @brief

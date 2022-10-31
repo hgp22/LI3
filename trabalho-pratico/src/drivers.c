@@ -16,6 +16,11 @@ gboolean insert_driver(Drivers drivers, long id, Driver driver)
     return g_hash_table_insert(drivers, k_id, driver);
 }
 
+Driver get_driver(Drivers drivers, long id)
+{
+    return g_hash_table_lookup(drivers, &id);
+}
+
 static void _key_destroyed(gpointer data)
 {
     g_free(data);

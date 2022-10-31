@@ -48,4 +48,22 @@ Drivers get_catalog_drivers(Catalog c);
  */
 Rides get_catalog_rides(Catalog c);
 
+/**
+ * @brief Get the catalog user object
+ * 
+ * @param c 
+ * @param username 
+ * @return User 
+ */
+User get_catalog_user(Catalog c, char *username);
+
+/**
+ * @brief Get the catalog driver object
+ * 
+ * @param c 
+ * @param id 
+ * @return Driver
+ */
+Driver get_catalog_driver(Catalog c, long id);
+
 #endif
