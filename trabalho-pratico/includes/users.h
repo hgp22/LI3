@@ -20,7 +20,7 @@ Users new_users(void);
  * @param user
  * @return gboolean
  */
-gboolean insert_user(Users users, User user);
+gboolean insert_user(Users users, char *username, User user);
 
 /**
  * @brief

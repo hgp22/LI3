@@ -20,7 +20,7 @@ Drivers new_drivers(void);
  * @param driver
  * @return gboolean
  */
-gboolean insert_driver(Drivers drivers, Driver driver);
+gboolean insert_driver(Drivers drivers, long id, Driver driver);
 
 /**
  * @brief

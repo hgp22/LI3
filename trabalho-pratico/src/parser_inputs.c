@@ -13,7 +13,7 @@ Users parse_users(FILE *fp)
 {
     char *line = NULL;
     size_t len = 0;
-    char *buff = NULL;
+    char *username = NULL;
     Users users = new_users();
 
     getline(&line, &len, fp); // Remove header
@@ -23,10 +23,10 @@ Users parse_users(FILE *fp)
         User user = new_user();
         for (Field_user field = U_username; field <= U_account_status;
              field++) {
-            buff = strsep(&record, ";\n");
+            char *buff = strsep(&record, ";\n");
             switch (field) {
                 case U_username:
-                    set_user_username(user, buff);
+                    username = strdup(buff);
                     break;
                 case U_name:
                     set_user_name(user, buff);
@@ -50,7 +50,7 @@ Users parse_users(FILE *fp)
             }
         }
 
-        insert_user(users, user);
+        insert_user(users, username, user);
     }
 
     free(line);
@@ -62,7 +62,7 @@ Drivers parse_drivers(FILE *fp)
 {
     char *line = NULL;
     size_t len = 0;
-    char *buff = NULL;
+    long id;
     Drivers drivers = new_drivers();
 
     getline(&line, &len, fp); // Remove header
@@ -71,10 +71,11 @@ Drivers parse_drivers(FILE *fp)
         char *record = line;
         Driver driver = new_driver();
         for (Field_driver field = D_id; field <= D_account_status; field++) {
-            buff = strsep(&record, ";\n");
+            char *buff = strsep(&record, ";\n");
             switch (field) {
                 case D_id:
-                    set_driver_id(driver, buff);
+                    char *endptr;
+                    id = strtol(buff, &endptr, 10);
                     break;
                 case D_name:
                     set_driver_name(driver, buff);
@@ -103,7 +104,7 @@ Drivers parse_drivers(FILE *fp)
             }
         }
 
-        insert_driver(drivers, driver);
+        insert_driver(drivers, id, driver);
     }
 
     free(line);
@@ -115,7 +116,6 @@ Rides parse_rides(FILE *fp)
 {
     char *line = NULL;
     size_t len = 0;
-    char *buff = NULL;
     Rides rides = NULL;
 
     getline(&line, &len, fp); // Remove header
@@ -124,7 +124,7 @@ Rides parse_rides(FILE *fp)
         char *record = line;
         Ride ride = new_ride();
         for (Field_ride field = R_id; field <= R_comment; field++) {
-            buff = strsep(&record, ";\n");
+            char *buff = strsep(&record, ";\n");
             switch (field) {
                 case R_id:
                     set_ride_id(ride, buff);

@@ -7,7 +7,6 @@
 #include <string.h>
 
 struct driver {
-    long id;
     char *name;
     char gender;
     uint8_t age;
@@ -37,12 +36,6 @@ void free_driver(void *driver)
     Driver d = (Driver)driver;
     free(d->name);
     free(driver);
-}
-
-void set_driver_id(Driver d, char *id)
-{
-    char *endptr;
-    d->id = strtol(id, &endptr, 10);
 }
 
 void set_driver_name(Driver d, char *name)
@@ -95,11 +88,6 @@ void set_driver_account_status(Driver d, char *account_status)
         default:
             break;
     }
-}
-
-long get_driver_id(Driver d)
-{
-    return d->id;
 }
 
 char *get_driver_name(Driver d)

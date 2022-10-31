@@ -7,7 +7,6 @@
 #include <string.h>
 
 struct user {
-    char *username;
     char *name;
     char gender;
     uint8_t age;
@@ -36,21 +35,13 @@ User new_user(void)
 void free_user(void *user)
 {
     User u = (User)user;
-    free(u->username);
     free(u->name);
     free(user);
 }
 
-void set_user_username(User u, char *username)
-{
-    u->username = malloc(strlen(username) * sizeof(username));
-    strcpy(u->username, username);
-}
-
 void set_user_name(User u, char *name)
 {
-    u->name = malloc(strlen(name) * sizeof(name));
-    strcpy(u->name, name);
+    u->name = strdup(name);
 }
 
 void set_user_gender(User u, char *gender)
@@ -85,11 +76,6 @@ void set_user_account_status(User u, char *account_status)
 char *get_user_name(User u)
 {
     return strdup(u->name);
-}
-
-char *get_user_username(User u)
-{
-    return strdup(u->username);
 }
 
 char get_user_gender(User u)

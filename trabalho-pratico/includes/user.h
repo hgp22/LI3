@@ -38,14 +38,6 @@ User new_user(void);
 void free_user(void *user);
 
 /**
- * @brief Set the username object
- *
- * @param u
- * @param username
- */
-void set_user_username(User u, char *username);
-
-/**
  * @brief Set the user name object
  *
  * @param u
@@ -92,14 +84,6 @@ void set_user_account_status(User u, char *account_status);
  * @return char*
  */
 char *get_user_name(User u);
-
-/**
- * @brief Get the user username object
- *
- * @param u
- * @return char*
- */
-char *get_user_username(User u);
 
 /**
  * @brief Get the user gender object
