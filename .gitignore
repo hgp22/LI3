@@ -64,3 +64,6 @@ dkms.conf
 # Datasets
 datasets/
 *.csv
+
+# Results
+Resultados/

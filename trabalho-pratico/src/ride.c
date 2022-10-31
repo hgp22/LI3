@@ -51,14 +51,12 @@ void set_ride_driver(Ride r, char *driver)
 
 void set_ride_user(Ride r, char *user)
 {
-    r->user = malloc(strlen(user) * sizeof(user));
-    strcpy(r->user, user);
+    r->user = strdup(user);
 }
 
 void set_ride_city(Ride r, char *city)
 {
-    r->city = malloc(strlen(city) * sizeof(city));
-    strcpy(r->city, city);
+    r->city = strdup(city);
 }
 
 void set_ride_distance(Ride r, char *distance)
