@@ -4,6 +4,7 @@
 #include "drivers.h"
 #include "inputs.h"
 #include "query2.h"
+#include "query3.h"
 #include "rides.h"
 #include "users.h"
 #include <glib.h>
@@ -50,6 +51,14 @@ Drivers get_catalog_drivers(Catalog c);
 Query2 get_catalog_query2(Catalog c);
 
 /**
+ * @brief Get the catalog query3 object
+ *
+ * @param c
+ * @return Query3
+ */
+Query3 get_catalog_query3(Catalog c);
+
+/**
  * @brief Get the catalog rides object
  *
  * @param c
@@ -74,5 +83,23 @@ User get_catalog_user(Catalog c, char *username);
  * @return Driver
  */
 Driver get_catalog_driver(Catalog c, long id);
+
+/**
+ * @brief
+ *
+ * @param driver1
+ * @param driver2
+ * @return gint
+ */
+static gint _driver_comparator(gconstpointer driver1, gconstpointer driver2);
+
+/**
+ * @brief
+ *
+ * @param user1
+ * @param user2
+ * @return gint
+ */
+static gint _user_comparator(gconstpointer user1, gconstpointer user2);
 
 #endif

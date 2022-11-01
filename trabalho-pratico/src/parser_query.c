@@ -3,11 +3,13 @@
 #include "driver.h"
 #include "query1.h"
 #include "query2.h"
+#include "query3.h"
 #include "user.h"
 #include <stdio.h>
 
 int parse_query(Catalog c, char *query)
 {
+    int N;
     switch (query[0]) {
         case '1':
             char id[64];
@@ -15,12 +17,12 @@ int parse_query(Catalog c, char *query)
             query1(c, id);
             break;
         case '2':
-            int N;
             sscanf(query, "%*d %d", &N);
             query2(c, N);
             break;
         case '3':
-            printf("Query 3\n");
+            sscanf(query, "%*d %d", &N);
+            query3(c, N);
             break;
         case '4':
             printf("Query 4\n");

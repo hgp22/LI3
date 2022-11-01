@@ -28,7 +28,7 @@ void query1(Catalog c, char *id)
 
     if (*endptr != '\0') {
         User u = get_catalog_user(c, id);
-        if (u != NULL && get_user_account_status(u)) {
+        if (u != NULL) {
             char *q1_answer = _user_to_q1_string(u);
             fprintf(command_out, "%s\n", q1_answer);
             free(q1_answer);
@@ -36,7 +36,7 @@ void query1(Catalog c, char *id)
     }
     else {
         Driver d = get_catalog_driver(c, driver);
-        if (d != NULL && get_driver_account_status(d)) {
+        if (d != NULL) {
             char *q1_answer = _driver_to_q1_string(d);
             fprintf(command_out, "%s\n", q1_answer);
             free(q1_answer);
