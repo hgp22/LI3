@@ -27,22 +27,6 @@ Catalog init_catalog(Inputs i);
 void free_catalog(Catalog c);
 
 /**
- * @brief Get the catalog users object
- *
- * @param c
- * @return Users
- */
-Users get_catalog_users(Catalog c);
-
-/**
- * @brief Get the catalog drivers object
- *
- * @param c
- * @return Drivers
- */
-Drivers get_catalog_drivers(Catalog c);
-
-/**
  * @brief Get the catalog query2 object
  *
  * @param c

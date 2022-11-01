@@ -153,6 +153,10 @@ void add_user_ride_data(User u, Ride r)
 
 User copy_user(User old_u)
 {
+    if (old_u == NULL) {
+        return NULL;
+    }
+
     User new_u = g_new(struct user, 1);
 
     new_u->username = strdup(old_u->username);

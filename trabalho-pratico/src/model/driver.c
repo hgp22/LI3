@@ -47,8 +47,7 @@ void set_driver_id(Driver d, char *id)
 
 void set_driver_name(Driver d, char *name)
 {
-    d->name = malloc(strlen(name) * sizeof(name));
-    strcpy(d->name, name);
+    d->name = strdup(name);
 }
 
 void set_driver_gender(Driver d, char *gender)
@@ -165,4 +164,28 @@ void add_driver_ride_data(Driver d, Ride r)
         d->last_ride_date = ride_date;
     }
     d->n_trips += 1;
+}
+
+#include <stdio.h>
+Driver copy_driver(Driver old_d)
+{
+    if (old_d == NULL) {
+        return NULL;
+    }
+
+    Driver new_d = g_new(struct driver, 1);
+
+    new_d->id = old_d->id;
+    new_d->name = strdup(old_d->name);
+    new_d->gender = old_d->gender;
+    new_d->age = old_d->age;
+    new_d->car_class = old_d->car_class;
+    new_d->account_age = old_d->account_age;
+    new_d->account_status = old_d->account_status;
+    new_d->sum_score = old_d->sum_score;
+    new_d->total_earned = old_d->total_earned;
+    new_d->n_trips = old_d->n_trips;
+    new_d->last_ride_date = old_d->last_ride_date;
+
+    return new_d;
 }

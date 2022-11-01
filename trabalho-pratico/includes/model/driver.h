@@ -197,4 +197,12 @@ unsigned short get_driver_last_ride_date(Driver d);
  */
 void add_driver_ride_data(Driver d, Ride r);
 
+/**
+ * @brief 
+ * 
+ * @param old_d 
+ * @return Driver 
+ */
+Driver copy_driver(Driver old_d);
+
 #endif

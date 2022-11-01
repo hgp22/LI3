@@ -60,16 +60,6 @@ void free_catalog(Catalog c)
     free(c);
 }
 
-Users get_catalog_users(Catalog c)
-{
-    return c->users;
-}
-
-Drivers get_catalog_drivers(Catalog c)
-{
-    return c->drivers;
-}
-
 Rides get_catalog_rides(Catalog c)
 {
     return c->rides;
@@ -87,12 +77,12 @@ Query3 get_catalog_query3(Catalog c)
 
 User get_catalog_user(Catalog c, char *username)
 {
-    return get_user(c->users, username);
+    return copy_user(get_user(c->users, username));
 }
 
 Driver get_catalog_driver(Catalog c, long id)
 {
-    return get_driver(c->drivers, id);
+    return copy_driver(get_driver(c->drivers, id));
 }
 
 static gint _driver_comparator(gconstpointer driver1, gconstpointer driver2)
