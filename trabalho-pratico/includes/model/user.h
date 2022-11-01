@@ -181,4 +181,12 @@ unsigned short get_user_last_ride_date(User u);
  */
 void add_user_ride_data(User u, Ride r);
 
+/**
+ * @brief 
+ * 
+ * @param old_u 
+ * @return User 
+ */
+User copy_user(User old_u);
+
 #endif

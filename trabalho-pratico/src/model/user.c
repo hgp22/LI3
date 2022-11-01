@@ -150,3 +150,22 @@ void add_user_ride_data(User u, Ride r)
     }
     u->n_trips += 1;
 }
+
+User copy_user(User old_u)
+{
+    User new_u = g_new(struct user, 1);
+
+    new_u->username = strdup(old_u->username);
+    new_u->name = strdup(old_u->name);
+    new_u->gender = old_u->gender;
+    new_u->age = old_u->age;
+    new_u->account_age = old_u->account_age;
+    new_u->account_status = old_u->account_status;
+    new_u->sum_score = old_u->sum_score;
+    new_u->total_spent = old_u->total_spent;
+    new_u->total_distance = old_u->total_distance;
+    new_u->n_trips = old_u->n_trips;
+    new_u->last_ride_date = old_u->last_ride_date;
+
+    return new_u;
+}

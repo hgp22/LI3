@@ -16,7 +16,7 @@ gboolean insert_user(Users users, User u)
 
 User get_user(Users users, char *username)
 {
-    return g_hash_table_lookup(users, username);
+    return copy_user(g_hash_table_lookup(users, username));
 }
 
 guint remove_inactive_users(Users users)
