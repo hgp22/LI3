@@ -19,6 +19,22 @@ User get_user(Users users, char *username)
     return g_hash_table_lookup(users, username);
 }
 
+guint remove_inactive_users(Users users)
+{
+    return g_hash_table_foreach_remove(users, (GHRFunc)_clean, NULL);
+}
+
+static gboolean _clean(gpointer key, gpointer value, gpointer user_data)
+{
+    User u = (User)value;
+    if (get_user_account_status(u) == U_Inactive) {
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
+
 static void _key_destroyed(gpointer data)
 {
     g_free(data);

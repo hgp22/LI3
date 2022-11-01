@@ -47,9 +47,9 @@ void free_driver(void *driver);
 
 /**
  * @brief Set the driver id object
- * 
- * @param d 
- * @param id 
+ *
+ * @param d
+ * @param id
  */
 void set_driver_id(Driver d, char *id);
 
@@ -103,9 +103,9 @@ void set_driver_account_status(Driver d, char *account_status);
 
 /**
  * @brief Get the driver id object
- * 
- * @param d 
- * @return long 
+ *
+ * @param d
+ * @return long
  */
 long get_driver_id(Driver d);
 

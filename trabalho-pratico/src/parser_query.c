@@ -2,6 +2,7 @@
 #include "catalog.h"
 #include "driver.h"
 #include "query1.h"
+#include "query2.h"
 #include "user.h"
 #include <stdio.h>
 
@@ -14,7 +15,9 @@ int parse_query(Catalog c, char *query)
             query1(c, id);
             break;
         case '2':
-            printf("Query 2\n");
+            int N;
+            sscanf(query, "%*d %d", &N);
+            query2(c, N);
             break;
         case '3':
             printf("Query 3\n");

@@ -25,9 +25,9 @@ typedef enum u_account_status {
 
 /**
  * @brief Set the user username object
- * 
- * @param u 
- * @param username 
+ *
+ * @param u
+ * @param username
  */
 void set_user_username(User u, char *username);
 
@@ -87,9 +87,9 @@ void set_user_account_status(User u, char *account_status);
 
 /**
  * @brief Get the user username object
- * 
- * @param u 
- * @return char* 
+ *
+ * @param u
+ * @return char*
  */
 char *get_user_username(User u);
 

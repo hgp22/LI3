@@ -21,6 +21,22 @@ Driver get_driver(Drivers drivers, long id)
     return g_hash_table_lookup(drivers, &id);
 }
 
+guint remove_inactive_drivers(Drivers drivers)
+{
+    return g_hash_table_foreach_remove(drivers, (GHRFunc)_clean, NULL);
+}
+
+static gboolean _clean(gpointer key, gpointer value, gpointer user_data)
+{
+    Driver d = (Driver)value;
+    if (get_driver_account_status(d) == D_Inactive) {
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
+
 static void _key_destroyed(gpointer data)
 {
     g_free(data);

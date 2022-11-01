@@ -26,12 +26,30 @@ gboolean insert_user(Users users, User u);
 
 /**
  * @brief Get the user object
- * 
- * @param users 
- * @param username 
- * @return User 
+ *
+ * @param users
+ * @param username
+ * @return User
  */
 User get_user(Users users, char *username);
+
+/**
+ * @brief
+ *
+ * @param users
+ * @return guint
+ */
+guint remove_inactive_users(Users users);
+
+/**
+ * @brief
+ *
+ * @param key
+ * @param value
+ * @param user_data
+ * @return gboolean
+ */
+static gboolean _clean(gpointer key, gpointer value, gpointer user_data);
 
 /**
  * @brief

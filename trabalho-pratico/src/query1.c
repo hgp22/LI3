@@ -24,6 +24,7 @@ void query1(Catalog c, char *id)
     char *s = malloc(34 * sizeof(char *));
     sprintf(s, "./Resultados/command%d_output.txt", counter++);
     FILE *command_out = fopen(s, "w");
+    free(s);
 
     if (*endptr != '\0') {
         User u = get_catalog_user(c, id);
