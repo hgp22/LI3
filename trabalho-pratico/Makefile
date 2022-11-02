@@ -77,7 +77,9 @@ run go: build
 format fmt:
 	-$(call show,yellow,reset,"C and Headers files")
 	@echo ":"
-	@-clang-format -verbose -i $(SRC_DIR)/* $(INC_DIR)/*
+	@-clang-format -verbose -i $(SRC_DIR)/*.c $(INC_DIR)/*.h
+	@-clang-format -verbose -i $(SRC_DIR)/$(MDL_DIR)/*.c $(SRC_DIR)/$(CTL_DIR)/*.c $(SRC_DIR)/$(VIW_DIR)/*.c
+	@-clang-format -verbose -i $(INC_DIR)/$(MDL_DIR)/*.h $(INC_DIR)/$(CTL_DIR)/*.h $(INC_DIR)/$(VIW_DIR)/*.h
 	@echo ""
 	-$(call show,yellow,reset,"Shell files")
 	@echo ":"

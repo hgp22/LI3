@@ -194,10 +194,10 @@ double get_ride_cost(Ride r);
 double get_ride_tip(Ride r);
 
 /**
- * @brief 
- * 
- * @param old_r 
- * @return Ride 
+ * @brief
+ *
+ * @param old_r
+ * @return Ride
  */
 Ride copy_ride(Ride old_r);
 
