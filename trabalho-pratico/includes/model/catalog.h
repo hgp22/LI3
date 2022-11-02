@@ -6,6 +6,8 @@
 typedef struct inputs *Inputs;
 typedef struct user *User;
 typedef struct driver *Driver;
+typedef GHashTable *Users;
+typedef GHashTable *Drivers;
 typedef GSList *Rides;
 typedef GSList *Query2;
 typedef GSList *Query3;
@@ -14,10 +16,9 @@ typedef struct catalog *Catalog;
 /**
  * @brief
  *
- * @param i
  * @return Catalog
  */
-Catalog init_catalog(Inputs i);
+Catalog new_catalog();
 
 /**
  * @brief
@@ -25,6 +26,30 @@ Catalog init_catalog(Inputs i);
  * @param catalog
  */
 void free_catalog(Catalog c);
+
+/**
+ * @brief Set the catalog users object
+ *
+ * @param c
+ * @param users
+ */
+void set_catalog_users(Catalog c, Users users);
+
+/**
+ * @brief Set the catalog drivers object
+ *
+ * @param c
+ * @param drivers
+ */
+void set_catalog_drivers(Catalog c, Drivers drivers);
+
+/**
+ * @brief Set the catalog rides object
+ *
+ * @param c
+ * @param rides
+ */
+void set_catalog_rides(Catalog c, Rides rides);
 
 /**
  * @brief Get the catalog query2 object
@@ -67,5 +92,13 @@ User get_catalog_user(Catalog c, char *username);
  * @return Driver
  */
 Driver get_catalog_driver(Catalog c, long id);
+
+/**
+ * @brief
+ *
+ * @param c
+ * @return int
+ */
+int process_catalog(Catalog c);
 
 #endif

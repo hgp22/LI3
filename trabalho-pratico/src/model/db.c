@@ -1,4 +1,5 @@
-#include "parser_inputs.h"
+#include "db.h"
+#include "catalog.h"
 #include "driver.h"
 #include "drivers.h"
 #include "ride.h"
@@ -8,7 +9,52 @@
 #include <stdio.h>
 #include <string.h>
 
-Users parse_users(FILE *fp)
+#define USERS "/users.csv"
+#define DRIVERS "/drivers.csv"
+#define RIDES "/rides.csv"
+
+static FILE *_get_file_pointer(char *path_inputs, char *input_file);
+static Users _load_users(FILE *fp);
+static Drivers _load_drivers(FILE *fp);
+static Rides _load_rides(FILE *fp);
+
+int load_db(Catalog c, char *path_inputs)
+{
+    FILE *file_users = _get_file_pointer(path_inputs, USERS);
+    FILE *file_drivers = _get_file_pointer(path_inputs, DRIVERS);
+    FILE *file_rides = _get_file_pointer(path_inputs, RIDES);
+
+    set_catalog_users(c, _load_users(file_users));
+    set_catalog_drivers(c, _load_drivers(file_drivers));
+    set_catalog_rides(c, _load_rides(file_rides));
+
+    fclose(file_users);
+    fclose(file_drivers);
+    fclose(file_rides);
+
+    return 0;
+}
+
+// ! move fopen out of this funtion and only use to create full path?
+static FILE *_get_file_pointer(char *path_inputs, char *input_file)
+{
+    char *path_file = malloc((strlen(path_inputs) + strlen(input_file) + 1) *
+                             sizeof(path_file));
+    strcpy(path_file, path_inputs);
+    strcat(path_file, input_file);
+
+    FILE *fp = fopen(path_file, "r");
+    if (fp == NULL) {
+        perror(path_file);
+        exit(1);
+    }
+
+    free(path_file);
+
+    return fp;
+}
+
+static Users _load_users(FILE *fp)
 {
     char *line = NULL;
     size_t len = 0;
@@ -56,7 +102,7 @@ Users parse_users(FILE *fp)
     return users;
 }
 
-Drivers parse_drivers(FILE *fp)
+static Drivers _load_drivers(FILE *fp)
 {
     char *line = NULL;
     size_t len = 0;
@@ -108,7 +154,7 @@ Drivers parse_drivers(FILE *fp)
     return drivers;
 }
 
-Rides parse_rides(FILE *fp)
+static Rides _load_rides(FILE *fp)
 {
     char *line = NULL;
     size_t len = 0;

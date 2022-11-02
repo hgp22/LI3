@@ -1,8 +1,6 @@
 #include "catalog.h"
 #include "driver.h"
 #include "drivers.h"
-#include "inputs.h"
-#include "parser_inputs.h"
 #include "query2.h"
 #include "query3.h"
 #include "ride.h"
@@ -22,23 +20,24 @@ struct catalog {
 static gint _user_comparator(gconstpointer user1, gconstpointer user2);
 static gint _driver_comparator(gconstpointer driver1, gconstpointer driver2);
 
-Catalog init_catalog(Inputs i)
+Catalog new_catalog()
 {
-    Catalog c = g_new(struct catalog, 1);
+    return g_new(struct catalog, 1);
+}
 
-    c->users = parse_users(get_inputs_users(i));
-    c->drivers = parse_drivers(get_inputs_drivers(i));
-    c->rides = parse_rides(get_inputs_rides(i));
-
+int process_catalog(Catalog c)
+{
     for (Rides iterator = c->rides; iterator; iterator = iterator->next) {
-        long d_id = get_ride_driver(iterator->data); // ? use gint
+        Ride r = iterator->data;
+        long d_id =
+            get_ride_driver(r); // ? use gint ? why did i even ask this ?
         Driver d = get_driver(c->drivers, d_id);
-        set_ride_cost(iterator->data, d);
-        add_driver_ride_data(d, iterator->data);
-        char *username = get_ride_user(iterator->data);
+        set_ride_cost(r, d);
+        add_driver_ride_data(d, r);
+        char *username = get_ride_user(r);
         User u = get_user(c->users, username);
         free(username);
-        add_user_ride_data(u, iterator->data);
+        add_user_ride_data(u, r);
     }
 
     remove_inactive_users(c->users);
@@ -50,7 +49,7 @@ Catalog init_catalog(Inputs i)
     c->query3 = (Query3)g_hash_table_get_values(c->users);
     c->query3 = g_slist_sort(c->query3, (GCompareFunc)_user_comparator);
 
-    return c;
+    return 0;
 }
 
 void free_catalog(Catalog c)
@@ -63,16 +62,33 @@ void free_catalog(Catalog c)
     free(c);
 }
 
+void set_catalog_users(Catalog c, Users users)
+{
+    c->users = users;
+}
+
+void set_catalog_drivers(Catalog c, Drivers drivers)
+{
+    c->drivers = drivers;
+}
+
+void set_catalog_rides(Catalog c, Rides rides)
+{
+    c->rides = rides;
+}
+
 Rides get_catalog_rides(Catalog c)
 {
     return c->rides;
 }
 
+// ! devolver copias, provavelmente devolver apenas o necessario
 Query2 get_catalog_query2(Catalog c)
 {
     return c->query2;
 }
 
+// ! devolver copias, provavelmente devolver apenas o necessario
 Query3 get_catalog_query3(Catalog c)
 {
     return c->query3;
