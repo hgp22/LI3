@@ -97,7 +97,7 @@ check: build
 		--log-file=$(LOG).log ./$(BIN_DIR)/$(PROGRAM) $(ARGS)
 
 .PHONY: debug # Run program with debugger
-debug: CFLAGS = -Wall -Wextra -ansi -pedantic -O0 -g
+debug: CFLAGS = -Wall -Wextra -pedantic -O0 -g # -ansi
 debug: build
 	gdb ./$(BIN_DIR)/$(PROGRAM)
 

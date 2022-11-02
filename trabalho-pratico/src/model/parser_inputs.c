@@ -5,7 +5,6 @@
 #include "rides.h"
 #include "user.h"
 #include "users.h"
-#include <glib.h>
 #include <stdio.h>
 #include <string.h>
 

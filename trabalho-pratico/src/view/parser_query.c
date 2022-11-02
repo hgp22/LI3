@@ -1,11 +1,11 @@
 #include "parser_query.h"
 #include "catalog.h"
-#include "driver.h"
 #include "query1.h"
 #include "query2.h"
 #include "query3.h"
-#include "user.h"
 #include <stdio.h>
+
+int counter = 1;
 
 int parse_query(Catalog c, char *query)
 {

@@ -19,6 +19,9 @@ struct catalog {
     Query3 query3;
 };
 
+static gint _user_comparator(gconstpointer user1, gconstpointer user2);
+static gint _driver_comparator(gconstpointer driver1, gconstpointer driver2);
+
 Catalog init_catalog(Inputs i)
 {
     Catalog c = g_new(struct catalog, 1);

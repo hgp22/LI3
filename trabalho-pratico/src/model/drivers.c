@@ -2,6 +2,10 @@
 #include "driver.h"
 #include <glib.h>
 
+static gboolean _clean(gpointer key, gpointer value, gpointer user_data);
+static void _key_destroyed(gpointer data);
+static void _value_destroyed(gpointer data);
+
 Drivers new_drivers(void)
 {
     return g_hash_table_new_full(g_int_hash, g_int_equal,

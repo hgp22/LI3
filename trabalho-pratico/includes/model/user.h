@@ -1,12 +1,10 @@
 #ifndef __USER_H__
 #define __USER_H__
 
-#include <glib.h>
 #include <stdint.h>
 
-typedef struct user *User;
-
 typedef struct ride *Ride;
+typedef struct user *User;
 
 typedef enum field_user {
     U_username,

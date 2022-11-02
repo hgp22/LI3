@@ -1,11 +1,14 @@
 #include "query2.h"
 #include "catalog.h"
 #include "driver.h"
+#include <stdio.h>
 
 #define ID 12
 #define SCORE 5
 
 extern int counter;
+
+static char *_driver_to_q2_string(Driver d);
 
 void query2(Catalog c, int N)
 {

@@ -4,7 +4,6 @@
 #include <stdint.h>
 
 typedef struct driver *Driver;
-
 typedef struct ride *Ride;
 
 typedef enum field_ride {

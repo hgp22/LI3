@@ -1,7 +1,7 @@
 #ifndef __PARSER_QUERY_H__
 #define __PARSER_QUERY_H__
 
-#include "catalog.h"
+typedef struct catalog *Catalog;
 
 /**
  * @brief

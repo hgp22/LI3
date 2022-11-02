@@ -1,9 +1,10 @@
 #ifndef __BATCH_H__
 #define __BATCH_H__
 
-#include "catalog.h"
-#include "inputs.h"
 #include <stdio.h>
+
+typedef struct inputs *Inputs;
+typedef struct catalog *Catalog;
 
 /**
  * @brief Run queries in batch

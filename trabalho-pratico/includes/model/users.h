@@ -1,12 +1,11 @@
 #ifndef __USERS_H__
 #define __USERS_H__
 
-#include "user.h"
 #include <glib.h>
 
-typedef GHashTable *Users;
-
+typedef struct user *User;
 typedef struct catalog *Catalog;
+typedef GHashTable *Users;
 
 /**
  * @brief
@@ -40,29 +39,5 @@ User get_user(Users users, char *username);
  * @return guint
  */
 guint remove_inactive_users(Users users);
-
-/**
- * @brief
- *
- * @param key
- * @param value
- * @param user_data
- * @return gboolean
- */
-static gboolean _clean(gpointer key, gpointer value, gpointer user_data);
-
-/**
- * @brief
- *
- * @param data
- */
-static void _key_destroyed(gpointer data);
-
-/**
- * @brief
- *
- * @param data
- */
-static void _value_destroyed(gpointer data);
 
 #endif

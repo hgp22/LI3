@@ -4,9 +4,8 @@
 #include <glib.h>
 #include <stdint.h>
 
-typedef struct driver *Driver;
-
 typedef struct ride *Ride;
+typedef struct driver *Driver;
 
 typedef enum field_driver {
     D_id,

@@ -1,10 +1,13 @@
 #include "query3.h"
 #include "catalog.h"
 #include "user.h"
+#include <stdio.h>
 
 #define DISTANCE 5
 
 extern int counter;
+
+static char *_user_to_q3_string(User u);
 
 void query3(Catalog c, int N)
 {

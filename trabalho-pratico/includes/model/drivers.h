@@ -1,9 +1,9 @@
 #ifndef __DRIVERS_H__
 #define __DRIVERS_H__
 
-#include "driver.h"
 #include <glib.h>
 
+typedef struct driver *Driver;
 typedef GHashTable *Drivers;
 
 /**
@@ -38,29 +38,5 @@ Driver get_driver(Drivers drivers, long id);
  * @return guint
  */
 guint remove_inactive_drivers(Drivers drivers);
-
-/**
- * @brief
- *
- * @param key
- * @param value
- * @param user_data
- * @return gboolean
- */
-static gboolean _clean(gpointer key, gpointer value, gpointer user_data);
-
-/**
- * @brief
- *
- * @param data
- */
-static void _key_destroyed(gpointer data);
-
-/**
- * @brief
- *
- * @param data
- */
-static void _value_destroyed(gpointer data);
 
 #endif

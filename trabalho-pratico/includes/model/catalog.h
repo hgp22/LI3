@@ -1,14 +1,14 @@
 #ifndef __CATALOG_H__
 #define __CATALOG_H__
 
-#include "drivers.h"
-#include "inputs.h"
-#include "query2.h"
-#include "query3.h"
-#include "rides.h"
-#include "users.h"
 #include <glib.h>
 
+typedef struct inputs *Inputs;
+typedef struct user *User;
+typedef struct driver *Driver;
+typedef GSList *Rides;
+typedef GSList *Query2;
+typedef GSList *Query3;
 typedef struct catalog *Catalog;
 
 /**
@@ -67,23 +67,5 @@ User get_catalog_user(Catalog c, char *username);
  * @return Driver
  */
 Driver get_catalog_driver(Catalog c, long id);
-
-/**
- * @brief
- *
- * @param driver1
- * @param driver2
- * @return gint
- */
-static gint _driver_comparator(gconstpointer driver1, gconstpointer driver2);
-
-/**
- * @brief
- *
- * @param user1
- * @param user2
- * @return gint
- */
-static gint _user_comparator(gconstpointer user1, gconstpointer user2);
 
 #endif

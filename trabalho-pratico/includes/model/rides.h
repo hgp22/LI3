@@ -1,9 +1,9 @@
 #ifndef __RIDES_H__
 #define __RIDES_H__
 
-#include "ride.h"
 #include <glib.h>
 
+typedef struct ride *Ride;
 typedef GSList *Rides;
 
 /**

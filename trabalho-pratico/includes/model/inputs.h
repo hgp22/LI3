@@ -1,9 +1,6 @@
 #ifndef __INPUTS_H__
 #define __INPUTS_H__
 
-#include "drivers.h"
-#include "rides.h"
-#include "users.h"
 #include <stdio.h>
 
 typedef struct inputs *Inputs;
@@ -46,14 +43,5 @@ FILE *get_inputs_drivers(Inputs i);
  * @return FILE*
  */
 FILE *get_inputs_rides(Inputs i);
-
-/**
- * @brief Get the file pointer object
- *
- * @param path_inputs String with path do inputs directory
- * @param input_file Input file name
- * @return FILE* File pointer to input file
- */
-static FILE *_get_file_pointer(char *path_inputs, char *input_file);
 
 #endif

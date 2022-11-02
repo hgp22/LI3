@@ -3,7 +3,6 @@
 #include "utils.h"
 #include <glib.h>
 #include <stdint.h>
-#include <stdlib.h>
 #include <string.h>
 
 struct driver {

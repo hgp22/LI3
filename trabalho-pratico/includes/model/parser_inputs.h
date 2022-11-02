@@ -1,10 +1,12 @@
 #ifndef __PARSER_INPUTS_H__
 #define __PARSER_INPUTS_H__
 
-#include "drivers.h"
-#include "rides.h"
-#include "users.h"
+#include <glib.h>
 #include <stdio.h>
+
+typedef GHashTable *Users;
+typedef GHashTable *Drivers;
+typedef GSList *Rides;
 
 /**
  * @brief

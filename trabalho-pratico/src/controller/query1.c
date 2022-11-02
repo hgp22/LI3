@@ -2,8 +2,6 @@
 #include "catalog.h"
 #include "driver.h"
 #include "user.h"
-#include "utils.h"
-#include <stdint.h>
 #include <stdio.h>
 
 #define GENDER 1
@@ -14,6 +12,9 @@
 #define SEMICOLONS 5
 
 extern int counter;
+
+static char *_user_to_q1_string(User u);
+static char *_driver_to_q1_string(Driver d);
 
 // ! remove IO from function
 void query1(Catalog c, char *id)
@@ -30,8 +31,7 @@ void query1(Catalog c, char *id)
         User u = get_catalog_user(c, id);
         if (u != NULL) {
             char *q1_answer = _user_to_q1_string(u);
-            // fprintf(command_out, "%s\n", q1_answer);
-            fprintf(stdout, "%s\n", q1_answer);
+            fprintf(command_out, "%s\n", q1_answer);
             free(q1_answer);
         }
     }
@@ -39,8 +39,7 @@ void query1(Catalog c, char *id)
         Driver d = get_catalog_driver(c, driver);
         if (d != NULL) {
             char *q1_answer = _driver_to_q1_string(d);
-            // fprintf(command_out, "%s\n", q1_answer);
-            fprintf(stdout, "%s\n", q1_answer);
+            fprintf(command_out, "%s\n", q1_answer);
             free(q1_answer);
         }
     }

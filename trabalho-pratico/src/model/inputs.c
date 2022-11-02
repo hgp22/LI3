@@ -1,8 +1,4 @@
 #include "inputs.h"
-#include "drivers.h"
-#include "parser_inputs.h"
-#include "rides.h"
-#include "users.h"
 #include <glib.h>
 #include <stdio.h>
 
@@ -11,6 +7,8 @@ struct inputs {
     FILE *file_drivers;
     FILE *file_rides;
 };
+
+static FILE *_get_file_pointer(char *path_inputs, char *input_file);
 
 Inputs init_inputs(char *path_inputs)
 {
