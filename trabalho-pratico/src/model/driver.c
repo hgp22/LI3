@@ -165,7 +165,6 @@ void add_driver_ride_data(Driver d, Ride r)
     d->n_trips += 1;
 }
 
-#include <stdio.h>
 Driver copy_driver(Driver old_d)
 {
     if (old_d == NULL) {

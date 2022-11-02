@@ -141,3 +141,25 @@ double get_ride_tip(Ride r)
 {
     return r->tip;
 }
+
+Ride copy_ride(Ride old_r)
+{
+    if (old_r == NULL) {
+        return NULL;
+    }
+
+    Ride new_r = g_new(struct ride, 1);
+
+    new_r->id = old_r->id;
+    new_r->date = old_r->date;
+    new_r->driver = old_r->driver;
+    new_r->user = strdup(old_r->user);
+    new_r->city = strdup(old_r->city);
+    new_r->distance = old_r->distance;
+    new_r->score_user = old_r->score_user;
+    new_r->score_driver = old_r->score_driver;
+    new_r->cost = old_r->cost;
+    new_r->tip = old_r->tip;
+
+    return new_r;
+}
