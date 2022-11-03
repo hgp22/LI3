@@ -25,10 +25,12 @@ Ride new_ride(void)
 
 void free_ride(void *ride)
 {
-    Ride r = (Ride)ride;
-    free(r->user);
-    free(r->city);
-    free(ride);
+    if (ride != NULL) {
+        Ride r = (Ride)ride;
+        free(r->user);
+        free(r->city);
+        free(ride);
+    }
 }
 
 void set_ride_id(Ride r, char *id)

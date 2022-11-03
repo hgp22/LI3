@@ -34,10 +34,12 @@ User new_user(void)
 
 void free_user(void *user)
 {
-    User u = (User)user;
-    free(u->username);
-    free(u->name);
-    free(user);
+    if (user != NULL) {
+        User u = (User)user;
+        free(u->username);
+        free(u->name);
+        free(user);
+    }
 }
 
 void set_user_username(User u, char *username)

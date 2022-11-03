@@ -59,6 +59,16 @@ void free_catalog(Catalog c)
     free(c);
 }
 
+void free_query2(Query2 q2)
+{
+    g_slist_free_full(q2, free_driver);
+}
+
+void free_query3(Query3 q3)
+{
+    g_slist_free_full(q3, free_user);
+}
+
 void set_catalog_users(Catalog c, Users users)
 {
     c->users = users;
@@ -79,7 +89,6 @@ Rides get_catalog_rides(Catalog c)
     return c->rides;
 }
 
-#include <stdio.h>
 Query2 get_catalog_top_n_drivers_by_score(Catalog c, int N)
 {
     Query2 r = NULL;

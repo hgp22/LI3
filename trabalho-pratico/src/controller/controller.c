@@ -1,9 +1,13 @@
 #include "controller.h"
 #include "catalog.h"
+#include "user.h"
+#include "driver.h"
 #include "db.h"
 #include "ui.h"
 #include <stdio.h>
 #include <string.h>
+
+#include <glib.h>
 
 int run_controller(char *path_inputs, char *path_queries)
 {
@@ -48,18 +52,28 @@ int parse_query(Catalog c, char *query)
             // where query1 returns and show_query1 receives a Person
             char *endptr;
             long driver = strtol(id, &endptr, 10);
-            if (*endptr != '\0')
-                show_query1_user(get_catalog_user(c, id));
-            else
-                show_query1_driver(get_catalog_driver(c, driver));
+            if (*endptr != '\0') {
+                User u = get_catalog_user(c, id);
+                show_query1_user(u);
+                free_user(u);
+            }
+            else {
+                Driver d = get_catalog_driver(c, driver);
+                show_query1_driver(d);
+                free_driver(d);
+            }
             break;
         case '2':
             sscanf(query, "%*d %d", &N);
-            show_query2(get_catalog_top_n_drivers_by_score(c, N));
+            Query2 q2 = get_catalog_top_n_drivers_by_score(c, N);
+            show_query2(q2);
+            free_query2(q2);
             break;
         case '3':
             sscanf(query, "%*d %d", &N);
-            show_query3(get_catalog_top_n_users_by_distance(c, N));
+            Query3 q3 = get_catalog_top_n_users_by_distance(c, N);
+            show_query3(q3);
+            free_query3(q3);
             break;
         case '4':
             printf("Query 4\n");

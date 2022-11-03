@@ -33,9 +33,11 @@ Driver new_driver(void)
 
 void free_driver(void *driver)
 {
-    Driver d = (Driver)driver;
-    free(d->name);
-    free(driver);
+    if (driver != NULL) {
+        Driver d = (Driver)driver;
+        free(d->name);
+        free(driver);
+    }
 }
 
 void set_driver_id(Driver d, char *id)

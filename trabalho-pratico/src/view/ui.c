@@ -3,13 +3,6 @@
 #include "user.h"
 #include <stdio.h>
 
-#define GENDER 1
-#define AGE 3
-#define SCORE 5
-#define TRIPS 6
-#define MONEY 16
-#define SEMICOLONS 5
-
 static int counter = 1;
 
 void show_query1_user(User u)
@@ -19,18 +12,12 @@ void show_query1_user(User u)
     FILE *command_out = fopen(file, "w");
 
     if (u != NULL) {
+        char answer[256];
         char *name = get_user_name(u);
-
-        char *answer = malloc((strlen(name) + GENDER + AGE + SCORE + TRIPS +
-                               MONEY + SEMICOLONS + 1) *
-                              sizeof(char *));
-
         sprintf(answer, "%s;%c;%d;%.3f;%hu;%.3f", name, get_user_gender(u),
                 get_user_age(u), get_user_avg_score(u), get_user_n_trips(u),
                 get_user_total_spent(u));
-
         free(name);
-
         fprintf(command_out, "%s\n", answer);
     }
 
@@ -44,18 +31,12 @@ void show_query1_driver(Driver d)
     FILE *command_out = fopen(file, "w");
 
     if (d != NULL) {
+        char answer[256];
         char *name = get_driver_name(d);
-
-        char *answer = malloc((strlen(name) + GENDER + AGE + SCORE + TRIPS +
-                               MONEY + SEMICOLONS + 1) *
-                              sizeof(char *));
-
         sprintf(answer, "%s;%c;%d;%.3f;%hu;%.3f", name, get_driver_gender(d),
                 get_driver_age(d), get_driver_avg_score(d),
                 get_driver_n_trips(d), get_driver_total_earned(d));
-
         free(name);
-
         fprintf(command_out, "%s\n", answer);
     }
 
