@@ -13,12 +13,17 @@ Users new_users(void)
                                  (GDestroyNotify)_value_destroyed);
 }
 
+void free_users(Users users)
+{
+    g_hash_table_destroy(g_steal_pointer(&users));
+}
+
 gboolean insert_user(Users users, User u)
 {
     return g_hash_table_insert(users, get_user_username(u), u);
 }
 
-User get_user(Users users, char *username)
+User get_users_user(Users users, char *username)
 {
     return g_hash_table_lookup(users, username);
 }

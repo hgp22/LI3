@@ -15,4 +15,11 @@ typedef GSList *Rides;
  */
 Rides insert_ride(Rides rides, Ride ride);
 
+/**
+ * @brief 
+ * 
+ * @param rides 
+ */
+void free_rides(Rides rides);
+
 #endif

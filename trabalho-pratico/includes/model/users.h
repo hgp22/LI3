@@ -15,6 +15,13 @@ typedef GHashTable *Users;
 Users new_users(void);
 
 /**
+ * @brief 
+ * 
+ * @param users 
+ */
+void free_users(Users users);
+
+/**
  * @brief
  *
  * @param users
@@ -30,7 +37,7 @@ gboolean insert_user(Users users, User u);
  * @param username
  * @return User
  */
-User get_user(Users users, char *username);
+User get_users_user(Users users, char *username);
 
 /**
  * @brief

@@ -1,9 +1,11 @@
 #include "controller.h"
 #include "catalog.h"
-#include "user.h"
-#include "driver.h"
 #include "db.h"
+#include "driver.h"
+#include "query2.h"
+#include "query3.h"
 #include "ui.h"
+#include "user.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -67,13 +69,13 @@ int parse_query(Catalog c, char *query)
             sscanf(query, "%*d %d", &N);
             Query2 q2 = get_catalog_top_n_drivers_by_score(c, N);
             show_query2(q2);
-            free_query2(q2);
+            free_query2_full(q2);
             break;
         case '3':
             sscanf(query, "%*d %d", &N);
             Query3 q3 = get_catalog_top_n_users_by_distance(c, N);
             show_query3(q3);
-            free_query3(q3);
+            free_query3_full(q3);
             break;
         case '4':
             printf("Query 4\n");
