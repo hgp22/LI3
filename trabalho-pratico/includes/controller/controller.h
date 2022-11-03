@@ -1,9 +1,6 @@
-#ifndef __BATCH_H__
-#define __BATCH_H__
+#ifndef __CONTROLLER_H__
+#define __CONTROLLER_H__
 
-#include <stdio.h>
-
-typedef struct inputs *Inputs;
 typedef struct catalog *Catalog;
 
 /**
@@ -13,7 +10,7 @@ typedef struct catalog *Catalog;
  * @param path_queries Path to queries batch file
  * @return int Control integer
  */
-int batch(char *path_inputs, char *path_queries);
+int run_controller(char *path_inputs, char *path_queries);
 
 /**
  * @brief
@@ -21,6 +18,15 @@ int batch(char *path_inputs, char *path_queries);
  * @param c
  * @return int
  */
-int parse_queries_batch(Catalog c);
+int run_queries(Catalog c);
+
+/**
+ * @brief
+ *
+ * @param c
+ * @param query
+ * @return int
+ */
+int parse_query(Catalog c, char *query);
 
 #endif
