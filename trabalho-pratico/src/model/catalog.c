@@ -1,8 +1,6 @@
 #include "catalog.h"
 #include "driver.h"
 #include "drivers.h"
-#include "query2.h"
-#include "query3.h"
 #include "ride.h"
 #include "rides.h"
 #include "user.h"
@@ -29,8 +27,7 @@ int process_catalog(Catalog c)
 {
     for (Rides iterator = c->rides; iterator; iterator = iterator->next) {
         Ride r = iterator->data;
-        long d_id =
-            get_ride_driver(r); // ? use gint ? why did i even ask this ?
+        long d_id = get_ride_driver(r);
         Driver d = get_driver(c->drivers, d_id);
         set_ride_cost(r, d);
         add_driver_ride_data(d, r);
@@ -82,16 +79,27 @@ Rides get_catalog_rides(Catalog c)
     return c->rides;
 }
 
-// ! devolver copias, provavelmente devolver apenas o necessario
-Query2 get_catalog_query2(Catalog c)
+#include <stdio.h>
+Query2 get_catalog_top_n_drivers_by_score(Catalog c, int N)
 {
-    return c->query2;
+    Query2 r = NULL;
+
+    for (Query2 itr = c->query2; itr && N; itr = itr->next, N--) {
+        r = g_slist_prepend(r, copy_driver(itr->data));
+    }
+
+    return g_slist_reverse(r);
 }
 
-// ! devolver copias, provavelmente devolver apenas o necessario
-Query3 get_catalog_query3(Catalog c)
+Query3 get_catalog_top_n_users_by_distance(Catalog c, int N)
 {
-    return c->query3;
+    Query3 r = NULL;
+
+    for (Query3 itr = c->query3; itr && N; itr = itr->next, N--) {
+        r = g_slist_prepend(r, copy_user(itr->data));
+    }
+
+    return g_slist_reverse(r);
 }
 
 User get_catalog_user(Catalog c, char *username)

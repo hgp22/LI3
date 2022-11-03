@@ -52,20 +52,22 @@ void set_catalog_drivers(Catalog c, Drivers drivers);
 void set_catalog_rides(Catalog c, Rides rides);
 
 /**
- * @brief Get the catalog query2 object
+ * @brief Get the catalog top n drivers by score object
  *
  * @param c
+ * @param N
  * @return Query2
  */
-Query2 get_catalog_query2(Catalog c);
+Query2 get_catalog_top_n_drivers_by_score(Catalog c, int N);
 
 /**
- * @brief Get the catalog query3 object
+ * @brief Get the catalog top n drivers by score object
  *
  * @param c
+ * @param N
  * @return Query3
  */
-Query3 get_catalog_query3(Catalog c);
+Query3 get_catalog_top_n_users_by_distance(Catalog c, int N);
 
 /**
  * @brief Get the catalog rides object
