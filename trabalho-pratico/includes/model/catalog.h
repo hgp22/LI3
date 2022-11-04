@@ -77,6 +77,15 @@ Query2 get_catalog_top_n_drivers_by_score(Catalog c, int N);
 Query3 get_catalog_top_n_users_by_distance(Catalog c, int N);
 
 /**
+ * @brief Get the catalog city avg cost object
+ *
+ * @param c
+ * @param city
+ * @return double
+ */
+double get_catalog_city_avg_cost(Catalog c, char *city);
+
+/**
  * @brief Get the catalog rides object
  *
  * @param c

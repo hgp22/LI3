@@ -78,7 +78,9 @@ int parse_query(Catalog c, char *query)
             free_query3_full(q3);
             break;
         case '4':
-            printf("Query 4\n");
+            char city[64];
+            sscanf(query, "%*d %s", city);
+            show_query4(get_catalog_city_avg_cost(c, city));
             break;
         case '5':
             printf("Query 5\n");

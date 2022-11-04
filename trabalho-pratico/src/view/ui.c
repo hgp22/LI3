@@ -83,3 +83,12 @@ void show_query3(Query3 q3)
 
     fclose(command_out);
 }
+
+void show_query4(double avg_score)
+{
+    char s[64];
+    sprintf(s, "./Resultados/command%d_output.txt", counter++);
+    FILE *command_out = fopen(s, "w");
+    fprintf(command_out, "%.3f\n", avg_score);
+    fclose(command_out);
+}

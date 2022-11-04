@@ -3,18 +3,12 @@
 #include "drivers.h"
 #include "query2.h"
 #include "query3.h"
+#include "query4.h"
 #include "ride.h"
 #include "rides.h"
 #include "user.h"
 #include "users.h"
 #include <glib.h>
-
-typedef GHashTable *Query4;
-
-typedef struct aux4 {
-    double sum_costs;
-    int n_rides;
-} * Aux4;
 
 struct catalog {
     Users users;
@@ -28,7 +22,7 @@ struct catalog {
 Catalog new_catalog()
 {
     Catalog c = g_new(struct catalog, 1);
-    c->query4 = g_hash_table_new(g_str_hash, g_str_equal);
+    c->query4 = new_query4();
     return c;
 }
 
@@ -44,21 +38,9 @@ int process_catalog(Catalog c)
         User u = get_users_user(c->users, username);
         free(username);
         add_user_ride_data(u, r);
-
         double cost = get_ride_cost(r);
         char *city = get_ride_city(r);
-        Aux4 foo = g_hash_table_lookup(c->query4, city);
-        if (foo != NULL) {
-            foo->sum_costs += cost;
-            foo->n_rides++;
-            free(city);
-        }
-        else {
-            Aux4 bar = g_new(struct aux4, 1);
-            bar->sum_costs = cost;
-            bar->n_rides = 1;
-            g_hash_table_insert(c->query4, city, bar);
-        }
+        add_query4_ride_cost(c->query4, city, cost);
     }
 
     remove_inactive_users(c->users);
@@ -80,6 +62,7 @@ void free_catalog(Catalog c)
     free_rides(c->rides);
     free_query2(c->query2);
     free_query3(c->query3);
+    free_query4(c->query4);
     free(c);
 }
 
@@ -123,6 +106,11 @@ Query3 get_catalog_top_n_users_by_distance(Catalog c, int N)
     }
 
     return g_slist_reverse(r);
+}
+
+double get_catalog_city_avg_cost(Catalog c, char *city)
+{
+    return get_query4_city_avg_cost(c->query4, city);
 }
 
 User get_catalog_user(Catalog c, char *username)
