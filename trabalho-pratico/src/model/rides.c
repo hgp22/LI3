@@ -4,22 +4,29 @@
 
 static gint _ride_comparator(gconstpointer ride1, gconstpointer ride2);
 
-Rides insert_ride(Rides rides, Ride ride)
+Rides new_rides(void)
 {
-    return g_slist_prepend(rides, ride);
+    return g_ptr_array_new_with_free_func(free_ride);
+}
+
+void add_ride(Rides rides, Ride ride)
+{
+    g_ptr_array_add(rides, (gpointer)ride);
 }
 
 void free_rides(Rides rides)
 {
-    g_slist_free_full(rides, free_ride);
+    g_ptr_array_free(rides, TRUE);
 }
 
-Rides sort_rides(Rides rides)
+void sort_rides(Rides rides)
 {
-    return g_slist_sort(rides, (GCompareFunc)_ride_comparator);
+    g_ptr_array_sort(rides, (GCompareFunc)_ride_comparator);
 }
 
-static gint _ride_comparator(gconstpointer ride1, gconstpointer ride2)
+static gint _ride_comparator(gconstpointer a, gconstpointer b)
 {
-    return get_ride_date((Ride)ride2) - get_ride_date((Ride)ride1);
+    const Ride r1 = *((Ride *)a);
+    const Ride r2 = *((Ride *)b);
+    return get_ride_date(r1) - get_ride_date(r2);
 }

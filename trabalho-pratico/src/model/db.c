@@ -158,7 +158,7 @@ static Rides _load_rides(FILE *fp)
 {
     char *line = NULL;
     size_t len = 0;
-    Rides rides = NULL;
+    Rides rides = new_rides();
 
     getline(&line, &len, fp); // Remove header
 
@@ -202,7 +202,7 @@ static Rides _load_rides(FILE *fp)
             }
         }
 
-        rides = insert_ride(rides, ride);
+        add_ride(rides, ride);
     }
 
     free(line);

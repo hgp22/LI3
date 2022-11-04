@@ -8,7 +8,7 @@ typedef struct user *User;
 typedef struct driver *Driver;
 typedef GHashTable *Users;
 typedef GHashTable *Drivers;
-typedef GSList *Rides;
+typedef GPtrArray *Rides;
 typedef GSList *Query2;
 typedef GSList *Query3;
 typedef struct catalog *Catalog;

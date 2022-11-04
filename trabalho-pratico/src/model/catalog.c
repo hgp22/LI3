@@ -26,13 +26,14 @@ Catalog new_catalog()
     return c;
 }
 
-#include <stdio.h>
 int process_catalog(Catalog c)
 {
-    c->rides = sort_rides(c->rides);
+    sort_rides(c->rides);
 
-    for (Rides iterator = c->rides; iterator; iterator = iterator->next) {
-        Ride r = iterator->data;
+    guint n_rides = c->rides->len;
+
+    for (guint i = 0; i < n_rides; i ++) {
+        Ride r = g_ptr_array_index(c->rides, i);
         long d_id = get_ride_driver(r);
         Driver d = get_driver(c->drivers, d_id);
         set_ride_cost(r, d);
@@ -41,7 +42,6 @@ int process_catalog(Catalog c)
         User u = get_users_user(c->users, username);
         free(username);
         add_user_ride_data(u, r);
-        // replace with add ride to city with complete parameters
         add_query4_ride(c->query4, r);
     }
 

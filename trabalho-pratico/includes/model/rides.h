@@ -4,16 +4,22 @@
 #include <glib.h>
 
 typedef struct ride *Ride;
-typedef GSList *Rides;
+typedef GPtrArray *Rides;
 
 /**
- * @brief
- *
- * @param rides
- * @param ride
- * @return Rides
+ * @brief 
+ * 
+ * @return Rides 
  */
-Rides insert_ride(Rides rides, Ride ride);
+Rides new_rides(void);
+
+/**
+ * @brief 
+ * 
+ * @param rides 
+ * @param ride 
+ */
+void add_ride(Rides rides, Ride ride);
 
 /**
  * @brief
@@ -26,8 +32,7 @@ void free_rides(Rides rides);
  * @brief 
  * 
  * @param rides 
- * @return Rides 
  */
-Rides sort_rides(Rides rides);
+void sort_rides(Rides rides);
 
 #endif
