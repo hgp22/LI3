@@ -67,7 +67,7 @@ int parse_query(Catalog c, char *query)
             sscanf(query, "%*d %d", &N);
             Query2 q2 = get_catalog_top_n_drivers_by_score(c, N);
             show_query2(q2);
-            free_query2_full(q2);
+            free_query2(q2);
             break;
         case '3':
             sscanf(query, "%*d %d", &N);

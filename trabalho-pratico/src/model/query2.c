@@ -7,28 +7,30 @@ static gint _driver_comparator(gconstpointer driver1, gconstpointer driver2);
 
 Query2 new_query2(Drivers drivers)
 {
-    return (Query2)g_hash_table_get_values(drivers);
+    Query2 q2 = g_ptr_array_sized_new(g_hash_table_size(drivers));
+    GHashTableIter iter;
+    gpointer key, value;
+    g_hash_table_iter_init(&iter, drivers);
+    while (g_hash_table_iter_next(&iter, &key, &value)) {
+        g_ptr_array_add(q2, value);
+    }
+    return q2;
 }
 
 void free_query2(Query2 q2)
 {
-    g_slist_free(q2);
+    g_ptr_array_free(q2, TRUE);
 }
 
-void free_query2_full(Query2 q2)
+void sort_query2(Query2 q2)
 {
-    g_slist_free_full(q2, free_driver);
+    g_ptr_array_sort(q2, (GCompareFunc)_driver_comparator);
 }
 
-Query2 sort_query2(Query2 q2)
+static gint _driver_comparator(gconstpointer a, gconstpointer b)
 {
-    return g_slist_sort(q2, (GCompareFunc)_driver_comparator);
-}
-
-static gint _driver_comparator(gconstpointer driver1, gconstpointer driver2)
-{
-    Driver d1 = (Driver)driver1;
-    Driver d2 = (Driver)driver2;
+    Driver d1 = *((Driver *)a);
+    Driver d2 = *((Driver *)b);
 
     float score1 = get_driver_avg_score(d1);
     float score2 = get_driver_avg_score(d2);

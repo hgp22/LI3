@@ -49,7 +49,7 @@ int process_catalog(Catalog c)
     remove_inactive_drivers(c->drivers);
 
     c->query2 = new_query2(c->drivers);
-    c->query2 = sort_query2(c->query2);
+    sort_query2(c->query2);
 
     c->query3 = new_query3(c->users);
     c->query3 = sort_query3(c->query3);
@@ -90,13 +90,13 @@ Rides get_catalog_rides(Catalog c)
 
 Query2 get_catalog_top_n_drivers_by_score(Catalog c, int N)
 {
-    Query2 r = NULL;
+    Query2 r = g_ptr_array_new_full(N, free_driver);
 
-    for (Query2 itr = c->query2; itr && N; itr = itr->next, N--) {
-        r = g_slist_prepend(r, copy_driver(itr->data));
+    for (int i = 0; i < N; i ++) {
+        g_ptr_array_add(r, copy_driver(g_ptr_array_index(c->query2, i)));
     }
 
-    return g_slist_reverse(r);
+    return r;
 }
 
 Query3 get_catalog_top_n_users_by_distance(Catalog c, int N)

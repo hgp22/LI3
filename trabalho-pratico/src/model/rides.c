@@ -6,7 +6,8 @@ static gint _ride_comparator(gconstpointer ride1, gconstpointer ride2);
 
 Rides new_rides(void)
 {
-    return g_ptr_array_new_with_free_func(free_ride);
+    return g_ptr_array_new_full(1000000, free_ride);
+    //return g_ptr_array_new_with_free_func(free_ride);
 }
 
 void add_ride(Rides rides, Ride ride)

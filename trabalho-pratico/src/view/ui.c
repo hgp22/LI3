@@ -51,8 +51,8 @@ void show_query2(Query2 q2)
 
     char answer[256];
 
-    for (Query2 itr = q2; itr; itr = itr->next) {
-        Driver d = (Driver)itr->data;
+    for (guint i = 0; i < q2->len; i ++) {
+        Driver d = (Driver)g_ptr_array_index(q2, i);
         char *name = get_driver_name(d);
         sprintf(answer, "%012ld;%s;%.3f", get_driver_id(d), name,
                 get_driver_avg_score(d));
