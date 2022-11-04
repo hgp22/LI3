@@ -15,9 +15,9 @@ typedef GHashTable *Users;
 Users new_users(void);
 
 /**
- * @brief 
- * 
- * @param users 
+ * @brief
+ *
+ * @param users
  */
 void free_users(Users users);
 

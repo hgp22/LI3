@@ -28,9 +28,9 @@ Catalog new_catalog();
 void free_catalog(Catalog c);
 
 /**
- * @brief 
- * 
- * @param q3 
+ * @brief
+ *
+ * @param q3
  */
 void free_query3(Query3 q3);
 

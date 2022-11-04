@@ -9,17 +9,27 @@
 #include "users.h"
 #include <glib.h>
 
+typedef GHashTable *Query4;
+
+typedef struct aux4 {
+    double sum_costs;
+    int n_rides;
+} * Aux4;
+
 struct catalog {
     Users users;
     Drivers drivers;
     Rides rides;
     Query2 query2;
     Query3 query3;
+    Query4 query4;
 };
 
 Catalog new_catalog()
 {
-    return g_new(struct catalog, 1);
+    Catalog c = g_new(struct catalog, 1);
+    c->query4 = g_hash_table_new(g_str_hash, g_str_equal);
+    return c;
 }
 
 int process_catalog(Catalog c)
@@ -34,6 +44,21 @@ int process_catalog(Catalog c)
         User u = get_users_user(c->users, username);
         free(username);
         add_user_ride_data(u, r);
+
+        double cost = get_ride_cost(r);
+        char *city = get_ride_city(r);
+        Aux4 foo = g_hash_table_lookup(c->query4, city);
+        if (foo != NULL) {
+            foo->sum_costs += cost;
+            foo->n_rides++;
+            free(city);
+        }
+        else {
+            Aux4 bar = g_new(struct aux4, 1);
+            bar->sum_costs = cost;
+            bar->n_rides = 1;
+            g_hash_table_insert(c->query4, city, bar);
+        }
     }
 
     remove_inactive_users(c->users);

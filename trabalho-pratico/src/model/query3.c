@@ -1,6 +1,6 @@
 #include "query3.h"
-#include "users.h"
 #include "user.h"
+#include "users.h"
 #include <glib.h>
 
 static gint _user_comparator(gconstpointer user1, gconstpointer user2);

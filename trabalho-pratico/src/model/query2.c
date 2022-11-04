@@ -1,6 +1,6 @@
 #include "query2.h"
-#include "drivers.h"
 #include "driver.h"
+#include "drivers.h"
 #include <glib.h>
 
 static gint _driver_comparator(gconstpointer driver1, gconstpointer driver2);

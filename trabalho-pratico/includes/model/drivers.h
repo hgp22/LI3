@@ -14,9 +14,9 @@ typedef GHashTable *Drivers;
 Drivers new_drivers(void);
 
 /**
- * @brief 
- * 
- * @param drivers 
+ * @brief
+ *
+ * @param drivers
  */
 void free_drivers(Drivers drivers);
 
