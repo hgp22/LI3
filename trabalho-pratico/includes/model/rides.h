@@ -22,4 +22,12 @@ Rides insert_ride(Rides rides, Ride ride);
  */
 void free_rides(Rides rides);
 
+/**
+ * @brief 
+ * 
+ * @param rides 
+ * @return Rides 
+ */
+Rides sort_rides(Rides rides);
+
 #endif

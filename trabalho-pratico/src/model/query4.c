@@ -1,4 +1,5 @@
 #include "query4.h"
+#include "ride.h"
 #include <glib.h>
 
 typedef struct city {
@@ -21,8 +22,10 @@ void free_query4(Query4 q4)
     g_hash_table_destroy(g_steal_pointer(&q4));
 }
 
-void add_query4_ride_cost(Query4 q4, char *city, double cost)
+void add_query4_ride(Query4 q4, Ride r)
 {
+    double cost = get_ride_cost(r);
+    char *city = get_ride_city(r);
     City found = g_hash_table_lookup(q4, city);
     if (found != NULL) {
         found->sum_costs += cost;

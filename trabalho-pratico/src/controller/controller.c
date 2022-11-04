@@ -9,8 +9,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <glib.h>
-
 int run_controller(char *path_inputs, char *path_queries)
 {
     Catalog c = new_catalog();
