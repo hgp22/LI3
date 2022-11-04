@@ -10,7 +10,7 @@ typedef GHashTable *Users;
 typedef GHashTable *Drivers;
 typedef GPtrArray *Rides;
 typedef GPtrArray *Query2;
-typedef GSList *Query3;
+typedef GPtrArray *Query3;
 typedef struct catalog *Catalog;
 
 /**

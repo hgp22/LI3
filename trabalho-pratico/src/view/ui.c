@@ -71,8 +71,8 @@ void show_query3(Query3 q3)
 
     char answer[256];
 
-    for (Query3 itr = q3; itr; itr = itr->next) {
-        User u = (User)itr->data;
+    for (guint i = 0; i < q3->len; i ++) {
+        User u = (User)g_ptr_array_index(q3, i);
         char *name = get_user_name(u);
         char *username = get_user_username(u);
         sprintf(answer, "%s;%s;%d", username, name, get_user_total_distance(u));

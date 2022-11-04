@@ -2,12 +2,13 @@
 #include "ride.h"
 #include <glib.h>
 
+#define DEFAULT_SIZE 1000000 // ? ou 1048576 (2^20)
+
 static gint _ride_comparator(gconstpointer ride1, gconstpointer ride2);
 
 Rides new_rides(void)
 {
-    return g_ptr_array_new_full(1000000, free_ride);
-    //return g_ptr_array_new_with_free_func(free_ride);
+    return g_ptr_array_new_full(DEFAULT_SIZE, free_ride);
 }
 
 void add_ride(Rides rides, Ride ride)

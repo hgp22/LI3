@@ -6,7 +6,7 @@
 typedef struct user *User;
 typedef struct driver *Driver;
 typedef GPtrArray *Query2;
-typedef GSList *Query3;
+typedef GPtrArray *Query3;
 
 /**
  * @brief

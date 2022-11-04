@@ -52,7 +52,7 @@ int process_catalog(Catalog c)
     sort_query2(c->query2);
 
     c->query3 = new_query3(c->users);
-    c->query3 = sort_query3(c->query3);
+    sort_query3(c->query3);
 
     return 0;
 }
@@ -101,13 +101,13 @@ Query2 get_catalog_top_n_drivers_by_score(Catalog c, int N)
 
 Query3 get_catalog_top_n_users_by_distance(Catalog c, int N)
 {
-    Query3 r = NULL;
+    Query3 r = g_ptr_array_new_full(N, free_user);
 
-    for (Query3 itr = c->query3; itr && N; itr = itr->next, N--) {
-        r = g_slist_prepend(r, copy_user(itr->data));
+    for (int i = 0; i < N; i ++) {
+        g_ptr_array_add(r, copy_user(g_ptr_array_index(c->query3, i)));
     }
 
-    return g_slist_reverse(r);
+    return r;
 }
 
 double get_catalog_city_avg_cost(Catalog c, char *city)

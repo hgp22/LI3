@@ -73,7 +73,7 @@ int parse_query(Catalog c, char *query)
             sscanf(query, "%*d %d", &N);
             Query3 q3 = get_catalog_top_n_users_by_distance(c, N);
             show_query3(q3);
-            free_query3_full(q3);
+            free_query3(q3);
             break;
         case '4':
             char city[64];
