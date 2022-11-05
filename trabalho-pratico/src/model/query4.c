@@ -1,8 +1,10 @@
 #include "query4.h"
 #include "ride.h"
+#include "rides.h"
 #include <glib.h>
 
 typedef struct city {
+    Rides rides;
     double sum_costs;
     int n_rides;
 } * City;
@@ -28,12 +30,15 @@ void add_query4_ride(Query4 q4, Ride r)
     char *city = get_ride_city(r);
     City found = g_hash_table_lookup(q4, city);
     if (found != NULL) {
+        g_array_append_val(found->rides, r);
         found->sum_costs += cost;
         found->n_rides++;
         free(city);
     }
     else {
         City new = g_new(struct city, 1);
+        new->rides = g_array_new(FALSE, FALSE, sizeof(Ride));
+        g_array_append_val(new->rides, r);
         new->sum_costs = cost;
         new->n_rides = 1;
         g_hash_table_insert(q4, city, new);
@@ -53,5 +58,7 @@ static void _key_destroyed(gpointer data)
 
 static void _value_destroyed(gpointer data)
 {
+    City city = (City)data;
+    g_array_free(city->rides, TRUE);
     g_free(data);
 }

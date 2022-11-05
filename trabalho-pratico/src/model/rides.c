@@ -38,17 +38,6 @@ double get_ride_avg_cost_in_range(Rides rides, char *dateA, char *dateB)
     guint i = g_array_binary_search_safe(rides, &r_date, _ride_comparator);
     free(r_date);
 
-    unsigned short begin = date_to_days(dateA);
-
-    while (i > 0 && get_ride_date(g_array_index(rides, Ride, i - 1)) >= begin) {
-        i--;
-    }
-
-    while (i < rides->len &&
-           get_ride_date(g_array_index(rides, Ride, i)) < begin) {
-        i++;
-    }
-
     unsigned short target = date_to_days(dateB);
     double sum_costs = 0;
     int n_rides = 0;
@@ -111,6 +100,17 @@ static guint g_array_binary_search_safe(GArray *array, gconstpointer target,
             else
                 break; /* element not found */
         }
+    }
+
+    while (middle > 0 && compare_func(target, _array->data + (_array->elt_size *
+                                                              middle)) <= 0) {
+        middle--;
+    }
+
+    while (middle < array->len &&
+           compare_func(target, _array->data + (_array->elt_size * middle)) >
+               0) {
+        middle++;
     }
 
     return middle;
