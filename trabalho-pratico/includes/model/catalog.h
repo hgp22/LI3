@@ -30,9 +30,10 @@ void free_catalog(Catalog c);
 /**
  * @brief
  *
- * @param q3
+ * @param c
+ * @return int
  */
-void free_query3(Query3 q3);
+int process_catalog(Catalog c);
 
 /**
  * @brief Set the catalog users object
@@ -57,6 +58,24 @@ void set_catalog_drivers(Catalog c, Drivers drivers);
  * @param rides
  */
 void set_catalog_rides(Catalog c, Rides rides);
+
+/**
+ * @brief Get the catalog user object
+ *
+ * @param c
+ * @param username
+ * @return User
+ */
+User get_catalog_user(Catalog c, char *username);
+
+/**
+ * @brief Get the catalog driver object
+ *
+ * @param c
+ * @param id
+ * @return Driver
+ */
+Driver get_catalog_driver(Catalog c, long id);
 
 /**
  * @brief Get the catalog top n drivers by score object
@@ -86,37 +105,13 @@ Query3 get_catalog_top_n_users_by_distance(Catalog c, int N);
 double get_catalog_city_avg_cost(Catalog c, char *city);
 
 /**
- * @brief Get the catalog rides object
+ * @brief Get the catalog avg cost in range object
  *
  * @param c
- * @return Rides
+ * @param dateA
+ * @param dateB
+ * @return double
  */
-Rides get_catalog_rides(Catalog c);
-
-/**
- * @brief Get the catalog user object
- *
- * @param c
- * @param username
- * @return User
- */
-User get_catalog_user(Catalog c, char *username);
-
-/**
- * @brief Get the catalog driver object
- *
- * @param c
- * @param id
- * @return Driver
- */
-Driver get_catalog_driver(Catalog c, long id);
-
-/**
- * @brief
- *
- * @param c
- * @return int
- */
-int process_catalog(Catalog c);
+double get_catalog_avg_cost_in_range(Catalog c, char *dateA, char *dateB);
 
 #endif

@@ -7,17 +7,17 @@ typedef struct ride *Ride;
 typedef GArray *Rides;
 
 /**
- * @brief 
- * 
- * @return Rides 
+ * @brief
+ *
+ * @return Rides
  */
 Rides new_rides(void);
 
 /**
- * @brief 
- * 
- * @param rides 
- * @param ride 
+ * @brief
+ *
+ * @param rides
+ * @param ride
  */
 void add_ride(Rides rides, Ride ride);
 
@@ -29,10 +29,20 @@ void add_ride(Rides rides, Ride ride);
 void free_rides(Rides rides);
 
 /**
- * @brief 
- * 
- * @param rides 
+ * @brief
+ *
+ * @param rides
  */
 void sort_rides(Rides rides);
+
+/**
+ * @brief Get the ride avg cost in range object
+ *
+ * @param rides
+ * @param dateA
+ * @param dateB
+ * @return double
+ */
+double get_ride_avg_cost_in_range(Rides rides, char *dateA, char *dateB);
 
 #endif

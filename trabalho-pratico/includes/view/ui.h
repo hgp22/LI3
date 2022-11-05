@@ -43,4 +43,11 @@ void show_query3(Query3 q3);
  */
 void show_query4(double avg_score);
 
+/**
+ * @brief
+ *
+ * @param avg_cost
+ */
+void show_query5(double avg_cost);
+
 #endif

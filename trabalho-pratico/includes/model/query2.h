@@ -22,9 +22,9 @@ Query2 new_query2(Drivers drivers);
 void free_query2(Query2 q2);
 
 /**
- * @brief 
- * 
- * @param q2 
+ * @brief
+ *
+ * @param q2
  */
 void sort_query2(Query2 q2);
 

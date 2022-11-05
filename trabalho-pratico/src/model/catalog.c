@@ -32,7 +32,7 @@ int process_catalog(Catalog c)
 
     guint n_rides = c->rides->len;
 
-    for (guint i = 0; i < n_rides; i ++) {
+    for (guint i = 0; i < n_rides; i++) {
         Ride r = g_array_index(c->rides, Ride, i);
         long d_id = get_ride_driver(r);
         Driver d = get_driver(c->drivers, d_id);
@@ -83,16 +83,21 @@ void set_catalog_rides(Catalog c, Rides rides)
     c->rides = rides;
 }
 
-Rides get_catalog_rides(Catalog c)
+User get_catalog_user(Catalog c, char *username)
 {
-    return c->rides;
+    return copy_user(get_users_user(c->users, username));
+}
+
+Driver get_catalog_driver(Catalog c, long id)
+{
+    return copy_driver(get_driver(c->drivers, id));
 }
 
 Query2 get_catalog_top_n_drivers_by_score(Catalog c, int N)
 {
     Query2 r = g_ptr_array_new_full(N, free_driver);
 
-    for (int i = 0; i < N; i ++) {
+    for (int i = 0; i < N; i++) {
         g_ptr_array_add(r, copy_driver(g_ptr_array_index(c->query2, i)));
     }
 
@@ -103,7 +108,7 @@ Query3 get_catalog_top_n_users_by_distance(Catalog c, int N)
 {
     Query3 r = g_ptr_array_new_full(N, free_user);
 
-    for (int i = 0; i < N; i ++) {
+    for (int i = 0; i < N; i++) {
         g_ptr_array_add(r, copy_user(g_ptr_array_index(c->query3, i)));
     }
 
@@ -115,12 +120,7 @@ double get_catalog_city_avg_cost(Catalog c, char *city)
     return get_query4_city_avg_cost(c->query4, city);
 }
 
-User get_catalog_user(Catalog c, char *username)
+double get_catalog_avg_cost_in_range(Catalog c, char *dateA, char *dateB)
 {
-    return copy_user(get_users_user(c->users, username));
-}
-
-Driver get_catalog_driver(Catalog c, long id)
-{
-    return copy_driver(get_driver(c->drivers, id));
+    return get_ride_avg_cost_in_range(c->rides, dateA, dateB);
 }

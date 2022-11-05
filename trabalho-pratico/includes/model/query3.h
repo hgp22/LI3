@@ -29,9 +29,9 @@ void free_query3(Query3 q3);
 void free_query3_full(Query3 q3);
 
 /**
- * @brief 
- * 
- * @param q3 
+ * @brief
+ *
+ * @param q3
  */
 void sort_query3(Query3 q3);
 

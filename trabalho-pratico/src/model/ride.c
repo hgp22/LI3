@@ -14,8 +14,8 @@ struct ride {
     uint8_t distance;
     uint8_t score_user;
     uint8_t score_driver;
-    double cost; // or unsigned short with value multiplied by 100
-    double tip;  // or unsigned short with value multiplied by 100
+    double cost;
+    double tip;
 };
 
 Ride new_ride(void)

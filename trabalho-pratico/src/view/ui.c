@@ -51,7 +51,7 @@ void show_query2(Query2 q2)
 
     char answer[256];
 
-    for (guint i = 0; i < q2->len; i ++) {
+    for (guint i = 0; i < q2->len; i++) {
         Driver d = (Driver)g_ptr_array_index(q2, i);
         char *name = get_driver_name(d);
         sprintf(answer, "%012ld;%s;%.3f", get_driver_id(d), name,
@@ -71,7 +71,7 @@ void show_query3(Query3 q3)
 
     char answer[256];
 
-    for (guint i = 0; i < q3->len; i ++) {
+    for (guint i = 0; i < q3->len; i++) {
         User u = (User)g_ptr_array_index(q3, i);
         char *name = get_user_name(u);
         char *username = get_user_username(u);
@@ -90,5 +90,14 @@ void show_query4(double avg_score)
     sprintf(s, "./Resultados/command%d_output.txt", counter++);
     FILE *command_out = fopen(s, "w");
     fprintf(command_out, "%.3f\n", avg_score);
+    fclose(command_out);
+}
+
+void show_query5(double avg_cost)
+{
+    char s[64];
+    sprintf(s, "./Resultados/command%d_output.txt", counter++);
+    FILE *command_out = fopen(s, "w");
+    fprintf(command_out, "%.3f\n", avg_cost);
     fclose(command_out);
 }
