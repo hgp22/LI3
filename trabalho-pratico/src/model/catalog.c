@@ -33,7 +33,7 @@ int process_catalog(Catalog c)
     guint n_rides = c->rides->len;
 
     for (guint i = 0; i < n_rides; i ++) {
-        Ride r = g_ptr_array_index(c->rides, i);
+        Ride r = g_array_index(c->rides, Ride, i);
         long d_id = get_ride_driver(r);
         Driver d = get_driver(c->drivers, d_id);
         set_ride_cost(r, d);

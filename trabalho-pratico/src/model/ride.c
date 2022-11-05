@@ -23,14 +23,11 @@ Ride new_ride(void)
     return g_new(struct ride, 1);
 }
 
-void free_ride(void *ride)
+void free_ride(Ride *r)
 {
-    if (ride != NULL) {
-        Ride r = (Ride)ride;
-        free(r->user);
-        free(r->city);
-        free(ride);
-    }
+    free((*r)->user);
+    free((*r)->city);
+    free(*r);
 }
 
 void set_ride_id(Ride r, char *id)

@@ -4,7 +4,7 @@
 #include <glib.h>
 
 typedef struct ride *Ride;
-typedef GPtrArray *Rides;
+typedef GArray *Rides;
 
 /**
  * @brief 
