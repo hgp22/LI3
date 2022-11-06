@@ -31,28 +31,8 @@ void sort_rides(Rides rides)
     g_array_sort(rides, (GCompareFunc)_ride_comparator);
 }
 
-double get_rides_avg_cost_in_range(Rides rides, char *dateA, char *dateB)
-{
-    Ride r_date = new_ride();
-    set_ride_date(r_date, dateA);
-    guint i = g_array_binary_search_safe(rides, &r_date, _ride_comparator);
-    free(r_date);
-
-    unsigned short target = date_to_days(dateB);
-    double sum_costs = 0;
-    int n_rides = 0;
-
-    for (Ride r = g_array_index(rides, Ride, i);
-         i < rides->len && get_ride_date(r) <= target;
-         r = g_array_index(rides, Ride, ++i)) {
-        sum_costs += get_ride_cost(r);
-        n_rides++;
-    }
-
-    return sum_costs / n_rides;
-}
-
-double get_rides_avg_distance_in_range(Rides rides, char *dateA, char *dateB)
+double get_rides_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
+                                   double (*get_func)(Ride))
 {
     Ride r_date = new_ride();
     set_ride_date(r_date, dateA);
@@ -66,7 +46,7 @@ double get_rides_avg_distance_in_range(Rides rides, char *dateA, char *dateB)
     for (Ride r = g_array_index(rides, Ride, i);
          i < rides->len && get_ride_date(r) <= target;
          r = g_array_index(rides, Ride, ++i)) {
-        sum_distance += get_ride_distance(r);
+        sum_distance += (double)get_func(r);
         n_rides++;
     }
 
@@ -123,7 +103,9 @@ static guint g_array_binary_search_safe(GArray *array, gconstpointer target,
         }
     }
 
-    while (middle > 0 && compare_func(target, _array->data + (_array->elt_size * (middle - 1))) <= 0) {
+    while (middle > 0 &&
+           compare_func(target, _array->data +
+                                    (_array->elt_size * (middle - 1))) <= 0) {
         middle--;
     }
 

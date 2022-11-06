@@ -116,9 +116,9 @@ char *get_ride_city(Ride r)
     return strdup(r->city);
 }
 
-uint8_t get_ride_distance(Ride r)
+double get_ride_distance(Ride r)
 {
-    return r->distance;
+    return (double)r->distance;
 }
 
 uint8_t get_ride_score_user(Ride r)

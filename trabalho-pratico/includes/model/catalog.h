@@ -115,14 +115,15 @@ double get_catalog_city_avg_cost(Catalog c, char *city);
 double get_catalog_avg_cost_in_range(Catalog c, char *dateA, char *dateB);
 
 /**
- * @brief 
- * 
- * @param c 
- * @param city 
- * @param dateA 
- * @param dateB 
- * @return double 
+ * @brief
+ *
+ * @param c
+ * @param city
+ * @param dateA
+ * @param dateB
+ * @return double
  */
-double avg_distance_in_city_in_date_range(Catalog c, char *city, char *dateA, char *dateB);
+double get_catalog_city_avg_dist_in_range(Catalog c, char *city, char *dateA,
+                                          char *dateB);
 
 #endif

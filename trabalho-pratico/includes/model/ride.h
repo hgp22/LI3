@@ -157,9 +157,9 @@ char *get_ride_city(Ride r);
  * @brief Get the ride distance object
  *
  * @param r
- * @return uint8_t
+ * @return double
  */
-uint8_t get_ride_distance(Ride r);
+double get_ride_distance(Ride r);
 
 /**
  * @brief Get the ride score user object

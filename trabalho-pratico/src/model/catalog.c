@@ -1,9 +1,9 @@
 #include "catalog.h"
+#include "cities.h"
 #include "driver.h"
 #include "drivers.h"
 #include "query2.h"
 #include "query3.h"
-#include "query4.h"
 #include "ride.h"
 #include "rides.h"
 #include "user.h"
@@ -16,13 +16,13 @@ struct catalog {
     Rides rides;
     Query2 query2;
     Query3 query3;
-    Query4 query4;
+    Cities cities;
 };
 
 Catalog new_catalog()
 {
     Catalog c = g_new(struct catalog, 1);
-    c->query4 = new_query4();
+    c->cities = new_cities();
     return c;
 }
 
@@ -42,7 +42,7 @@ int process_catalog(Catalog c)
         User u = get_users_user(c->users, username);
         free(username);
         add_user_ride_data(u, r);
-        add_query4_ride(c->query4, r);
+        add_cities_ride(c->cities, r);
     }
 
     remove_inactive_users(c->users);
@@ -64,7 +64,7 @@ void free_catalog(Catalog c)
     free_rides(c->rides);
     free_query2(c->query2);
     free_query3(c->query3);
-    free_query4(c->query4);
+    free_cities(c->cities);
     free(c);
 }
 
@@ -117,15 +117,16 @@ Query3 get_catalog_top_n_users_by_distance(Catalog c, int N)
 
 double get_catalog_city_avg_cost(Catalog c, char *city)
 {
-    return get_query4_city_avg_cost(c->query4, city);
+    return get_cities_city_avg_cost(c->cities, city);
 }
 
 double get_catalog_avg_cost_in_range(Catalog c, char *dateA, char *dateB)
 {
-    return get_rides_avg_cost_in_range(c->rides, dateA, dateB);
+    return get_rides_avg_stat_in_range(c->rides, dateA, dateB, get_ride_cost);
 }
 
-double avg_distance_in_city_in_date_range(Catalog c, char *city, char *dateA, char *dateB)
+double get_catalog_city_avg_dist_in_range(Catalog c, char *city, char *dateA,
+                                          char *dateB)
 {
-    return avg_distance(c->query4, city, dateA, dateB);
+    return get_cities_city_avg_dist_in_range(c->cities, city, dateA, dateB);
 }
