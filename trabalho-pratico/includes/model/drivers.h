@@ -27,7 +27,7 @@ void free_drivers(Drivers drivers);
  * @param d
  * @return gboolean
  */
-gboolean insert_driver(Drivers drivers, Driver d);
+gboolean add_drivers_driver(Drivers drivers, Driver d);
 
 /**
  * @brief Get the driver object
@@ -36,7 +36,7 @@ gboolean insert_driver(Drivers drivers, Driver d);
  * @param id
  * @return Driver
  */
-Driver get_driver(Drivers drivers, long id);
+Driver get_drivers_driver(Drivers drivers, long id);
 
 /**
  * @brief

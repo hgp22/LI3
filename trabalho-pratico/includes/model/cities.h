@@ -5,7 +5,7 @@
 
 typedef GHashTable *Cities;
 typedef struct ride *Ride;
-typedef GArray *Rides;
+typedef GPtrArray *Rides;
 
 /**
  * @brief

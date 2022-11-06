@@ -31,7 +31,7 @@ Ride new_ride(void);
  *
  * @param ride
  */
-void free_ride(Ride *r);
+void free_ride(void *ride);
 
 /**
  * @brief Set the ride id object

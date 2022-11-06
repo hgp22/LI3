@@ -4,7 +4,7 @@
 #include <glib.h>
 
 typedef struct ride *Ride;
-typedef GArray *Rides;
+typedef GPtrArray *Rides;
 
 /**
  * @brief
@@ -17,16 +17,25 @@ Rides new_rides(void);
  * @brief
  *
  * @param rides
- * @param ride
  */
-void add_ride(Rides rides, Ride ride);
+void free_rides(Rides rides);
 
 /**
  * @brief
  *
  * @param rides
+ * @param ride
  */
-void free_rides(Rides rides);
+void add_rides_ride(Rides rides, Ride ride);
+
+/**
+ * @brief Get the rides ride object
+ * 
+ * @param rides 
+ * @param index 
+ * @return Ride 
+ */
+Ride get_rides_ride(Rides rides, guint index);
 
 /**
  * @brief

@@ -32,16 +32,15 @@ void add_cities_ride(Cities cities, Ride r)
     char *city = get_ride_city(r);
     City found = g_hash_table_lookup(cities, city);
     if (found != NULL) {
-        g_array_append_val(found->rides, r);
+        g_ptr_array_add(found->rides, r);
         found->sum_costs += cost;
         found->n_rides++;
         free(city);
     }
     else {
         City new = g_new(struct city, 1);
-        new->rides =
-            g_array_sized_new(FALSE, FALSE, sizeof(Ride), RESERVED_SIZE);
-        g_array_append_val(new->rides, r);
+        new->rides = g_ptr_array_sized_new(RESERVED_SIZE);
+        g_ptr_array_add(new->rides, r);
         new->sum_costs = cost;
         new->n_rides = 1;
         g_hash_table_insert(cities, city, new);
@@ -70,6 +69,6 @@ static void _key_destroyed(gpointer data)
 static void _value_destroyed(gpointer data)
 {
     City city = (City)data;
-    g_array_free(city->rides, TRUE);
+    g_ptr_array_free(city->rides, TRUE);
     g_free(data);
 }

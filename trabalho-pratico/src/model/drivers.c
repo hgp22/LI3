@@ -13,19 +13,19 @@ Drivers new_drivers(void)
                                  (GDestroyNotify)_value_destroyed);
 }
 
-gboolean insert_driver(Drivers drivers, Driver d)
+void free_drivers(Drivers drivers)
+{
+    g_hash_table_destroy(g_steal_pointer(&drivers));
+}
+
+gboolean add_drivers_driver(Drivers drivers, Driver d)
 {
     gint *k_id = g_new(gint, 1);
     *k_id = get_driver_id(d);
     return g_hash_table_insert(drivers, k_id, d);
 }
 
-void free_drivers(Drivers drivers)
-{
-    g_hash_table_destroy(g_steal_pointer(&drivers));
-}
-
-Driver get_driver(Drivers drivers, long id)
+Driver get_drivers_driver(Drivers drivers, long id)
 {
     return g_hash_table_lookup(drivers, &id);
 }

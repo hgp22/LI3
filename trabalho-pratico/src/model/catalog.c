@@ -33,9 +33,9 @@ int process_catalog(Catalog c)
     guint n_rides = c->rides->len;
 
     for (guint i = 0; i < n_rides; i++) {
-        Ride r = g_array_index(c->rides, Ride, i);
+        Ride r = get_rides_ride(c->rides, i);
         long d_id = get_ride_driver(r);
-        Driver d = get_driver(c->drivers, d_id);
+        Driver d = get_drivers_driver(c->drivers, d_id);
         set_ride_cost(r, d);
         add_driver_ride_data(d, r);
         char *username = get_ride_user(r);
@@ -90,7 +90,7 @@ User get_catalog_user(Catalog c, char *username)
 
 Driver get_catalog_driver(Catalog c, long id)
 {
-    return copy_driver(get_driver(c->drivers, id));
+    return copy_driver(get_drivers_driver(c->drivers, id));
 }
 
 Query2 get_catalog_top_n_drivers_by_score(Catalog c, int N)

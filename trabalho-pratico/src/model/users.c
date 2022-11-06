@@ -18,7 +18,7 @@ void free_users(Users users)
     g_hash_table_destroy(g_steal_pointer(&users));
 }
 
-gboolean insert_user(Users users, User u)
+gboolean add_users_user(Users users, User u)
 {
     return g_hash_table_insert(users, get_user_username(u), u);
 }

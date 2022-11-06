@@ -28,7 +28,7 @@ void free_users(Users users);
  * @param u
  * @return gboolean
  */
-gboolean insert_user(Users users, User u);
+gboolean add_users_user(Users users, User u);
 
 /**
  * @brief Get the user object
