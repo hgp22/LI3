@@ -15,22 +15,31 @@ CFLAGS  = -O2 -Wall -Wextra
 CFLAGS += -Wno-unused-parameter -Wno-unused-function -Wno-unused-result
 LIBS    = `pkg-config --cflags --libs glib-2.0`
 INCLDS  = -I $(INC_DIR)
+INCLDS += -I $(INC_DIR)/$(MDL_DIR)
+INCLDS += -I $(INC_DIR)/$(VIW_DIR)
+INCLDS += -I $(INC_DIR)/$(CTL_DIR)
 #------------------------------------------------------------------------------
 BIN_DIR = .
 BLD_DIR = build
 DOC_DIR = docs
 INC_DIR = includes
 LOG_DIR = log
-OUT_DIR = out
+OUT_DIR = Resultados
 SRC_DIR = src
 TST_DIR = tests
 UTI_DIR = scripts
+MDL_DIR = model
+VIW_DIR = view
+CTL_DIR = controller
 #------------------------------------------------------------------------------
 PROGRAM = programa-principal
 #------------------------------------------------------------------------------
 TRASH   = $(PROGRAM) $(BLD_DIR) $(DOC_DIR)/{html,latex} $(LOG_DIR) $(OUT_DIR)
 #------------------------------------------------------------------------------
 SRC     = $(wildcard $(SRC_DIR)/*.c)
+SRC    += $(wildcard $(SRC_DIR)/$(MDL_DIR)/*.c)
+SRC    += $(wildcard $(SRC_DIR)/$(VIW_DIR)/*.c)
+SRC    += $(wildcard $(SRC_DIR)/$(CTL_DIR)/*.c)
 OBJS    = $(patsubst $(SRC_DIR)/%.c,$(BLD_DIR)/%.o,$(SRC))
 DEPS    = $(patsubst $(BLD_DIR)/%.o,$(BLD_DIR)/%.d,$(OBJS))
 #==============================================================================
@@ -68,7 +77,9 @@ run go: build
 format fmt:
 	-$(call show,yellow,reset,"C and Headers files")
 	@echo ":"
-	@-clang-format -verbose -i $(SRC_DIR)/* $(INC_DIR)/*
+	@-clang-format -verbose -i $(SRC_DIR)/*.c $(INC_DIR)/*.h
+	@-clang-format -verbose -i $(SRC_DIR)/$(MDL_DIR)/*.c $(SRC_DIR)/$(CTL_DIR)/*.c $(SRC_DIR)/$(VIW_DIR)/*.c
+	@-clang-format -verbose -i $(INC_DIR)/$(MDL_DIR)/*.h $(INC_DIR)/$(CTL_DIR)/*.h $(INC_DIR)/$(VIW_DIR)/*.h
 	@echo ""
 	-$(call show,yellow,reset,"Shell files")
 	@echo ":"
@@ -80,15 +91,15 @@ lint:
 		$(SRC_DIR)/*
 
 check: LOG = $(LOG_DIR)/`date +%Y-%m-%d_%H:%M:%S`
-check: CFLAGS += -pg
+check: CFLAGS += -g -Og # -pg
 check: build
-	@memusage --data=$(LOG).dat --png=$(LOG).png $(BIN_DIR)/$(PROGRAM)
-	@gprof $(BIN_DIR)/$(PROGRAM) gmon.out > $(LOG).txt
+	#@memusage --data=$(LOG).dat --png=$(LOG).png $(BIN_DIR)/$(PROGRAM) $(ARGS)
+	#@gprof $(BIN_DIR)/$(PROGRAM) $(ARGS) gmon.out > $(LOG).txt
 	@valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all \
 		--log-file=$(LOG).log ./$(BIN_DIR)/$(PROGRAM) $(ARGS)
 
 .PHONY: debug # Run program with debugger
-debug: CFLAGS = -Wall -Wextra -ansi -pedantic -O0 -g
+debug: CFLAGS = -Wall -Wextra -pedantic -O0 -g # -ansi
 debug: build
 	gdb ./$(BIN_DIR)/$(PROGRAM)
 
@@ -103,6 +114,9 @@ test:
 setup:
 	@mkdir -p $(BIN_DIR)
 	@mkdir -p $(BLD_DIR)
+	@mkdir -p $(BLD_DIR)/$(MDL_DIR)
+	@mkdir -p $(BLD_DIR)/$(VIW_DIR)
+	@mkdir -p $(BLD_DIR)/$(CTL_DIR)
 	@mkdir -p $(LOG_DIR)
 	@mkdir -p $(OUT_DIR)
 

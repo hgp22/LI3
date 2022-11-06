@@ -1,6 +1,9 @@
 #ifndef __RIDE_H__
 #define __RIDE_H__
 
+#include <stdint.h>
+
+typedef struct driver *Driver;
 typedef struct ride *Ride;
 
 typedef enum field_ride {
@@ -21,14 +24,14 @@ typedef enum field_ride {
  *
  * @return Ride
  */
-Ride init_ride(void);
+Ride new_ride(void);
 
 /**
  * @brief
  *
  * @param ride
  */
-void free_ride(void *ride);
+void free_ride(Ride *r);
 
 /**
  * @brief Set the ride id object
@@ -95,6 +98,14 @@ void set_ride_score_user(Ride r, char *score_user);
 void set_ride_score_driver(Ride r, char *score_driver);
 
 /**
+ * @brief Set the ride cost object
+ *
+ * @param r
+ * @param d
+ */
+void set_ride_cost(Ride r, Driver d);
+
+/**
  * @brief Set the ride tip object
  *
  * @param r
@@ -103,36 +114,28 @@ void set_ride_score_driver(Ride r, char *score_driver);
 void set_ride_tip(Ride r, char *tip);
 
 /**
- * @brief Set the ride comment object
- *
- * @param r
- * @param comment
- */
-void set_ride_comment(Ride r, char *comment);
-
-/**
  * @brief Get the ride id object
  *
  * @param r
- * @return char*
+ * @return long
  */
-char *get_ride_id(Ride r);
+long get_ride_id(Ride r);
 
 /**
  * @brief Get the ride date object
  *
  * @param r
- * @return char*
+ * @return unsigned short
  */
-char *get_ride_date(Ride r);
+unsigned short get_ride_date(Ride r);
 
 /**
  * @brief Get the ride driver object
  *
  * @param r
- * @return char*
+ * @return long
  */
-char *get_ride_driver(Ride r);
+long get_ride_driver(Ride r);
 
 /**
  * @brief Get the ride user object
@@ -154,40 +157,48 @@ char *get_ride_city(Ride r);
  * @brief Get the ride distance object
  *
  * @param r
- * @return char*
+ * @return double
  */
-char *get_ride_distance(Ride r);
+double get_ride_distance(Ride r);
 
 /**
  * @brief Get the ride score user object
  *
  * @param r
- * @return char*
+ * @return uint8_t
  */
-char *get_ride_score_user(Ride r);
+uint8_t get_ride_score_user(Ride r);
 
 /**
  * @brief Get the ride score driver object
  *
  * @param r
- * @return char*
+ * @return uint8_t
  */
-char *get_ride_score_driver(Ride r);
+uint8_t get_ride_score_driver(Ride r);
+
+/**
+ * @brief Get the ride cost object
+ *
+ * @param r
+ * @return float
+ */
+double get_ride_cost(Ride r);
 
 /**
  * @brief Get the ride tip object
  *
  * @param r
- * @return char*
+ * @return float
  */
-char *get_ride_tip(Ride r);
+double get_ride_tip(Ride r);
 
 /**
- * @brief Get the ride comment object
+ * @brief
  *
- * @param r
- * @return char*
+ * @param old_r
+ * @return Ride
  */
-char *get_ride_comment(Ride r);
+Ride copy_ride(Ride old_r);
 
 #endif

@@ -1,9 +1,9 @@
-#include "batch.h"
+#include "controller.h"
 
 int main(int argc, char **argv)
 {
     if (argc == 3) {
-        batch(argv[1], argv[2]);
+        run_controller(argv[1], argv[2]);
     }
 
     return 0;
