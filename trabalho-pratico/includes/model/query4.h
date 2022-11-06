@@ -4,7 +4,9 @@
 #include <glib.h>
 
 typedef GHashTable *Query4;
+typedef struct city *City;
 typedef struct ride *Ride;
+typedef GArray *Rides;
 
 /**
  * @brief
@@ -37,5 +39,16 @@ void add_query4_ride(Query4 q4, Ride r);
  * @return double
  */
 double get_query4_city_avg_cost(Query4 q4, char *city);
+
+/**
+ * @brief 
+ * 
+ * @param q4 
+ * @param city 
+ * @param dateA 
+ * @param dateB 
+ * @return double 
+ */
+double avg_distance(Query4 q4, char *city, char *dateA, char *dateB);
 
 #endif

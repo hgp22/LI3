@@ -101,3 +101,12 @@ void show_query5(double avg_cost)
     fprintf(command_out, "%.3f\n", avg_cost);
     fclose(command_out);
 }
+
+void show_query6(double avg_distance)
+{
+    char s[64];
+    sprintf(s, "./Resultados/command%d_output.txt", counter++);
+    FILE *command_out = fopen(s, "w");
+    fprintf(command_out, "%.3f\n", avg_distance);
+    fclose(command_out);
+}

@@ -43,6 +43,16 @@ void sort_rides(Rides rides);
  * @param dateB
  * @return double
  */
-double get_ride_avg_cost_in_range(Rides rides, char *dateA, char *dateB);
+double get_rides_avg_cost_in_range(Rides rides, char *dateA, char *dateB);
+
+/**
+ * @brief Get the ride avg distance in range object
+ * 
+ * @param rides 
+ * @param dateA 
+ * @param dateB 
+ * @return double 
+ */
+double get_rides_avg_distance_in_range(Rides rides, char *dateA, char *dateB);
 
 #endif

@@ -3,11 +3,11 @@
 #include "rides.h"
 #include <glib.h>
 
-typedef struct city {
+struct city {
     Rides rides;
     double sum_costs;
     int n_rides;
-} * City;
+};
 
 static void _key_destroyed(gpointer data);
 static void _value_destroyed(gpointer data);
@@ -49,6 +49,12 @@ double get_query4_city_avg_cost(Query4 q4, char *city)
 {
     City c = g_hash_table_lookup(q4, city);
     return c->sum_costs / c->n_rides;
+}
+
+double avg_distance(Query4 q4, char *city, char *dateA, char *dateB)
+{
+    City c = g_hash_table_lookup(q4, city);
+    return get_rides_avg_distance_in_range(c->rides, dateA, dateB);
 }
 
 static void _key_destroyed(gpointer data)

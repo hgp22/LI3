@@ -50,4 +50,11 @@ void show_query4(double avg_score);
  */
 void show_query5(double avg_cost);
 
+/**
+ * @brief 
+ * 
+ * @param avg_distance 
+ */
+void show_query6(double avg_distance);
+
 #endif

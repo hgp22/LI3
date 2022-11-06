@@ -87,7 +87,11 @@ int parse_query(Catalog c, char *query)
             show_query5(get_catalog_avg_cost_in_range(c, dateA, dateB));
             break;
         case '6':
-            printf("Query 6\n");
+            char city1[64];
+            char dateA1[16];
+            char dateB1[16];
+            sscanf(query, "%*d %s %s %s", city1, dateA1, dateB1);
+            show_query6(avg_distance_in_city_in_date_range(c, city1, dateA1, dateB1));
             break;
         case '7':
             printf("Query 7\n");

@@ -122,5 +122,10 @@ double get_catalog_city_avg_cost(Catalog c, char *city)
 
 double get_catalog_avg_cost_in_range(Catalog c, char *dateA, char *dateB)
 {
-    return get_ride_avg_cost_in_range(c->rides, dateA, dateB);
+    return get_rides_avg_cost_in_range(c->rides, dateA, dateB);
+}
+
+double avg_distance_in_city_in_date_range(Catalog c, char *city, char *dateA, char *dateB)
+{
+    return avg_distance(c->query4, city, dateA, dateB);
 }
