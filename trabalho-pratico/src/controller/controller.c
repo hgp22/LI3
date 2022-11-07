@@ -30,11 +30,14 @@ int run_queries(Catalog c)
 {
     char *query = NULL;
     size_t len = 0;
+    FILE *fp = NULL;
 
     while (getline(&query, &len, stdin) != -1) {
+        fp = next_output_file();
         parse_query(c, query);
     }
 
+    fclose(fp);
     free(query);
 
     return 0;
