@@ -7,25 +7,25 @@ typedef GPtrArray *Query2;
 typedef GHashTable *Drivers;
 
 /**
- * @brief
+ * @brief Creat a new Query2
  *
- * @param drivers
+ * @param drivers Drivers to creat Query2
  * @return Query2
  */
-Query2 new_query2(Drivers drivers);
+Query2 query2_new(Drivers drivers);
 
 /**
- * @brief
+ * @brief Free Query2
  *
- * @param q2
+ * @param q2 Query2 to be freed
  */
-void free_query2(Query2 q2);
+void query2_free(Query2 q2);
 
 /**
- * @brief
+ * @brief Sort Query2
  *
- * @param q2
+ * @param q2 Query2 to be sorted
  */
-void sort_query2(Query2 q2);
+void query2_sort(Query2 q2);
 
 #endif

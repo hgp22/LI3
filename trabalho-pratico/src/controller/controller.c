@@ -11,9 +11,9 @@
 
 int run_controller(char *path_inputs, char *path_queries)
 {
-    Catalog c = new_catalog();
-    load_db(c, path_inputs);
-    process_catalog(c);
+    Catalog c = catalog_new();
+    db_load(c, path_inputs);
+    catalog_process(c);
 
     FILE *file_queries = freopen(path_queries, "r", stdin);
 
@@ -21,7 +21,7 @@ int run_controller(char *path_inputs, char *path_queries)
 
     fclose(file_queries);
 
-    free_catalog(c);
+    catalog_free(c);
 
     return 0;
 }
@@ -32,7 +32,7 @@ int run_queries(Catalog c)
     size_t len = 0;
 
     while (getline(&query, &len, stdin) != -1) {
-        parse_query(c, query);
+        run_query(c, query);
     }
 
     free(query);
@@ -40,7 +40,7 @@ int run_queries(Catalog c)
     return 0;
 }
 
-int parse_query(Catalog c, char *query)
+int run_query(Catalog c, char *query)
 {
     int N;
     switch (query[0]) {
@@ -53,38 +53,38 @@ int parse_query(Catalog c, char *query)
             char *endptr;
             long driver = strtol(id, &endptr, 10);
             if (*endptr != '\0') {
-                User u = get_catalog_user(c, id);
+                User u = catalog_get_user(c, id);
                 show_query1_user(u);
-                free_user(u);
+                user_free(u);
             }
             else {
-                Driver d = get_catalog_driver(c, driver);
+                Driver d = catalog_get_driver(c, driver);
                 show_query1_driver(d);
-                free_driver(d);
+                driver_free(d);
             }
             break;
         case '2':
             sscanf(query, "%*d %d", &N);
-            Query2 q2 = get_catalog_top_n_drivers_by_score(c, N);
+            Query2 q2 = catalog_get_top_n_drivers_by_score(c, N);
             show_query2(q2);
-            free_query2(q2);
+            query2_free(q2);
             break;
         case '3':
             sscanf(query, "%*d %d", &N);
-            Query3 q3 = get_catalog_top_n_users_by_distance(c, N);
+            Query3 q3 = catalog_get_top_n_users_by_distance(c, N);
             show_query3(q3);
-            free_query3(q3);
+            query3_free(q3);
             break;
         case '4':
             char city[64];
             sscanf(query, "%*d %s", city);
-            show_query4(get_catalog_city_avg_cost(c, city));
+            show_query4(catalog_get_city_avg_cost(c, city));
             break;
         case '5':
             char dateA[16];
             char dateB[16];
             sscanf(query, "%*d %s %s", dateA, dateB);
-            show_query5(get_catalog_avg_cost_in_range(c, dateA, dateB));
+            show_query5(catalog_get_avg_cost_in_range(c, dateA, dateB));
             break;
         case '6':
             char city1[64];
@@ -92,7 +92,7 @@ int parse_query(Catalog c, char *query)
             char dateB1[16];
             sscanf(query, "%*d %s %s %s", city1, dateA1, dateB1);
             show_query6(
-                get_catalog_city_avg_dist_in_range(c, city1, dateA1, dateB1));
+                catalog_get_city_avg_dist_in_range(c, city1, dateA1, dateB1));
             break;
         case '7':
             printf("Query 7\n");

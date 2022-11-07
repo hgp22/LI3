@@ -35,14 +35,14 @@ typedef enum d_account_status {
  *
  * @return Driver
  */
-Driver new_driver(void);
+Driver driver_new(void);
 
 /**
  * @brief
  *
  * @param driver
  */
-void free_driver(void *driver);
+void driver_free(void *driver);
 
 /**
  * @brief Set the driver id object
@@ -50,7 +50,7 @@ void free_driver(void *driver);
  * @param d
  * @param id
  */
-void set_driver_id(Driver d, char *id);
+void driver_set_id(Driver d, char *id);
 
 /**
  * @brief Set the driver name object
@@ -58,7 +58,7 @@ void set_driver_id(Driver d, char *id);
  * @param d
  * @param name
  */
-void set_driver_name(Driver d, char *name);
+void driver_set_name(Driver d, char *name);
 
 /**
  * @brief Set the driver gend object
@@ -66,7 +66,7 @@ void set_driver_name(Driver d, char *name);
  * @param d
  * @param gender
  */
-void set_driver_gender(Driver d, char *gender);
+void driver_set_gender(Driver d, char *gender);
 
 /**
  * @brief Set the driver age object
@@ -74,7 +74,7 @@ void set_driver_gender(Driver d, char *gender);
  * @param d
  * @param birth_date
  */
-void set_driver_age(Driver d, char *birth_date);
+void driver_set_age(Driver d, char *birth_date);
 
 /**
  * @brief Set the driver car class object
@@ -82,7 +82,7 @@ void set_driver_age(Driver d, char *birth_date);
  * @param d
  * @param car_class
  */
-void set_driver_car_class(Driver d, char *car_class);
+void driver_set_car_class(Driver d, char *car_class);
 
 /**
  * @brief Set the driver account age object
@@ -90,7 +90,7 @@ void set_driver_car_class(Driver d, char *car_class);
  * @param d
  * @param account_creation
  */
-void set_driver_account_age(Driver d, char *account_creation);
+void driver_set_account_age(Driver d, char *account_creation);
 
 /**
  * @brief Set the driver account status object
@@ -98,7 +98,7 @@ void set_driver_account_age(Driver d, char *account_creation);
  * @param d
  * @param account_status
  */
-void set_driver_account_status(Driver d, char *account_status);
+void driver_set_account_status(Driver d, char *account_status);
 
 /**
  * @brief Get the driver id object
@@ -106,7 +106,7 @@ void set_driver_account_status(Driver d, char *account_status);
  * @param d
  * @return long
  */
-long get_driver_id(Driver d);
+long driver_get_id(Driver d);
 
 /**
  * @brief Get the driver name object
@@ -114,7 +114,7 @@ long get_driver_id(Driver d);
  * @param d
  * @return char*
  */
-char *get_driver_name(Driver d);
+char *driver_get_name(Driver d);
 
 /**
  * @brief Get the driver gender object
@@ -122,7 +122,7 @@ char *get_driver_name(Driver d);
  * @param d
  * @return char
  */
-char get_driver_gender(Driver d);
+char driver_get_gender(Driver d);
 
 /**
  * @brief Get the driver age object
@@ -130,7 +130,7 @@ char get_driver_gender(Driver d);
  * @param d
  * @return uint8_t
  */
-uint8_t get_driver_age(Driver d);
+uint8_t driver_get_age(Driver d);
 
 /**
  * @brief Get the driver car class object
@@ -138,7 +138,7 @@ uint8_t get_driver_age(Driver d);
  * @param d
  * @return Car_Class
  */
-Car_Class get_driver_car_class(Driver d);
+Car_Class driver_get_car_class(Driver d);
 
 /**
  * @brief Get the driver account age object
@@ -146,7 +146,7 @@ Car_Class get_driver_car_class(Driver d);
  * @param d
  * @return unsigned short
  */
-unsigned short get_driver_account_age(Driver d);
+unsigned short driver_get_account_age(Driver d);
 
 /**
  * @brief Get the driver account status object
@@ -154,7 +154,7 @@ unsigned short get_driver_account_age(Driver d);
  * @param d
  * @return D_Status
  */
-D_Status get_driver_account_status(Driver d);
+D_Status driver_get_account_status(Driver d);
 
 /**
  * @brief Get the driver avg score object
@@ -162,7 +162,7 @@ D_Status get_driver_account_status(Driver d);
  * @param d
  * @return double
  */
-double get_driver_avg_score(Driver d);
+double driver_get_avg_score(Driver d);
 
 /**
  * @brief Get the driver total earned object
@@ -170,7 +170,7 @@ double get_driver_avg_score(Driver d);
  * @param d
  * @return double
  */
-double get_driver_total_earned(Driver d);
+double driver_get_total_earned(Driver d);
 
 /**
  * @brief Get the driver n trips object
@@ -178,7 +178,7 @@ double get_driver_total_earned(Driver d);
  * @param d
  * @return unsigned short
  */
-unsigned short get_driver_n_trips(Driver d);
+unsigned short driver_get_n_trips(Driver d);
 
 /**
  * @brief Get the driver last ride date object
@@ -186,7 +186,7 @@ unsigned short get_driver_n_trips(Driver d);
  * @param d
  * @return unsigned short
  */
-unsigned short get_driver_last_ride_date(Driver d);
+unsigned short driver_get_last_ride_date(Driver d);
 
 /**
  * @brief
@@ -194,7 +194,7 @@ unsigned short get_driver_last_ride_date(Driver d);
  * @param d
  * @param r
  */
-void add_driver_ride_data(Driver d, Ride r);
+void driver_add_ride_data(Driver d, Ride r);
 
 /**
  * @brief
@@ -202,6 +202,6 @@ void add_driver_ride_data(Driver d, Ride r);
  * @param old_d
  * @return Driver
  */
-Driver copy_driver(Driver old_d);
+Driver driver_copy(Driver old_d);
 
 #endif

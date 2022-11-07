@@ -11,14 +11,14 @@ typedef GHashTable *Drivers;
  *
  * @return Drivers
  */
-Drivers new_drivers(void);
+Drivers drivers_new(void);
 
 /**
  * @brief
  *
  * @param drivers
  */
-void free_drivers(Drivers drivers);
+void drivers_free(Drivers drivers);
 
 /**
  * @brief
@@ -27,7 +27,7 @@ void free_drivers(Drivers drivers);
  * @param d
  * @return gboolean
  */
-gboolean insert_driver(Drivers drivers, Driver d);
+gboolean drivers_add_driver(Drivers drivers, Driver d);
 
 /**
  * @brief Get the driver object
@@ -36,7 +36,7 @@ gboolean insert_driver(Drivers drivers, Driver d);
  * @param id
  * @return Driver
  */
-Driver get_driver(Drivers drivers, long id);
+Driver drivers_get_driver(Drivers drivers, long id);
 
 /**
  * @brief
@@ -44,6 +44,6 @@ Driver get_driver(Drivers drivers, long id);
  * @param drivers
  * @return guint
  */
-guint remove_inactive_drivers(Drivers drivers);
+guint drivers_remove_inactive_accounts(Drivers drivers);
 
 #endif

@@ -22,26 +22,26 @@ typedef enum u_account_status {
 } U_Status;
 
 /**
- * @brief Set the user username object
- *
- * @param u
- * @param username
- */
-void set_user_username(User u, char *username);
-
-/**
  * @brief
  *
  * @return User
  */
-User new_user(void);
+User user_new(void);
 
 /**
  * @brief
  *
  * @param user
  */
-void free_user(void *user);
+void user_free(void *user);
+
+/**
+ * @brief Set the user username object
+ *
+ * @param u
+ * @param username
+ */
+void user_set_username(User u, char *username);
 
 /**
  * @brief Set the user name object
@@ -49,7 +49,7 @@ void free_user(void *user);
  * @param u
  * @param name
  */
-void set_user_name(User u, char *name);
+void user_set_name(User u, char *name);
 
 /**
  * @brief Set the user gender object
@@ -57,7 +57,7 @@ void set_user_name(User u, char *name);
  * @param u
  * @param gender
  */
-void set_user_gender(User u, char *gender);
+void user_set_gender(User u, char *gender);
 
 /**
  * @brief Set the user age object
@@ -65,7 +65,7 @@ void set_user_gender(User u, char *gender);
  * @param u
  * @param birth_date
  */
-void set_user_age(User u, char *birth_date);
+void user_set_age(User u, char *birth_date);
 
 /**
  * @brief Set the user account age object
@@ -73,7 +73,7 @@ void set_user_age(User u, char *birth_date);
  * @param u
  * @param account_creation
  */
-void set_user_account_age(User u, char *account_creation);
+void user_set_account_age(User u, char *account_creation);
 
 /**
  * @brief Set the user account status object
@@ -81,7 +81,7 @@ void set_user_account_age(User u, char *account_creation);
  * @param u
  * @param account_status
  */
-void set_user_account_status(User u, char *account_status);
+void user_set_account_status(User u, char *account_status);
 
 /**
  * @brief Get the user username object
@@ -89,7 +89,7 @@ void set_user_account_status(User u, char *account_status);
  * @param u
  * @return char*
  */
-char *get_user_username(User u);
+char *user_get_username(User u);
 
 /**
  * @brief Get the user name object
@@ -97,7 +97,7 @@ char *get_user_username(User u);
  * @param u
  * @return char*
  */
-char *get_user_name(User u);
+char *user_get_name(User u);
 
 /**
  * @brief Get the user gender object
@@ -105,7 +105,7 @@ char *get_user_name(User u);
  * @param u
  * @return char
  */
-char get_user_gender(User u);
+char user_get_gender(User u);
 
 /**
  * @brief Get the user age object
@@ -113,7 +113,7 @@ char get_user_gender(User u);
  * @param u
  * @return uint8_t
  */
-uint8_t get_user_age(User u);
+uint8_t user_get_age(User u);
 
 /**
  * @brief Get the user account age object
@@ -121,7 +121,7 @@ uint8_t get_user_age(User u);
  * @param u
  * @return unsigned short
  */
-unsigned short get_user_account_age(User u);
+unsigned short user_get_account_age(User u);
 
 /**
  * @brief Get the user account status object
@@ -129,7 +129,7 @@ unsigned short get_user_account_age(User u);
  * @param u
  * @return U_Status
  */
-U_Status get_user_account_status(User u);
+U_Status user_get_account_status(User u);
 
 /**
  * @brief Get the user avg score object
@@ -137,7 +137,7 @@ U_Status get_user_account_status(User u);
  * @param u
  * @return double
  */
-double get_user_avg_score(User u);
+double user_get_avg_score(User u);
 
 /**
  * @brief Get the user total spent object
@@ -145,7 +145,7 @@ double get_user_avg_score(User u);
  * @param u
  * @return double
  */
-double get_user_total_spent(User u);
+double user_get_total_spent(User u);
 
 /**
  * @brief Get the user total distance object
@@ -153,7 +153,7 @@ double get_user_total_spent(User u);
  * @param u
  * @return unsigned short
  */
-unsigned short get_user_total_distance(User u);
+unsigned short user_get_total_distance(User u);
 
 /**
  * @brief Get the user n trips object
@@ -161,7 +161,7 @@ unsigned short get_user_total_distance(User u);
  * @param u
  * @return unsigned short
  */
-unsigned short get_user_n_trips(User u);
+unsigned short user_get_n_trips(User u);
 
 /**
  * @brief Get the user last ride date object
@@ -169,7 +169,7 @@ unsigned short get_user_n_trips(User u);
  * @param u
  * @return unsigned short
  */
-unsigned short get_user_last_ride_date(User u);
+unsigned short user_get_last_ride_date(User u);
 
 /**
  * @brief
@@ -177,7 +177,7 @@ unsigned short get_user_last_ride_date(User u);
  * @param u
  * @param r
  */
-void add_user_ride_data(User u, Ride r);
+void user_add_ride_data(User u, Ride r);
 
 /**
  * @brief
@@ -185,6 +185,6 @@ void add_user_ride_data(User u, Ride r);
  * @param old_u
  * @return User
  */
-User copy_user(User old_u);
+User user_copy(User old_u);
 
 #endif

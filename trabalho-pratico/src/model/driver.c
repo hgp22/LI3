@@ -19,7 +19,7 @@ struct driver {
     unsigned short last_ride_date;
 };
 
-Driver new_driver(void)
+Driver driver_new(void)
 {
     Driver d = g_new(struct driver, 1);
 
@@ -31,7 +31,7 @@ Driver new_driver(void)
     return d;
 }
 
-void free_driver(void *driver)
+void driver_free(void *driver)
 {
     if (driver != NULL) {
         Driver d = (Driver)driver;
@@ -40,28 +40,28 @@ void free_driver(void *driver)
     }
 }
 
-void set_driver_id(Driver d, char *id)
+void driver_set_id(Driver d, char *id)
 {
     char *endptr;
     d->id = strtol(id, &endptr, 10);
 }
 
-void set_driver_name(Driver d, char *name)
+void driver_set_name(Driver d, char *name)
 {
     d->name = strdup(name);
 }
 
-void set_driver_gender(Driver d, char *gender)
+void driver_set_gender(Driver d, char *gender)
 {
     d->gender = *gender;
 }
 
-void set_driver_age(Driver d, char *birth_date)
+void driver_set_age(Driver d, char *birth_date)
 {
     d->age = date_to_age(birth_date);
 }
 
-void set_driver_car_class(Driver d, char *car_class)
+void driver_set_car_class(Driver d, char *car_class)
 {
     switch (car_class[0]) {
         case 'b':
@@ -78,12 +78,12 @@ void set_driver_car_class(Driver d, char *car_class)
     }
 }
 
-void set_driver_account_age(Driver d, char *account_creation)
+void driver_set_account_age(Driver d, char *account_creation)
 {
     d->account_age = date_to_days(account_creation);
 }
 
-void set_driver_account_status(Driver d, char *account_status)
+void driver_set_account_status(Driver d, char *account_status)
 {
     switch (account_status[0]) {
         case 'i':
@@ -97,42 +97,42 @@ void set_driver_account_status(Driver d, char *account_status)
     }
 }
 
-long get_driver_id(Driver d)
+long driver_get_id(Driver d)
 {
     return d->id;
 }
 
-char *get_driver_name(Driver d)
+char *driver_get_name(Driver d)
 {
     return strdup(d->name);
 }
 
-char get_driver_gender(Driver d)
+char driver_get_gender(Driver d)
 {
     return d->gender;
 }
 
-uint8_t get_driver_age(Driver d)
+uint8_t driver_get_age(Driver d)
 {
     return d->age;
 }
 
-Car_Class get_driver_car_class(Driver d)
+Car_Class driver_get_car_class(Driver d)
 {
     return d->car_class;
 }
 
-unsigned short get_driver_account_age(Driver d)
+unsigned short driver_get_account_age(Driver d)
 {
     return d->account_age;
 }
 
-D_Status get_driver_account_status(Driver d)
+D_Status driver_get_account_status(Driver d)
 {
     return d->account_status;
 }
 
-double get_driver_avg_score(Driver d)
+double driver_get_avg_score(Driver d)
 {
     double avg_score = 0;
     if (d->n_trips != 0) {
@@ -141,33 +141,33 @@ double get_driver_avg_score(Driver d)
     return avg_score;
 }
 
-double get_driver_total_earned(Driver d)
+double driver_get_total_earned(Driver d)
 {
     return d->total_earned;
 }
 
-unsigned short get_driver_n_trips(Driver d)
+unsigned short driver_get_n_trips(Driver d)
 {
     return d->n_trips;
 }
 
-unsigned short get_driver_last_ride_date(Driver d)
+unsigned short driver_get_last_ride_date(Driver d)
 {
     return d->last_ride_date;
 }
 
-void add_driver_ride_data(Driver d, Ride r)
+void driver_add_ride_data(Driver d, Ride r)
 {
-    d->sum_score += get_ride_score_driver(r);
-    d->total_earned += get_ride_cost(r) + get_ride_tip(r);
-    unsigned short ride_date = get_ride_date(r);
+    d->sum_score += ride_get_score_driver(r);
+    d->total_earned += ride_get_cost(r) + ride_get_tip(r);
+    unsigned short ride_date = ride_get_date(r);
     if (ride_date > d->last_ride_date) {
         d->last_ride_date = ride_date;
     }
     d->n_trips += 1;
 }
 
-Driver copy_driver(Driver old_d)
+Driver driver_copy(Driver old_d)
 {
     if (old_d == NULL) {
         return NULL;

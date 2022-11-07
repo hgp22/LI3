@@ -64,7 +64,7 @@ $(BLD_DIR)/%.o: %.c
 
 $(BIN_DIR)/$(PROGRAM): $(DEPS) $(OBJS)
 	-$(call show,green,bold,"Compiling $(shell basename $@) ... ")
-	@$(CC) $(INCLDS) $(LIBS) $(CFLAGS) -o $@ $(OBJS)
+	@$(CC) $(INCLDS) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
 	@echo -e "$(OK_STRING)"
 
 .PHONY: build # Compile binary program

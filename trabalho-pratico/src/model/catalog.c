@@ -19,114 +19,114 @@ struct catalog {
     Cities cities;
 };
 
-Catalog new_catalog()
+Catalog catalog_new()
 {
     Catalog c = g_new(struct catalog, 1);
-    c->cities = new_cities();
+    c->cities = cities_new();
     return c;
 }
 
-int process_catalog(Catalog c)
+int catalog_process(Catalog c)
 {
-    sort_rides(c->rides);
+    rides_sort(c->rides);
 
     guint n_rides = c->rides->len;
 
     for (guint i = 0; i < n_rides; i++) {
         Ride r = g_array_index(c->rides, Ride, i);
-        long d_id = get_ride_driver(r);
-        Driver d = get_driver(c->drivers, d_id);
-        set_ride_cost(r, d);
-        add_driver_ride_data(d, r);
-        char *username = get_ride_user(r);
-        User u = get_users_user(c->users, username);
+        long d_id = ride_get_driver(r);
+        Driver d = drivers_get_driver(c->drivers, d_id);
+        ride_set_cost(r, d);
+        driver_add_ride_data(d, r);
+        char *username = ride_get_user(r);
+        User u = users_get_user(c->users, username);
         free(username);
-        add_user_ride_data(u, r);
-        add_cities_ride(c->cities, r);
+        user_add_ride_data(u, r);
+        cities_add_ride(c->cities, r);
     }
 
-    remove_inactive_users(c->users);
-    remove_inactive_drivers(c->drivers);
+    users_remove_inactive_accounts(c->users);
+    drivers_remove_inactive_accounts(c->drivers);
 
-    c->query2 = new_query2(c->drivers);
-    sort_query2(c->query2);
+    c->query2 = query2_new(c->drivers);
+    query2_sort(c->query2);
 
-    c->query3 = new_query3(c->users);
-    sort_query3(c->query3);
+    c->query3 = query3_new(c->users);
+    query3_sort(c->query3);
 
     return 0;
 }
 
-void free_catalog(Catalog c)
+void catalog_free(Catalog c)
 {
-    free_users(c->users);
-    free_drivers(c->drivers);
-    free_rides(c->rides);
-    free_query2(c->query2);
-    free_query3(c->query3);
-    free_cities(c->cities);
+    users_free(c->users);
+    drivers_free(c->drivers);
+    rides_free(c->rides);
+    query2_free(c->query2);
+    query3_free(c->query3);
+    cities_free(c->cities);
     free(c);
 }
 
-void set_catalog_users(Catalog c, Users users)
+void catalog_set_users(Catalog c, Users users)
 {
     c->users = users;
 }
 
-void set_catalog_drivers(Catalog c, Drivers drivers)
+void catalog_set_drivers(Catalog c, Drivers drivers)
 {
     c->drivers = drivers;
 }
 
-void set_catalog_rides(Catalog c, Rides rides)
+void catalog_set_rides(Catalog c, Rides rides)
 {
     c->rides = rides;
 }
 
-User get_catalog_user(Catalog c, char *username)
+User catalog_get_user(Catalog c, char *username)
 {
-    return copy_user(get_users_user(c->users, username));
+    return user_copy(users_get_user(c->users, username));
 }
 
-Driver get_catalog_driver(Catalog c, long id)
+Driver catalog_get_driver(Catalog c, long id)
 {
-    return copy_driver(get_driver(c->drivers, id));
+    return driver_copy(drivers_get_driver(c->drivers, id));
 }
 
-Query2 get_catalog_top_n_drivers_by_score(Catalog c, int N)
+Query2 catalog_get_top_n_drivers_by_score(Catalog c, int N)
 {
-    Query2 r = g_ptr_array_new_full(N, free_driver);
+    Query2 r = g_ptr_array_new_full(N, driver_free);
 
     for (int i = 0; i < N; i++) {
-        g_ptr_array_add(r, copy_driver(g_ptr_array_index(c->query2, i)));
+        g_ptr_array_add(r, driver_copy(g_ptr_array_index(c->query2, i)));
     }
 
     return r;
 }
 
-Query3 get_catalog_top_n_users_by_distance(Catalog c, int N)
+Query3 catalog_get_top_n_users_by_distance(Catalog c, int N)
 {
-    Query3 r = g_ptr_array_new_full(N, free_user);
+    Query3 r = g_ptr_array_new_full(N, user_free);
 
     for (int i = 0; i < N; i++) {
-        g_ptr_array_add(r, copy_user(g_ptr_array_index(c->query3, i)));
+        g_ptr_array_add(r, user_copy(g_ptr_array_index(c->query3, i)));
     }
 
     return r;
 }
 
-double get_catalog_city_avg_cost(Catalog c, char *city)
+double catalog_get_city_avg_cost(Catalog c, char *city)
 {
-    return get_cities_city_avg_cost(c->cities, city);
+    return cities_get_city_avg_cost(c->cities, city);
 }
 
-double get_catalog_avg_cost_in_range(Catalog c, char *dateA, char *dateB)
+double catalog_get_avg_cost_in_range(Catalog c, char *dateA, char *dateB)
 {
-    return get_rides_avg_stat_in_range(c->rides, dateA, dateB, get_ride_cost);
+    return rides_get_avg_stat_in_range(c->rides, dateA, dateB, ride_get_cost);
 }
 
-double get_catalog_city_avg_dist_in_range(Catalog c, char *city, char *dateA,
+double catalog_get_city_avg_dist_in_range(Catalog c, char *city, char *dateA,
                                           char *dateB)
 {
-    return get_cities_city_avg_dist_in_range(c->cities, city, dateA, dateB);
+    return cities_get_city_avg_dist_in_range(c->cities, city, dateA, dateB);
 }

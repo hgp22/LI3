@@ -14,22 +14,22 @@ typedef struct city {
 static void _key_destroyed(gpointer data);
 static void _value_destroyed(gpointer data);
 
-Cities new_cities(void)
+Cities cities_new(void)
 {
     return g_hash_table_new_full(g_str_hash, g_str_equal,
                                  (GDestroyNotify)_key_destroyed,
                                  (GDestroyNotify)_value_destroyed);
 }
 
-void free_cities(Cities cities)
+void cities_free(Cities cities)
 {
     g_hash_table_destroy(g_steal_pointer(&cities));
 }
 
-void add_cities_ride(Cities cities, Ride r)
+void cities_add_ride(Cities cities, Ride r)
 {
-    double cost = get_ride_cost(r);
-    char *city = get_ride_city(r);
+    double cost = ride_get_cost(r);
+    char *city = ride_get_city(r);
     City found = g_hash_table_lookup(cities, city);
     if (found != NULL) {
         g_array_append_val(found->rides, r);
@@ -48,18 +48,17 @@ void add_cities_ride(Cities cities, Ride r)
     }
 }
 
-double get_cities_city_avg_cost(Cities cities, char *city)
+double cities_get_city_avg_cost(Cities cities, char *city)
 {
     City c = g_hash_table_lookup(cities, city);
     return c->sum_costs / c->n_rides;
 }
 
-double get_cities_city_avg_dist_in_range(Cities cities, char *city, char *dateA,
+double cities_get_city_avg_dist_in_range(Cities cities, char *city, char *dateA,
                                          char *dateB)
 {
     City c = g_hash_table_lookup(cities, city);
-    return get_rides_avg_stat_in_range(c->rides, dateA, dateB,
-                                       get_ride_distance);
+    return rides_get_avg_stat_in_range(c->rides, dateA, dateB, ride_get_distance);
 }
 
 static void _key_destroyed(gpointer data)

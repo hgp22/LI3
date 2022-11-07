@@ -7,32 +7,32 @@ typedef GPtrArray *Query3;
 typedef GHashTable *Users;
 
 /**
- * @brief
+ * @brief Creat new Query3
  *
- * @param drivers
- * @return Query3
+ * @param users Users to creat Query3
+ * @return Query3 created
  */
-Query3 new_query3(Users users);
+Query3 query3_new(Users users);
 
 /**
- * @brief
+ * @brief Free Query3
  *
- * @param q3
+ * @param q3 Query3 to be freed
  */
-void free_query3(Query3 q3);
+void query3_free(Query3 q3);
 
 /**
- * @brief
+ * @brief Free Query3 and it's elements
  *
- * @param q3
+ * @param q3 Query3 to be fully freed
  */
-void free_query3_full(Query3 q3);
+void query3_free_full(Query3 q3);
 
 /**
- * @brief
+ * @brief Sort Query3
  *
- * @param q3
+ * @param q3 Query3 to be sorted
  */
-void sort_query3(Query3 q3);
+void query3_sort(Query3 q3);
 
 #endif

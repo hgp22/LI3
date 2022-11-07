@@ -18,66 +18,66 @@ struct ride {
     double tip;
 };
 
-Ride new_ride(void)
+Ride ride_new(void)
 {
     return g_new(struct ride, 1);
 }
 
-void free_ride(Ride *r)
+void ride_free(Ride *r)
 {
     free((*r)->user);
     free((*r)->city);
     free(*r);
 }
 
-void set_ride_id(Ride r, char *id)
+void ride_set_id(Ride r, char *id)
 {
     char *endptr;
     r->id = strtol(id, &endptr, 10);
 }
 
-void set_ride_date(Ride r, char *date)
+void ride_set_date(Ride r, char *date)
 {
     r->date = date_to_days(date);
 }
 
-void set_ride_driver(Ride r, char *driver)
+void ride_set_driver(Ride r, char *driver)
 {
     char *endptr;
     r->driver = strtol(driver, &endptr, 10);
 }
 
-void set_ride_user(Ride r, char *user)
+void ride_set_user(Ride r, char *user)
 {
     r->user = strdup(user);
 }
 
-void set_ride_city(Ride r, char *city)
+void ride_set_city(Ride r, char *city)
 {
     r->city = strdup(city);
 }
 
-void set_ride_distance(Ride r, char *distance)
+void ride_set_distance(Ride r, char *distance)
 {
     char *endptr;
     r->distance = (uint8_t)strtol(distance, &endptr, 10);
 }
 
-void set_ride_score_user(Ride r, char *score_user)
+void ride_set_score_user(Ride r, char *score_user)
 {
     char *endptr;
     r->score_user = (uint8_t)strtol(score_user, &endptr, 10);
 }
 
-void set_ride_score_driver(Ride r, char *score_driver)
+void ride_set_score_driver(Ride r, char *score_driver)
 {
     char *endptr;
     r->score_driver = (uint8_t)strtol(score_driver, &endptr, 10);
 }
 
-void set_ride_cost(Ride r, Driver d)
+void ride_set_cost(Ride r, Driver d)
 {
-    Car_Class class = get_driver_car_class(d);
+    Car_Class class = driver_get_car_class(d);
     double base[] = {3.25, 4.00, 5.20};
     double tax[] = {0.62, 0.79, 0.94};
     double b = base[class];
@@ -85,63 +85,63 @@ void set_ride_cost(Ride r, Driver d)
     r->cost = b + t * r->distance;
 }
 
-void set_ride_tip(Ride r, char *tip)
+void ride_set_tip(Ride r, char *tip)
 {
     char *endptr;
     r->tip = (float)strtof(tip, &endptr);
 }
 
-long get_ride_id(Ride r)
+long ride_get_id(Ride r)
 {
     return r->id;
 }
 
-unsigned short get_ride_date(Ride r)
+unsigned short ride_get_date(Ride r)
 {
     return r->date;
 }
 
-long get_ride_driver(Ride r)
+long ride_get_driver(Ride r)
 {
     return r->driver;
 }
 
-char *get_ride_user(Ride r)
+char *ride_get_user(Ride r)
 {
     return strdup(r->user);
 }
 
-char *get_ride_city(Ride r)
+char *ride_get_city(Ride r)
 {
     return strdup(r->city);
 }
 
-double get_ride_distance(Ride r)
+double ride_get_distance(Ride r)
 {
     return (double)r->distance;
 }
 
-uint8_t get_ride_score_user(Ride r)
+uint8_t ride_get_score_user(Ride r)
 {
     return r->score_user;
 }
 
-uint8_t get_ride_score_driver(Ride r)
+uint8_t ride_get_score_driver(Ride r)
 {
     return r->score_driver;
 }
 
-double get_ride_cost(Ride r)
+double ride_get_cost(Ride r)
 {
     return r->cost;
 }
 
-double get_ride_tip(Ride r)
+double ride_get_tip(Ride r)
 {
     return r->tip;
 }
 
-Ride copy_ride(Ride old_r)
+Ride ride_copy(Ride old_r)
 {
     if (old_r == NULL) {
         return NULL;

@@ -10,6 +10,6 @@ typedef struct catalog *Catalog;
  * @param path_inputs
  * @return int
  */
-int load_db(Catalog c, char *path_inputs);
+int db_load(Catalog c, char *path_inputs);
 
 #endif
