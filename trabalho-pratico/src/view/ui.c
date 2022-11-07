@@ -10,15 +10,6 @@ FILE *next_output_file(void)
     char file[64];
     sprintf(file, "./Resultados/command%d_output.txt", counter++);
     return freopen(file, "w", stdout);
-    /*
-    FILE *command_out = freopen(file, "w", stdout);
-    if (command_out == NULL) {
-        perror(file);
-        return 1;
-    }
-    return 0;
-    */
-}
 
 void show_query1_user(User u)
 {
