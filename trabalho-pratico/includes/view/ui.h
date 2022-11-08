@@ -2,11 +2,19 @@
 #define __UI_H__
 
 #include <glib.h>
+#include <stdio.h>
 
 typedef struct user *User;
 typedef struct driver *Driver;
 typedef GPtrArray *Query2;
 typedef GPtrArray *Query3;
+
+/**
+ * @brief 
+ * 
+ * @return FILE* 
+ */
+FILE *next_output_file(void);
 
 /**
  * @brief
