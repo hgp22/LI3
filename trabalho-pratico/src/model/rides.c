@@ -16,14 +16,19 @@ Rides rides_new(void)
     return r;
 }
 
+void rides_free(Rides rides)
+{
+    g_array_free(rides, TRUE);
+}
+
 void rides_add_ride(Rides rides, Ride ride)
 {
     g_array_append_val(rides, ride);
 }
 
-void rides_free(Rides rides)
+Ride rides_get_ride(Rides rides, guint index)
 {
-    g_array_free(rides, TRUE);
+    return g_array_index(rides, Ride, index);
 }
 
 void rides_sort(Rides rides)

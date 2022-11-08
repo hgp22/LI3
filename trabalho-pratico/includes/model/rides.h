@@ -17,16 +17,25 @@ Rides rides_new(void);
  * @brief
  *
  * @param rides
- * @param ride
  */
-void rides_add_ride(Rides rides, Ride ride);
+void rides_free(Rides rides);
 
 /**
  * @brief
  *
  * @param rides
+ * @param ride
  */
-void rides_free(Rides rides);
+void rides_add_ride(Rides rides, Ride ride);
+
+/**
+ * @brief 
+ * 
+ * @param rides 
+ * @param index 
+ * @return Ride 
+ */
+Ride rides_get_ride(Rides rides, guint index);
 
 /**
  * @brief

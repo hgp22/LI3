@@ -17,9 +17,24 @@ Query2 query2_new(Drivers drivers)
     return q2;
 }
 
+Query2 query2_new_sized(int N)
+{
+    return g_ptr_array_new_full(N, driver_free);
+}
+
 void query2_free(Query2 q2)
 {
     g_ptr_array_free(q2, TRUE);
+}
+
+void query2_add_driver(Query2 q2, Driver d)
+{
+    g_ptr_array_add(q2, d);
+}
+
+Driver query2_index(Query2 q2, int index)
+{
+    return g_ptr_array_index(q2, index);
 }
 
 void query2_sort(Query2 q2)

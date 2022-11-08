@@ -17,9 +17,24 @@ Query3 query3_new(Users users)
     return q3;
 }
 
+Query3 query3_new_sized(int N)
+{
+    return g_ptr_array_new_full(N, user_free);
+}
+
 void query3_free(Query3 q3)
 {
     g_ptr_array_free(q3, TRUE);
+}
+
+void query3_add_driver(Query3 q3, User u)
+{
+    g_ptr_array_add(q3, u);
+}
+
+User query3_index(Query3 q3, int index)
+{
+    return g_ptr_array_index(q3, index);
 }
 
 void query3_sort(Query3 q3)

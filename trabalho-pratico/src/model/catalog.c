@@ -33,7 +33,7 @@ int catalog_process(Catalog c)
     guint n_rides = c->rides->len;
 
     for (guint i = 0; i < n_rides; i++) {
-        Ride r = g_array_index(c->rides, Ride, i);
+        Ride r = rides_get_ride(c->rides, i);
         long d_id = ride_get_driver(r);
         Driver d = drivers_get_driver(c->drivers, d_id);
         ride_set_cost(r, d);
@@ -95,10 +95,10 @@ Driver catalog_get_driver(Catalog c, long id)
 
 Query2 catalog_get_top_n_drivers_by_score(Catalog c, int N)
 {
-    Query2 r = g_ptr_array_new_full(N, driver_free);
+    Query2 r = query2_new_sized(N);
 
     for (int i = 0; i < N; i++) {
-        g_ptr_array_add(r, driver_copy(g_ptr_array_index(c->query2, i)));
+        query2_add_driver(r, driver_copy(query2_index(c->query2, i)));
     }
 
     return r;
@@ -106,10 +106,10 @@ Query2 catalog_get_top_n_drivers_by_score(Catalog c, int N)
 
 Query3 catalog_get_top_n_users_by_distance(Catalog c, int N)
 {
-    Query3 r = g_ptr_array_new_full(N, user_free);
+    Query3 r = query3_new_sized(N);
 
     for (int i = 0; i < N; i++) {
-        g_ptr_array_add(r, user_copy(g_ptr_array_index(c->query3, i)));
+        query3_add_driver(r, user_copy(query3_index(c->query3, i)));
     }
 
     return r;
