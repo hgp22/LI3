@@ -8,47 +8,44 @@ typedef struct ride *Ride;
 typedef GPtrArray *Rides;
 
 /**
- * @brief
+ * @brief Creates a new Cities
  *
- * @return Cities
+ * @return Cities created
  */
-Cities new_cities(void);
+Cities cities_new(void);
 
 /**
- * @brief
+ * @brief Frees Cities
  *
- * @param cities
+ * @param cities Cities to be freed
  */
-void free_cities(Cities cities);
+void cities_free(Cities cities);
 
 /**
- * @brief
+ * @brief Adds ride to cities
  *
- * @param cities
- * @param city
- * @param cost
+ * @param cities Cities to add ride to
+ * @param r Ride to be added
  */
-void add_cities_ride(Cities cities, Ride r);
+void cities_add_ride(Cities cities, Ride r);
 
 /**
  * @brief Get the cities city avg cost object
  *
- * @param cities
- * @param city
- * @return double
+ * @param cities Cities to get average cost
+ * @param city City name to fin in Cities
  */
-double get_cities_city_avg_cost(Cities cities, char *city);
+double cities_get_city_avg_cost(Cities cities, char *city);
 
 /**
- * @brief
+ * @brief Gets the average distance travelled in a city between two dates
  *
- * @param cities
- * @param city
- * @param dateA
- * @param dateB
- * @return double
+ * @param cities Cities
+ * @param city City
+ * @param dateA First date
+ * @param dateB Second date
+ * @return Average distance
  */
-double get_cities_city_avg_dist_in_range(Cities cities, char *city, char *dateA,
-                                         char *dateB);
+double cities_get_city_avg_dist_in_range(Cities cities, char *city, char *dateA, char *dateB);
 
 #endif

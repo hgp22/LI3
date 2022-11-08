@@ -9,12 +9,12 @@ static gint _ride_comparator(gconstpointer a, gconstpointer b);
 static guint g_array_binary_search_safe(GPtrArray *array, gconstpointer target,
                                         GCompareFunc compare_func);
 
-Rides new_rides(void)
+Rides rides_new(void)
 {
-    return g_ptr_array_new_full(RESERVED_SIZE, (GDestroyNotify)free_ride);
+    return g_ptr_array_new_full(RESERVED_SIZE, (GDestroyNotify)ride_free);
 }
 
-void free_rides(Rides rides)
+void rides_free(Rides rides)
 {
     g_ptr_array_free(rides, TRUE);
 }
@@ -29,16 +29,26 @@ Ride get_rides_ride(Rides rides, guint index)
     return g_ptr_array_index(rides, index);
 }
 
-void sort_rides(Rides rides)
+void rides_add_ride(Rides rides, Ride ride)
+{
+    g_ptr_array_add(rides, ride);
+}
+
+Ride rides_get_ride(Rides rides, guint index)
+{
+    return g_ptr_array_index(rides, index);
+}
+
+void rides_sort(Rides rides)
 {
     g_ptr_array_sort(rides, (GCompareFunc)_ride_comparator);
 }
 
-double get_rides_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
+double rides_get_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
                                    double (*get_func)(Ride))
 {
-    Ride r_date = new_ride();
-    set_ride_date(r_date, dateA);
+    Ride r_date = ride_new();
+    ride_set_date(r_date, dateA);
     guint i = g_array_binary_search_safe(rides, &r_date, _ride_comparator);
     free(r_date);
 
@@ -47,7 +57,7 @@ double get_rides_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
     int n_rides = 0;
 
     for (Ride r = g_ptr_array_index(rides, i);
-         i < rides->len && get_ride_date(r) <= target;
+         i < rides->len && ride_get_date(r) <= target;
          r = g_ptr_array_index(rides, ++i)) {
         sum_distance += get_func(r);
         n_rides++;
@@ -60,7 +70,7 @@ static gint _ride_comparator(gconstpointer a, gconstpointer b)
 {
     const Ride r1 = *((Ride *)a);
     const Ride r2 = *((Ride *)b);
-    return get_ride_date(r1) - get_ride_date(r2);
+    return ride_get_date(r1) - ride_get_date(r2);
 }
 
 typedef struct _GRealPtrArray GRealPtrArray;

@@ -19,7 +19,7 @@ struct user {
     unsigned short last_ride_date;
 };
 
-User new_user(void)
+User user_new(void)
 {
     User u = g_new(struct user, 1);
 
@@ -32,7 +32,7 @@ User new_user(void)
     return u;
 }
 
-void free_user(void *user)
+void user_free(void *user)
 {
     if (user != NULL) {
         User u = (User)user;
@@ -42,32 +42,32 @@ void free_user(void *user)
     }
 }
 
-void set_user_username(User u, char *username)
+void user_set_username(User u, char *username)
 {
     u->username = strdup(username);
 }
 
-void set_user_name(User u, char *name)
+void user_set_name(User u, char *name)
 {
     u->name = strdup(name);
 }
 
-void set_user_gender(User u, char *gender)
+void user_set_gender(User u, char *gender)
 {
     u->gender = *gender;
 }
 
-void set_user_age(User u, char *birth_date)
+void user_set_age(User u, char *birth_date)
 {
     u->age = date_to_age(birth_date);
 }
 
-void set_user_account_age(User u, char *account_creation)
+void user_set_account_age(User u, char *account_creation)
 {
     u->account_age = date_to_days(account_creation);
 }
 
-void set_user_account_status(User u, char *account_status)
+void user_set_account_status(User u, char *account_status)
 {
     switch (account_status[0]) {
         case 'i':
@@ -81,37 +81,37 @@ void set_user_account_status(User u, char *account_status)
     }
 }
 
-char *get_user_username(User u)
+char *user_get_username(User u)
 {
     return strdup(u->username);
 }
 
-char *get_user_name(User u)
+char *user_get_name(User u)
 {
     return strdup(u->name);
 }
 
-char get_user_gender(User u)
+char user_get_gender(User u)
 {
     return u->gender;
 }
 
-uint8_t get_user_age(User u)
+uint8_t user_get_age(User u)
 {
     return u->age;
 }
 
-unsigned short get_user_account_age(User u)
+unsigned short user_get_account_age(User u)
 {
     return u->account_age;
 }
 
-U_Status get_user_account_status(User u)
+U_Status user_get_account_status(User u)
 {
     return u->account_status;
 }
 
-double get_user_avg_score(User u)
+double user_get_avg_score(User u)
 {
     double avg_score = 0;
     if (u->n_trips != 0) {
@@ -120,39 +120,39 @@ double get_user_avg_score(User u)
     return avg_score;
 }
 
-double get_user_total_spent(User u)
+double user_get_total_spent(User u)
 {
     return u->total_spent;
 }
 
-unsigned short get_user_total_distance(User u)
+unsigned short user_get_total_distance(User u)
 {
     return u->total_distance;
 }
 
-unsigned short get_user_n_trips(User u)
+unsigned short user_get_n_trips(User u)
 {
     return u->n_trips;
 }
 
-unsigned short get_user_last_ride_date(User u)
+unsigned short user_get_last_ride_date(User u)
 {
     return u->last_ride_date;
 }
 
-void add_user_ride_data(User u, Ride r)
+void user_add_ride_data(User u, Ride r)
 {
-    u->sum_score += get_ride_score_user(r);
-    u->total_spent += get_ride_cost(r) + get_ride_tip(r);
-    u->total_distance += (unsigned short)get_ride_distance(r);
-    unsigned short ride_date = get_ride_date(r);
+    u->sum_score += ride_get_score_user(r);
+    u->total_spent += ride_get_cost(r) + ride_get_tip(r);
+    u->total_distance += (unsigned short)ride_get_distance(r);
+    unsigned short ride_date = ride_get_date(r);
     if (ride_date > u->last_ride_date) {
         u->last_ride_date = ride_date;
     }
     u->n_trips += 1;
 }
 
-User copy_user(User old_u)
+User user_copy(User old_u)
 {
     if (old_u == NULL) {
         return NULL;

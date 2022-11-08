@@ -7,53 +7,52 @@ typedef struct ride *Ride;
 typedef GPtrArray *Rides;
 
 /**
- * @brief
+ * @brief Creates a new Rides
  *
- * @return Rides
+ * @return Rides created
  */
-Rides new_rides(void);
+Rides rides_new(void);
 
 /**
- * @brief
+ * @brief Frees Rides
  *
- * @param rides
+ * @param rides Rides to be freed
  */
-void free_rides(Rides rides);
+void rides_free(Rides rides);
 
 /**
- * @brief
+ * @brief Adds a Ride to Rides
  *
- * @param rides
- * @param ride
+ * @param rides Rides to add Ride
+ * @param ride Ride to add to Rides
  */
-void add_rides_ride(Rides rides, Ride ride);
+void rides_add_ride(Rides rides, Ride ride);
 
 /**
- * @brief Get the rides ride object
+ * @brief Get Ride from Rides
  * 
- * @param rides 
- * @param index 
- * @return Ride 
+ * @param rides Rides to get Ride from
+ * @param index Index to get Ride from
+ * @return Ride found
  */
-Ride get_rides_ride(Rides rides, guint index);
+Ride rides_get_ride(Rides rides, guint index);
 
 /**
- * @brief
+ * @brief Sorts Rides
  *
- * @param rides
+ * @param rides Rides sorted
  */
-void sort_rides(Rides rides);
+void rides_sort(Rides rides);
 
 /**
- * @brief Get the rides avg something in range object
+ * @brief Get the average ride statistic between two dates
  *
- * @param rides
- * @param dateA
- * @param dateB
- * @param get_func
- * @return double
+ * @param rides Rides
+ * @param dateA First date
+ * @param dateB Second date
+ * @param get_func Function to get stat
+ * @return Calculated average
  */
-double get_rides_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
-                                   double (*get_func)(Ride));
+double rides_get_avg_stat_in_range(Rides rides, char *dateA, char *dateB, double (*get_func)(Ride));
 
 #endif

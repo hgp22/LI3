@@ -4,7 +4,7 @@
 typedef struct catalog *Catalog;
 
 /**
- * @brief Run queries in batch
+ * @brief Controller main function
  *
  * @param path_inputs Path to inputs directory
  * @param path_queries Path to queries batch file
@@ -13,20 +13,20 @@ typedef struct catalog *Catalog;
 int run_controller(char *path_inputs, char *path_queries);
 
 /**
- * @brief
+ * @brief Controller loop, runs each query
  *
- * @param c
- * @return int
+ * @param c Complete catalog
+ * @return int Control integer
  */
 int run_queries(Catalog c);
 
 /**
- * @brief
+ * @brief Runs a single query
  *
- * @param c
- * @param query
- * @return int
+ * @param c Complete catalog
+ * @param query Query to be runned
+ * @return int Control integer
  */
-int parse_query(Catalog c, char *query);
+int run_query(Catalog c, char *query);
 
 #endif

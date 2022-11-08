@@ -14,116 +14,115 @@ typedef GPtrArray *Query3;
 typedef struct catalog *Catalog;
 
 /**
- * @brief
+ * @brief Creates a new catalog
  *
- * @return Catalog
+ * @return Catalog created
  */
-Catalog new_catalog();
+Catalog catalog_new();
 
 /**
- * @brief
+ * @brief Frees a catalog
  *
- * @param catalog
+ * @param catalog Catalog to be freed
  */
-void free_catalog(Catalog c);
+void catalog_free(Catalog c);
 
 /**
- * @brief
+ * @brief Processes a basic catalog into a complete catalog capable of answering any query
  *
- * @param c
- * @return int
+ * @param c Catalog to be processed
+ * @return Control integer
  */
-int process_catalog(Catalog c);
+int catalog_process(Catalog c);
 
 /**
- * @brief Set the catalog users object
+ * @brief Load users into catalog
  *
- * @param c
- * @param users
+ * @param c Catalog where to load users
+ * @param users Users to load into catalog
  */
-void set_catalog_users(Catalog c, Users users);
+void catalog_set_users(Catalog c, Users users);
 
 /**
- * @brief Set the catalog drivers object
+ * @brief Load drivers into catalog
  *
- * @param c
- * @param drivers
+ * @param c Catalog where to load drivers
+ * @param drivers Drivers to load into catalog
  */
-void set_catalog_drivers(Catalog c, Drivers drivers);
+void catalog_set_drivers(Catalog c, Drivers drivers);
 
 /**
- * @brief Set the catalog rides object
+ * @brief Load rides into catalog
  *
- * @param c
- * @param rides
+ * @param c Catalog where to load rides
+ * @param rides Rides to load into catalog
  */
-void set_catalog_rides(Catalog c, Rides rides);
+void catalog_set_rides(Catalog c, Rides rides);
 
 /**
- * @brief Get the catalog user object
+ * @brief Get a user in catalog by username
  *
- * @param c
- * @param username
- * @return User
+ * @param c Catalog to get user
+ * @param username Username of user to be returned
+ * @return User searched
  */
-User get_catalog_user(Catalog c, char *username);
+User catalog_get_user(Catalog c, char *username);
 
 /**
- * @brief Get the catalog driver object
+ * @brief Get a driver in catalog by driver id
  *
- * @param c
- * @param id
- * @return Driver
+ * @param c Catalog to get driver
+ * @param id Id of driver to be returned
+ * @return Driver searched
  */
-Driver get_catalog_driver(Catalog c, long id);
+Driver catalog_get_driver(Catalog c, long id);
 
 /**
- * @brief Get the catalog top n drivers by score object
+ * @brief Get the top N drivers by score
  *
- * @param c
- * @param N
- * @return Query2
+ * @param c Catalog to be searched
+ * @param N Number of drivers to be returned
+ * @return List of top N drivers by score
  */
-Query2 get_catalog_top_n_drivers_by_score(Catalog c, int N);
+Query2 catalog_get_top_n_drivers_by_score(Catalog c, int N);
 
 /**
- * @brief Get the catalog top n drivers by score object
- *
- * @param c
- * @param N
- * @return Query3
+ * @brief Get the top N users by distanced travelled
+ * 
+ * @param c Catalog to be searched
+ * @param N Number of users to be returned
+ * @return List of top N users by distance travelled
  */
-Query3 get_catalog_top_n_users_by_distance(Catalog c, int N);
+Query3 catalog_get_top_n_users_by_distance(Catalog c, int N);
 
 /**
- * @brief Get the catalog city avg cost object
+ * @brief Get rides average cost in a city
  *
- * @param c
- * @param city
- * @return double
+ * @param c Catalog
+ * @param city City
+ * @return Rides average cost in a city
  */
-double get_catalog_city_avg_cost(Catalog c, char *city);
+double catalog_get_city_avg_cost(Catalog c, char *city);
 
 /**
- * @brief Get the catalog avg cost in range object
+ * @brief Get rides average cost between two dates inclusive
  *
- * @param c
- * @param dateA
- * @param dateB
- * @return double
+ * @param c Catalog
+ * @param dateA First date
+ * @param dateB Second date
+ * @return Average ride cost between two dates inclusive
  */
-double get_catalog_avg_cost_in_range(Catalog c, char *dateA, char *dateB);
+double catalog_get_avg_cost_in_range(Catalog c, char *dateA, char *dateB);
 
 /**
- * @brief
+ * @brief Get average distance travelled in a city between two dates inclusive
  *
- * @param c
- * @param city
- * @param dateA
- * @param dateB
- * @return double
+ * @param c Catalog
+ * @param city Cidade
+ * @param dateA First date
+ * @param dateB Second date
+ * @return Average distance travelled in a city between two dates inclusive
  */
-double get_catalog_city_avg_dist_in_range(Catalog c, char *city, char *dateA,
-                                          char *dateB);
+double catalog_get_city_avg_dist_in_range(Catalog c, char *city, char *dateA, char *dateB);
 
 #endif

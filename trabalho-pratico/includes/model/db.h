@@ -4,12 +4,12 @@
 typedef struct catalog *Catalog;
 
 /**
- * @brief
+ * @brief Loads inputs files to Catalog
  *
- * @param c
- * @param path_inputs
- * @return int
+ * @param c Catalog to be loaded to
+ * @param path_inputs Path to inputs
+ * @return Control integer
  */
-int load_db(Catalog c, char *path_inputs);
+int db_load(Catalog c, char *path_inputs);
 
 #endif
