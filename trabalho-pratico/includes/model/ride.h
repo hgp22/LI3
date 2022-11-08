@@ -20,16 +20,16 @@ typedef enum field_ride {
 } Field_ride;
 
 /**
- * @brief
+ * @brief Create new Ride
  *
- * @return Ride
+ * @return Ride created
  */
 Ride ride_new(void);
 
 /**
- * @brief
+ * @brief Frees Ride
  *
- * @param ride
+ * @param ride Ride to be freed
  */
 void ride_free(Ride *r);
 

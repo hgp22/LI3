@@ -22,16 +22,16 @@ typedef enum u_account_status {
 } U_Status;
 
 /**
- * @brief
+ * @brief Create new User
  *
- * @return User
+ * @return User created
  */
 User user_new(void);
 
 /**
- * @brief
+ * @brief Frees User
  *
- * @param user
+ * @param user User to be freed
  */
 void user_free(void *user);
 

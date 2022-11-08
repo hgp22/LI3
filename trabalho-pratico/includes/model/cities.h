@@ -8,7 +8,7 @@ typedef struct ride *Ride;
 typedef GArray *Rides;
 
 /**
- * @brief Creat a new Cities
+ * @brief Creates a new Cities
  *
  * @return Cities created
  */
@@ -24,27 +24,27 @@ void cities_free(Cities cities);
 /**
  * @brief Adds ride to cities
  *
- * @param cities
- * @param r
+ * @param cities Cities to add ride to
+ * @param r Ride to be added
  */
 void cities_add_ride(Cities cities, Ride r);
 
 /**
  * @brief Get the cities city avg cost object
  *
- * @param cities
- * @param city
+ * @param cities Cities to get average cost
+ * @param city City name to fin in Cities
  */
 double cities_get_city_avg_cost(Cities cities, char *city);
 
 /**
- * @brief
+ * @brief Gets the average distance travelled in a city between two dates
  *
- * @param cities
- * @param city
- * @param dateA
- * @param dateB
- * @return double
+ * @param cities Cities
+ * @param city City
+ * @param dateA First date
+ * @param dateB Second date
+ * @return Average distance
  */
 double cities_get_city_avg_dist_in_range(Cities cities, char *city, char *dateA, char *dateB);
 

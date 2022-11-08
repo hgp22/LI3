@@ -31,16 +31,16 @@ typedef enum d_account_status {
 } D_Status;
 
 /**
- * @brief
+ * @brief Create new Driver
  *
- * @return Driver
+ * @return Driver created
  */
 Driver driver_new(void);
 
 /**
- * @brief
+ * @brief Frees Driver
  *
- * @param driver
+ * @param driver Driver to be freed
  */
 void driver_free(void *driver);
 

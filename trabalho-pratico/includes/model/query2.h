@@ -8,42 +8,42 @@ typedef GHashTable *Drivers;
 typedef struct driver *Driver;
 
 /**
- * @brief Creat a new Query2
+ * @brief Creates a new Query2
  *
- * @param drivers Drivers to creat Query2
- * @return Query2
+ * @param drivers Drivers to create Query2
+ * @return Query2 created
  */
 Query2 query2_new(Drivers drivers);
 
 /**
- * @brief 
+ * @brief Creates a sized Query2
  * 
- * @param N 
- * @return Query2 
+ * @param N Sized of Query2
+ * @return Query2 created
  */
 Query2 query2_new_sized(int N);
 
 /**
- * @brief Free Query2
+ * @brief Frees Query2
  *
  * @param q2 Query2 to be freed
  */
 void query2_free(Query2 q2);
 
 /**
- * @brief 
+ * @brief Adds a Driver to a Query2
  * 
- * @param q2 
- * @param d 
+ * @param q2 Query2 to add Driver
+ * @param d Driver to be added
  */
 void query2_add_driver(Query2 q2, Driver d);
 
 /**
- * @brief 
+ * @brief Get Driver in index from Query2
  * 
- * @param q2 
- * @param index 
- * @return Driver 
+ * @param q2 Query2 to get Driver
+ * @param index Index to get in Query2
+ * @return Driver in index
  */
 Driver query2_index(Query2 q2, int index);
 

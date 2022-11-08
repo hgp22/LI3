@@ -14,9 +14,9 @@ typedef GPtrArray *Query3;
 typedef struct catalog *Catalog;
 
 /**
- * @brief Creats a new catalog
+ * @brief Creates a new catalog
  *
- * @return Catalog
+ * @return Catalog created
  */
 Catalog catalog_new();
 
