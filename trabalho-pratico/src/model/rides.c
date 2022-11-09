@@ -19,16 +19,6 @@ void rides_free(Rides rides)
     g_ptr_array_free(rides, TRUE);
 }
 
-void add_rides_ride(Rides rides, Ride ride)
-{
-    g_ptr_array_add(rides, ride);
-}
-
-Ride get_rides_ride(Rides rides, guint index)
-{
-    return g_ptr_array_index(rides, index);
-}
-
 void rides_add_ride(Rides rides, Ride ride)
 {
     g_ptr_array_add(rides, ride);
