@@ -43,6 +43,9 @@ int catalog_process(Catalog c)
         free(username);
         user_add_ride_data(u, r);
         cities_add_ride(c->cities, r);
+        users_add_user(c->users, u);
+        drivers_add_driver(c->drivers, d);
+        rides_replace_ride(c->rides, r, i);
     }
 
     users_remove_inactive_accounts(c->users);

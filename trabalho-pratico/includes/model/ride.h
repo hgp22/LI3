@@ -199,6 +199,6 @@ double ride_get_tip(Ride r);
  * @param old_r
  * @return Ride
  */
-Ride copy_ride(Ride old_r);
+Ride ride_copy(Ride old_r);
 
 #endif

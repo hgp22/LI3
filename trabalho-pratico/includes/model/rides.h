@@ -29,6 +29,15 @@ void rides_free(Rides rides);
 void rides_add_ride(Rides rides, Ride ride);
 
 /**
+ * @brief 
+ * 
+ * @param rides 
+ * @param ride 
+ * @param index 
+ */
+void rides_replace_ride(Rides rides, Ride ride, guint index);
+
+/**
  * @brief Get Ride from Rides
  * 
  * @param rides Rides to get Ride from

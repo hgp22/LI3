@@ -21,12 +21,18 @@ void rides_free(Rides rides)
 
 void rides_add_ride(Rides rides, Ride ride)
 {
-    g_ptr_array_add(rides, ride);
+    g_ptr_array_add(rides, ride_copy(ride));
+}
+
+void rides_replace_ride(Rides rides, Ride ride, guint index)
+{
+    Ride *r = (Ride *)&g_ptr_array_index(rides, index);
+    *r = ride_copy(ride);
 }
 
 Ride rides_get_ride(Rides rides, guint index)
 {
-    return g_ptr_array_index(rides, index);
+    return ride_copy(g_ptr_array_index(rides, index));
 }
 
 void rides_sort(Rides rides)

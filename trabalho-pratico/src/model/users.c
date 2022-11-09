@@ -20,12 +20,12 @@ void users_free(Users users)
 
 gboolean users_add_user(Users users, User u)
 {
-    return g_hash_table_insert(users, user_get_username(u), u);
+    return g_hash_table_insert(users, user_get_username(u), user_copy(u));
 }
 
 User users_get_user(Users users, char *username)
 {
-    return g_hash_table_lookup(users, username);
+    return user_copy(g_hash_table_lookup(users, username));
 }
 
 guint users_remove_inactive_accounts(Users users)

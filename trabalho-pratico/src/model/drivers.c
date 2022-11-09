@@ -22,12 +22,12 @@ gboolean drivers_add_driver(Drivers drivers, Driver d)
 {
     gint *k_id = g_new(gint, 1);
     *k_id = driver_get_id(d);
-    return g_hash_table_insert(drivers, k_id, d);
+    return g_hash_table_insert(drivers, k_id, driver_copy(d));
 }
 
 Driver drivers_get_driver(Drivers drivers, long id)
 {
-    return g_hash_table_lookup(drivers, &id);
+    return driver_copy(g_hash_table_lookup(drivers, &id));
 }
 
 guint drivers_remove_inactive_accounts(Drivers drivers)
