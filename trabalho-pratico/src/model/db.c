@@ -95,6 +95,7 @@ static Users _load_users(FILE *fp)
         }
 
         users_add_user(users, user);
+        user_free(user);
     }
 
     free(line);
@@ -147,6 +148,7 @@ static Drivers _load_drivers(FILE *fp)
         }
 
         drivers_add_driver(drivers, driver);
+        driver_free(driver);
     }
 
     free(line);
@@ -203,6 +205,7 @@ static Rides _load_rides(FILE *fp)
         }
 
         rides_add_ride(rides, ride);
+        ride_free(ride);
     }
 
     free(line);

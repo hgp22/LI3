@@ -26,24 +26,27 @@ void cities_free(Cities cities)
     g_hash_table_destroy(g_steal_pointer(&cities));
 }
 
-void cities_add_ride(Cities cities, Ride r)
+void cities_add_rides(Cities cities, Rides rides)
 {
-    double cost = ride_get_cost(r);
-    char *city = ride_get_city(r);
-    City found = g_hash_table_lookup(cities, city);
-    if (found != NULL) {
-        g_ptr_array_add(found->rides, r);
-        found->sum_costs += cost;
-        found->n_rides++;
-        free(city);
-    }
-    else {
-        City new = g_new(struct city, 1);
-        new->rides = g_ptr_array_sized_new(RESERVED_SIZE);
-        g_ptr_array_add(new->rides, r);
-        new->sum_costs = cost;
-        new->n_rides = 1;
-        g_hash_table_insert(cities, city, new);
+    for (guint i = 0; i < rides->len; i++) {
+        Ride r = rides_get_ride_shallow(rides, i);
+        double cost = ride_get_cost(r);
+        char *city = ride_get_city(r);
+        City found = g_hash_table_lookup(cities, city);
+        if (found != NULL) {
+            g_ptr_array_add(found->rides, r);
+            found->sum_costs += cost;
+            found->n_rides++;
+            free(city);
+        }
+        else {
+            City new = g_new(struct city, 1);
+            new->rides = g_ptr_array_sized_new(RESERVED_SIZE);
+            g_ptr_array_add(new->rides, r);
+            new->sum_costs = cost;
+            new->n_rides = 1;
+            g_hash_table_insert(cities, city, new);
+        }
     }
 }
 

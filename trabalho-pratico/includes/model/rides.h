@@ -47,6 +47,15 @@ void rides_replace_ride(Rides rides, Ride ride, guint index);
 Ride rides_get_ride(Rides rides, guint index);
 
 /**
+ * @brief Get shallow Ride from Rides
+ * 
+ * @param rides Rides to get Ride from
+ * @param index Index to get Ride from
+ * @return Ride found
+ */
+Ride rides_get_ride_shallow(Rides rides, guint index);
+
+/**
  * @brief Sorts Rides
  *
  * @param rides Rides sorted

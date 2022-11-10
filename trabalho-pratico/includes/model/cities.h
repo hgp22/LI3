@@ -22,12 +22,12 @@ Cities cities_new(void);
 void cities_free(Cities cities);
 
 /**
- * @brief Adds ride to cities
+ * @brief Adds rides to cities
  *
- * @param cities Cities to add ride to
- * @param r Ride to be added
+ * @param cities Cities to add rides to
+ * @param rides Rides to be added
  */
-void cities_add_ride(Cities cities, Ride r);
+void cities_add_rides(Cities cities, Rides rides);
 
 /**
  * @brief Get the cities city avg cost object
