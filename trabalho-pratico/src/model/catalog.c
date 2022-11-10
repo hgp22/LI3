@@ -92,12 +92,12 @@ void catalog_set_rides(Catalog c, Rides rides)
 
 User catalog_get_user(Catalog c, char *username)
 {
-    return user_copy(users_get_user(c->users, username));
+    return users_get_user(c->users, username);
 }
 
 Driver catalog_get_driver(Catalog c, long id)
 {
-    return driver_copy(drivers_get_driver(c->drivers, id));
+    return drivers_get_driver(c->drivers, id);
 }
 
 Query2 catalog_get_top_n_drivers_by_score(Catalog c, int N)
