@@ -7,43 +7,43 @@ typedef struct driver *Driver;
 typedef GHashTable *Drivers;
 
 /**
- * @brief
+ * @brief Creates a new Driver
  *
- * @return Drivers
+ * @return Drivers created
  */
-Drivers new_drivers(void);
+Drivers drivers_new(void);
 
 /**
- * @brief
+ * @brief Frees Drivers
  *
- * @param drivers
+ * @param drivers Drivers to be freed
  */
-void free_drivers(Drivers drivers);
+void drivers_free(Drivers drivers);
 
 /**
- * @brief
+ * @brief Adds a Driver to Drivers
  *
- * @param drivers
- * @param d
- * @return gboolean
+ * @param drivers Drivers to add Driver
+ * @param d Driver to add to Drivers
+ * @return Control boolean
  */
-gboolean insert_driver(Drivers drivers, Driver d);
+gboolean drivers_add_driver(Drivers drivers, Driver d);
 
 /**
- * @brief Get the driver object
+ * @brief Get Driver from Drivers
  *
- * @param drivers
- * @param id
- * @return Driver
+ * @param drivers Drivers to get Driver from
+ * @param id Id to find Driver
+ * @return Driver found
  */
-Driver get_driver(Drivers drivers, long id);
+Driver drivers_get_driver(Drivers drivers, long id);
 
 /**
- * @brief
+ * @brief Remove inactive driver accounts fromo Drivers
  *
- * @param drivers
- * @return guint
+ * @param drivers Drivers to remove innactive accounts
+ * @return Control integer
  */
-guint remove_inactive_drivers(Drivers drivers);
+guint drivers_remove_inactive_accounts(Drivers drivers);
 
 #endif

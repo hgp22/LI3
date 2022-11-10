@@ -6,36 +6,51 @@
 #define RESERVED_SIZE 1048576 // (2^20)
 
 static gint _ride_comparator(gconstpointer a, gconstpointer b);
-static guint g_array_binary_search_safe(GArray *array, gconstpointer target,
+static guint g_array_binary_search_safe(GPtrArray *array, gconstpointer target,
                                         GCompareFunc compare_func);
 
-Rides new_rides(void)
+Rides rides_new(void)
 {
-    Rides r = g_array_sized_new(FALSE, FALSE, sizeof(Ride), RESERVED_SIZE);
-    g_array_set_clear_func(r, (GDestroyNotify)free_ride);
-    return r;
+    return g_ptr_array_new_full(RESERVED_SIZE, (GDestroyNotify)ride_free);
 }
 
-void add_ride(Rides rides, Ride ride)
+void rides_free(Rides rides)
 {
-    g_array_append_val(rides, ride);
+    g_ptr_array_free(rides, TRUE);
 }
 
-void free_rides(Rides rides)
+void rides_add_ride(Rides rides, Ride ride)
 {
-    g_array_free(rides, TRUE);
+    g_ptr_array_add(rides, ride_copy(ride));
 }
 
-void sort_rides(Rides rides)
+void rides_replace_ride(Rides rides, Ride ride, guint index)
 {
-    g_array_sort(rides, (GCompareFunc)_ride_comparator);
+    Ride *r = (Ride *)&g_ptr_array_index(rides, index);
+    ride_free(*r);
+    *r = ride_copy(ride);
 }
 
-double get_rides_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
+Ride rides_get_ride(Rides rides, guint index)
+{
+    return ride_copy(g_ptr_array_index(rides, index));
+}
+
+Ride rides_get_ride_shallow(Rides rides, guint index)
+{
+    return g_ptr_array_index(rides, index);
+}
+
+void rides_sort(Rides rides)
+{
+    g_ptr_array_sort(rides, (GCompareFunc)_ride_comparator);
+}
+
+double rides_get_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
                                    double (*get_func)(Ride))
 {
-    Ride r_date = new_ride();
-    set_ride_date(r_date, dateA);
+    Ride r_date = ride_new();
+    ride_set_date(r_date, dateA);
     guint i = g_array_binary_search_safe(rides, &r_date, _ride_comparator);
     free(r_date);
 
@@ -43,10 +58,10 @@ double get_rides_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
     double sum_distance = 0;
     int n_rides = 0;
 
-    for (Ride r = g_array_index(rides, Ride, i);
-         i < rides->len && get_ride_date(r) <= target;
-         r = g_array_index(rides, Ride, ++i)) {
-        sum_distance += (double)get_func(r);
+    for (Ride r = g_ptr_array_index(rides, i);
+         i < rides->len && ride_get_date(r) <= target;
+         r = g_ptr_array_index(rides, ++i)) {
+        sum_distance += get_func(r);
         n_rides++;
     }
 
@@ -57,26 +72,25 @@ static gint _ride_comparator(gconstpointer a, gconstpointer b)
 {
     const Ride r1 = *((Ride *)a);
     const Ride r2 = *((Ride *)b);
-    return get_ride_date(r1) - get_ride_date(r2);
+    return ride_get_date(r1) - ride_get_date(r2);
 }
 
-typedef struct _GRealArray GRealArray;
+typedef struct _GRealPtrArray GRealPtrArray;
 
-struct _GRealArray {
-    guint8 *data;
+struct _GRealPtrArray {
+    gpointer *pdata;
     guint len;
-    guint elt_capacity;
-    guint elt_size;
-    guint zero_terminated : 1;
-    guint clear : 1;
+    guint alloc;
     gatomicrefcount ref_count;
-    GDestroyNotify clear_func;
+    guint8 null_terminated; /* always either 0 or 1, so it can be added to array
+                               lengths */
+    GDestroyNotify element_free_func;
 };
 
-static guint g_array_binary_search_safe(GArray *array, gconstpointer target,
+static guint g_array_binary_search_safe(GPtrArray *array, gconstpointer target,
                                         GCompareFunc compare_func)
 {
-    GRealArray *_array = (GRealArray *)array;
+    GRealPtrArray *_array = (GRealPtrArray *)array;
     guint left, middle = 0, right;
     gint val;
 
@@ -90,8 +104,7 @@ static guint g_array_binary_search_safe(GArray *array, gconstpointer target,
         while (left <= right) {
             middle = left + (right - left) / 2;
 
-            val = compare_func(_array->data + (_array->elt_size * middle),
-                               target);
+            val = compare_func(_array->pdata + middle, target);
             if (val == 0)
                 break;
             else if (val < 0)
@@ -104,14 +117,12 @@ static guint g_array_binary_search_safe(GArray *array, gconstpointer target,
     }
 
     while (middle > 0 &&
-           compare_func(target, _array->data +
-                                    (_array->elt_size * (middle - 1))) <= 0) {
+           compare_func(target, _array->pdata + middle - 1) <= 0) {
         middle--;
     }
 
     while (middle < array->len &&
-           compare_func(target, _array->data + (_array->elt_size * middle)) >
-               0) {
+           compare_func(target, _array->pdata + middle) > 0) {
         middle++;
     }
 

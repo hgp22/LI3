@@ -8,43 +8,43 @@ typedef struct catalog *Catalog;
 typedef GHashTable *Users;
 
 /**
- * @brief
+ * @brief Creates a new Users
  *
- * @return Users
+ * @return Users created
  */
-Users new_users(void);
+Users users_new(void);
 
 /**
- * @brief
+ * @brief Frees Users
  *
- * @param users
+ * @param users Users freed
  */
-void free_users(Users users);
+void users_free(Users users);
 
 /**
- * @brief
+ * @brief Adds a User to Users
  *
- * @param users
- * @param u
- * @return gboolean
+ * @param users Users to add User
+ * @param u User to add to Users
+ * @return Control boolean
  */
-gboolean insert_user(Users users, User u);
+gboolean users_add_user(Users users, User u);
 
 /**
- * @brief Get the user object
+ * @brief Get a User from Users by username
  *
- * @param users
- * @param username
- * @return User
+ * @param users Users to get User from
+ * @param username Username to find User
+ * @return User found
  */
-User get_users_user(Users users, char *username);
+User users_get_user(Users users, char *username);
 
 /**
- * @brief
+ * @brief Removes inactive users accounts in Users
  *
- * @param users
- * @return guint
+ * @param users Users to remove inactive accounts
+ * @return Control integer
  */
-guint remove_inactive_users(Users users);
+guint users_remove_inactive_accounts(Users users);
 
 #endif

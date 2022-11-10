@@ -5,34 +5,53 @@
 
 typedef GPtrArray *Query3;
 typedef GHashTable *Users;
+typedef struct user *User;
 
 /**
- * @brief
+ * @brief Creates a new Query3
  *
- * @param drivers
- * @return Query3
+ * @param users Users to create Query3
+ * @return Query3 created
  */
-Query3 new_query3(Users users);
+Query3 query3_new(Users users);
 
 /**
- * @brief
- *
- * @param q3
+ * @brief Creates a sized Query2
+ * 
+ * @param N Sized of Query2
+ * @return Query3 created
  */
-void free_query3(Query3 q3);
+Query3 query3_new_sized(int N);
 
 /**
- * @brief
+ * @brief Frees Query3
  *
- * @param q3
+ * @param q3 Query3 to be freed
  */
-void free_query3_full(Query3 q3);
+void query3_free(Query3 q3);
 
 /**
- * @brief
- *
- * @param q3
+ * @brief Adds a User to a Query3
+ * 
+ * @param q3 Query3 to add User
+ * @param u User to be added
  */
-void sort_query3(Query3 q3);
+void query3_add_driver(Query3 q3, User u);
+
+/**
+ * @brief Get User in index from Query3
+ * 
+ * @param q3 Query3 to get Driver
+ * @param index Index to get in Query3
+ * @return User in index
+ */
+User query3_index(Query3 q3, int index);
+
+/**
+ * @brief Sort Query3
+ *
+ * @param q3 Query3 to be sorted
+ */
+void query3_sort(Query3 q3);
 
 #endif

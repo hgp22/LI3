@@ -6,29 +6,29 @@ static gboolean _clean(gpointer key, gpointer value, gpointer user_data);
 static void _key_destroyed(gpointer data);
 static void _value_destroyed(gpointer data);
 
-Users new_users(void)
+Users users_new(void)
 {
     return g_hash_table_new_full(g_str_hash, g_str_equal,
                                  (GDestroyNotify)_key_destroyed,
                                  (GDestroyNotify)_value_destroyed);
 }
 
-void free_users(Users users)
+void users_free(Users users)
 {
     g_hash_table_destroy(g_steal_pointer(&users));
 }
 
-gboolean insert_user(Users users, User u)
+gboolean users_add_user(Users users, User u)
 {
-    return g_hash_table_insert(users, get_user_username(u), u);
+    return g_hash_table_insert(users, user_get_username(u), user_copy(u));
 }
 
-User get_users_user(Users users, char *username)
+User users_get_user(Users users, char *username)
 {
-    return g_hash_table_lookup(users, username);
+    return user_copy(g_hash_table_lookup(users, username));
 }
 
-guint remove_inactive_users(Users users)
+guint users_remove_inactive_accounts(Users users)
 {
     return g_hash_table_foreach_remove(users, (GHRFunc)_clean, NULL);
 }
@@ -36,7 +36,7 @@ guint remove_inactive_users(Users users)
 static gboolean _clean(gpointer key, gpointer value, gpointer user_data)
 {
     User u = (User)value;
-    if (get_user_account_status(u) == U_Inactive) {
+    if (user_get_account_status(u) == U_Inactive) {
         return TRUE;
     }
     else {
@@ -51,5 +51,5 @@ static void _key_destroyed(gpointer data)
 
 static void _value_destroyed(gpointer data)
 {
-    free_user(data);
+    user_free(data);
 }

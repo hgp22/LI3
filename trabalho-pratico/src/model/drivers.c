@@ -6,31 +6,31 @@ static gboolean _clean(gpointer key, gpointer value, gpointer user_data);
 static void _key_destroyed(gpointer data);
 static void _value_destroyed(gpointer data);
 
-Drivers new_drivers(void)
+Drivers drivers_new(void)
 {
     return g_hash_table_new_full(g_int_hash, g_int_equal,
                                  (GDestroyNotify)_key_destroyed,
                                  (GDestroyNotify)_value_destroyed);
 }
 
-gboolean insert_driver(Drivers drivers, Driver d)
-{
-    gint *k_id = g_new(gint, 1);
-    *k_id = get_driver_id(d);
-    return g_hash_table_insert(drivers, k_id, d);
-}
-
-void free_drivers(Drivers drivers)
+void drivers_free(Drivers drivers)
 {
     g_hash_table_destroy(g_steal_pointer(&drivers));
 }
 
-Driver get_driver(Drivers drivers, long id)
+gboolean drivers_add_driver(Drivers drivers, Driver d)
 {
-    return g_hash_table_lookup(drivers, &id);
+    gint *k_id = g_new(gint, 1);
+    *k_id = driver_get_id(d);
+    return g_hash_table_insert(drivers, k_id, driver_copy(d));
 }
 
-guint remove_inactive_drivers(Drivers drivers)
+Driver drivers_get_driver(Drivers drivers, long id)
+{
+    return driver_copy(g_hash_table_lookup(drivers, &id));
+}
+
+guint drivers_remove_inactive_accounts(Drivers drivers)
 {
     return g_hash_table_foreach_remove(drivers, (GHRFunc)_clean, NULL);
 }
@@ -38,7 +38,7 @@ guint remove_inactive_drivers(Drivers drivers)
 static gboolean _clean(gpointer key, gpointer value, gpointer user_data)
 {
     Driver d = (Driver)value;
-    if (get_driver_account_status(d) == D_Inactive) {
+    if (driver_get_account_status(d) == D_Inactive) {
         return TRUE;
     }
     else {
@@ -53,5 +53,5 @@ static void _key_destroyed(gpointer data)
 
 static void _value_destroyed(gpointer data)
 {
-    free_driver(data);
+    driver_free(data);
 }
