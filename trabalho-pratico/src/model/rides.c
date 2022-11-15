@@ -55,17 +55,17 @@ double rides_get_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
     free(r_date);
 
     unsigned short target = date_to_days(dateB);
-    double sum_distance = 0;
+    double sum_stat = 0;
     int n_rides = 0;
 
     for (Ride r = g_ptr_array_index(rides, i);
          i < rides->len && ride_get_date(r) <= target;
          r = g_ptr_array_index(rides, ++i)) {
-        sum_distance += get_func(r);
+        sum_stat += get_func(r);
         n_rides++;
     }
 
-    return sum_distance / n_rides;
+    return sum_stat / n_rides;
 }
 
 static gint _ride_comparator(gconstpointer a, gconstpointer b)

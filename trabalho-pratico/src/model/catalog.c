@@ -145,3 +145,8 @@ Query2 catalog_get_top_n_drivers_in_city(Catalog c, char *city, int N)
 {
     return cities_get_city_top_N_drivers(c->cities, city, N);
 }
+
+Query9 catalog_get_rides_with_tips_in_range(Catalog c, char *dateA, char *dateB)
+{
+    return query9_rides_with_tips_in_range(c->query9, dateA, dateB);
+}
