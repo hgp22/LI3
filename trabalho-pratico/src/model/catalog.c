@@ -62,6 +62,8 @@ int catalog_process(Catalog c)
     // query 4, 6 and 7
     c->cities = cities_new(c->rides, c->query2);
 
+    c->query9 = query9_new(c->rides);
+
     return 0;
 }
 
