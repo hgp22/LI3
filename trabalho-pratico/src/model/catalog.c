@@ -21,9 +21,7 @@ struct catalog {
 
 Catalog catalog_new()
 {
-    Catalog c = g_new(struct catalog, 1);
-    c->cities = cities_new();
-    return c;
+    return g_new(struct catalog, 1);
 }
 
 int catalog_process(Catalog c)
@@ -59,7 +57,8 @@ int catalog_process(Catalog c)
     c->query3 = query3_new(c->users);
     query3_sort(c->query3);
 
-    cities_add_rides(c->cities, c->rides);
+    // query 4, 6 and 7
+    c->cities = cities_new(c->rides, c->query2);
 
     return 0;
 }
@@ -136,4 +135,9 @@ double catalog_get_city_avg_dist_in_range(Catalog c, char *city, char *dateA,
                                           char *dateB)
 {
     return cities_get_city_avg_dist_in_range(c->cities, city, dateA, dateB);
+}
+
+Query2 catalog_get_top_n_drivers_in_city(Catalog c, char *city, int N)
+{
+    return cities_get_city_top_N_drivers(c->cities, city, N);
 }

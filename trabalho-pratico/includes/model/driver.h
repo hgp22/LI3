@@ -6,6 +6,8 @@
 
 typedef struct ride *Ride;
 typedef struct driver *Driver;
+typedef GHashTable *CitiesScore;
+typedef struct city_score *CityScore;
 
 typedef enum field_driver {
     D_id,
@@ -43,6 +45,13 @@ Driver driver_new(void);
  * @param driver Driver to be freed
  */
 void driver_free(void *driver);
+
+/**
+ * @brief Frees CitiesScore
+ *
+ * @param cs CitiesScore to be freed
+ */
+void driver_free_cities_score(CitiesScore cs);
 
 /**
  * @brief Set the driver id object
@@ -189,18 +198,35 @@ unsigned short driver_get_n_trips(Driver d);
 unsigned short driver_get_last_ride_date(Driver d);
 
 /**
- * @brief
+ * @brief Get cities scores from driver
  *
- * @param d
- * @param r
+ * @param d Driver
+ * @return Cities Scores
+ */
+CitiesScore driver_get_cities_score(Driver d);
+
+/**
+ * @brief Get driver city score
+ *
+ * @param d Driver
+ * @param city City
+ * @return City score
+ */
+double driver_get_city_score(Driver d, char *city);
+
+/**
+ * @brief Get data in a drivers' ride
+ *
+ * @param d Driver
+ * @param r Ride
  */
 void driver_add_ride_data(Driver d, Ride r);
 
 /**
- * @brief
+ * @brief Copy driver
  *
- * @param old_d
- * @return Driver
+ * @param old_d Driver to be copied
+ * @return Driver copy
  */
 Driver driver_copy(Driver old_d);
 

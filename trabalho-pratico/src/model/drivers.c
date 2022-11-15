@@ -1,5 +1,7 @@
 #include "drivers.h"
 #include "driver.h"
+#include "ride.h"
+#include "rides.h"
 #include <glib.h>
 
 static gboolean _clean(gpointer key, gpointer value, gpointer user_data);

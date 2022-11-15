@@ -17,7 +17,7 @@ Query2 query2_new(Drivers drivers);
 
 /**
  * @brief Creates a sized Query2
- * 
+ *
  * @param N Sized of Query2
  * @return Query2 created
  */
@@ -32,7 +32,7 @@ void query2_free(Query2 q2);
 
 /**
  * @brief Adds a Driver to a Query2
- * 
+ *
  * @param q2 Query2 to add Driver
  * @param d Driver to be added
  */
@@ -40,7 +40,7 @@ void query2_add_driver(Query2 q2, Driver d);
 
 /**
  * @brief Get Driver in index from Query2
- * 
+ *
  * @param q2 Query2 to get Driver
  * @param index Index to get in Query2
  * @return Driver in index

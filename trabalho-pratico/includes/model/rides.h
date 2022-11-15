@@ -29,17 +29,17 @@ void rides_free(Rides rides);
 void rides_add_ride(Rides rides, Ride ride);
 
 /**
- * @brief 
- * 
- * @param rides 
- * @param ride 
- * @param index 
+ * @brief
+ *
+ * @param rides
+ * @param ride
+ * @param index
  */
 void rides_replace_ride(Rides rides, Ride ride, guint index);
 
 /**
  * @brief Get Ride from Rides
- * 
+ *
  * @param rides Rides to get Ride from
  * @param index Index to get Ride from
  * @return Ride found
@@ -48,7 +48,7 @@ Ride rides_get_ride(Rides rides, guint index);
 
 /**
  * @brief Get shallow Ride from Rides
- * 
+ *
  * @param rides Rides to get Ride from
  * @param index Index to get Ride from
  * @return Ride found
@@ -71,6 +71,7 @@ void rides_sort(Rides rides);
  * @param get_func Function to get stat
  * @return Calculated average
  */
-double rides_get_avg_stat_in_range(Rides rides, char *dateA, char *dateB, double (*get_func)(Ride));
+double rides_get_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
+                                   double (*get_func)(Ride));
 
 #endif

@@ -11,7 +11,7 @@ typedef GPtrArray *Query3;
 
 /**
  * @brief Sets next output file
- * 
+ *
  * @return FILE* File pointer to next output file
  */
 FILE *next_output_file(void);
@@ -64,5 +64,13 @@ void show_query5(double avg_cost);
  * @param avg_distance Answer to query 6
  */
 void show_query6(double avg_distance);
+
+/**
+ * @brief
+ *
+ * @param drivers
+ * @param city
+ */
+void show_query7(Query2 drivers, char *city);
 
 #endif

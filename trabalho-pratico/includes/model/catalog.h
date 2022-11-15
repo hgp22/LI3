@@ -28,7 +28,8 @@ Catalog catalog_new();
 void catalog_free(Catalog c);
 
 /**
- * @brief Processes a basic catalog into a complete catalog capable of answering any query
+ * @brief Processes a basic catalog into a complete catalog capable of answering
+ * any query
  *
  * @param c Catalog to be processed
  * @return Control integer
@@ -88,7 +89,7 @@ Query2 catalog_get_top_n_drivers_by_score(Catalog c, int N);
 
 /**
  * @brief Get the top N users by distanced travelled
- * 
+ *
  * @param c Catalog to be searched
  * @param N Number of users to be returned
  * @return List of top N users by distance travelled
@@ -123,6 +124,17 @@ double catalog_get_avg_cost_in_range(Catalog c, char *dateA, char *dateB);
  * @param dateB Second date
  * @return Average distance travelled in a city between two dates inclusive
  */
-double catalog_get_city_avg_dist_in_range(Catalog c, char *city, char *dateA, char *dateB);
+double catalog_get_city_avg_dist_in_range(Catalog c, char *city, char *dateA,
+                                          char *dateB);
+
+/**
+ * @brief
+ *
+ * @param c
+ * @param city
+ * @param N
+ * @return Query2
+ */
+Query2 catalog_get_top_n_drivers_in_city(Catalog c, char *city, int N);
 
 #endif

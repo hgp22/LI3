@@ -6,13 +6,16 @@
 typedef GHashTable *Cities;
 typedef struct ride *Ride;
 typedef GPtrArray *Rides;
+typedef GPtrArray *Query2;
 
 /**
  * @brief Creates a new Cities
  *
+ * @param rides Rides to add to city
+ * @param drivers Drivers to add to city
  * @return Cities created
  */
-Cities cities_new(void);
+Cities cities_new(Rides rides, Query2 drivers);
 
 /**
  * @brief Frees Cities
@@ -20,14 +23,6 @@ Cities cities_new(void);
  * @param cities Cities to be freed
  */
 void cities_free(Cities cities);
-
-/**
- * @brief Adds rides to cities
- *
- * @param cities Cities to add rides to
- * @param rides Rides to be added
- */
-void cities_add_rides(Cities cities, Rides rides);
 
 /**
  * @brief Get the cities city avg cost object
@@ -46,6 +41,17 @@ double cities_get_city_avg_cost(Cities cities, char *city);
  * @param dateB Second date
  * @return Average distance
  */
-double cities_get_city_avg_dist_in_range(Cities cities, char *city, char *dateA, char *dateB);
+double cities_get_city_avg_dist_in_range(Cities cities, char *city, char *dateA,
+                                         char *dateB);
+
+/**
+ * @brief Gets top N driver in a city
+ *
+ * @param cities Cities collection
+ * @param city City name
+ * @param N Number of drivers to get
+ * @return List of top N drivers
+ */
+Query2 cities_get_city_top_N_drivers(Cities cities, char *city, int N);
 
 #endif

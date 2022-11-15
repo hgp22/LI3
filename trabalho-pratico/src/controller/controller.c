@@ -98,7 +98,11 @@ int run_query(Catalog c, char *query)
                 catalog_get_city_avg_dist_in_range(c, city1, dateA1, dateB1));
             break;
         case '7':
-            printf("Query 7\n");
+            char city2[64];
+            sscanf(query, "%*d %d %s", &N, city2);
+            Query2 drivers = catalog_get_top_n_drivers_in_city(c, city2, N);
+            show_query7(drivers, city2);
+            query2_free(drivers);
             break;
         case '8':
             printf("Query 8\n");

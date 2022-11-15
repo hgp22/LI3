@@ -5,6 +5,7 @@
 
 typedef struct driver *Driver;
 typedef GHashTable *Drivers;
+typedef GPtrArray *Rides;
 
 /**
  * @brief Creates a new Driver

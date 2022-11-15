@@ -17,7 +17,16 @@ struct driver {
     double total_earned;
     unsigned short n_trips;
     unsigned short last_ride_date;
+    CitiesScore cities_score;
 };
+
+struct city_score {
+    int sum_score;
+    int n_cities;
+};
+
+static void _key_destroyed(gpointer data);
+static void _value_destroyed(gpointer data);
 
 Driver driver_new(void)
 {
@@ -27,6 +36,9 @@ Driver driver_new(void)
     d->total_earned = 0;
     d->n_trips = 0;
     d->last_ride_date = 0;
+    d->cities_score = g_hash_table_new_full(g_str_hash, g_str_equal,
+                                            (GDestroyNotify)_key_destroyed,
+                                            (GDestroyNotify)_value_destroyed);
 
     return d;
 }
@@ -36,8 +48,14 @@ void driver_free(void *driver)
     if (driver != NULL) {
         Driver d = (Driver)driver;
         free(d->name);
+        driver_free_cities_score(d->cities_score);
         free(driver);
     }
+}
+
+void driver_free_cities_score(CitiesScore cs)
+{
+    g_hash_table_destroy(g_steal_pointer(&cs));
 }
 
 void driver_set_id(Driver d, char *id)
@@ -156,6 +174,31 @@ unsigned short driver_get_last_ride_date(Driver d)
     return d->last_ride_date;
 }
 
+CitiesScore driver_get_cities_score(Driver d)
+{
+    CitiesScore cities_score = g_hash_table_new_similar(d->cities_score);
+
+    GHashTableIter iter;
+    gpointer key, value;
+    g_hash_table_iter_init(&iter, d->cities_score);
+    while (g_hash_table_iter_next(&iter, &key, &value)) {
+        char *k = strdup(key);
+        CityScore tmp = (CityScore)value;
+        CityScore v = g_new(struct city_score, 1);
+        v->sum_score = tmp->sum_score;
+        v->n_cities = tmp->n_cities;
+        g_hash_table_insert(cities_score, k, v);
+    }
+
+    return cities_score;
+}
+
+double driver_get_city_score(Driver d, char *city)
+{
+    CityScore c_s = g_hash_table_lookup(d->cities_score, city);
+    return (double)c_s->sum_score / c_s->n_cities;
+}
+
 void driver_add_ride_data(Driver d, Ride r)
 {
     d->sum_score += ride_get_score_driver(r);
@@ -163,6 +206,20 @@ void driver_add_ride_data(Driver d, Ride r)
     unsigned short ride_date = ride_get_date(r);
     if (ride_date > d->last_ride_date) {
         d->last_ride_date = ride_date;
+    }
+    int score = ride_get_score_driver(r);
+    char *city = ride_get_city(r);
+    CityScore found = g_hash_table_lookup(d->cities_score, city);
+    if (found != NULL) {
+        found->sum_score += score;
+        found->n_cities++;
+        free(city);
+    }
+    else {
+        CityScore new = g_new(struct city_score, 1);
+        new->sum_score = score;
+        new->n_cities = 1;
+        g_hash_table_insert(d->cities_score, city, new);
     }
     d->n_trips += 1;
 }
@@ -186,6 +243,29 @@ Driver driver_copy(Driver old_d)
     new_d->total_earned = old_d->total_earned;
     new_d->n_trips = old_d->n_trips;
     new_d->last_ride_date = old_d->last_ride_date;
+    new_d->cities_score = g_hash_table_new_similar(old_d->cities_score);
+
+    GHashTableIter iter;
+    gpointer key, value;
+    g_hash_table_iter_init(&iter, old_d->cities_score);
+    while (g_hash_table_iter_next(&iter, &key, &value)) {
+        char *k = strdup(key);
+        CityScore tmp = (CityScore)value;
+        CityScore v = g_new(struct city_score, 1);
+        v->sum_score = tmp->sum_score;
+        v->n_cities = tmp->n_cities;
+        g_hash_table_insert(new_d->cities_score, k, v);
+    }
 
     return new_d;
+}
+
+static void _key_destroyed(gpointer data)
+{
+    g_free(data);
+}
+
+static void _value_destroyed(gpointer data)
+{
+    g_free(data);
 }
