@@ -4,6 +4,7 @@
 #include "drivers.h"
 #include "query2.h"
 #include "query3.h"
+#include "query9.h"
 #include "ride.h"
 #include "rides.h"
 #include "user.h"
@@ -17,6 +18,7 @@ struct catalog {
     Query2 query2;
     Query3 query3;
     Cities cities;
+    Query9 query9;
 };
 
 Catalog catalog_new()
