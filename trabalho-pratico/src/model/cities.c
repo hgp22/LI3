@@ -51,6 +51,7 @@ Cities cities_new(Rides rides, Query2 drivers)
 
     // add drivers to cities
     for (guint i = 0; i < drivers->len; i++) {
+        // get shallow driver
         Driver d = g_ptr_array_index(drivers, i);
         CitiesScore cities_score = driver_get_cities_score(d);
         GHashTableIter iter;

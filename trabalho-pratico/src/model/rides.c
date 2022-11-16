@@ -75,54 +75,36 @@ static gint _ride_comparator(gconstpointer a, gconstpointer b)
     return ride_get_date(r1) - ride_get_date(r2);
 }
 
-typedef struct _GRealPtrArray GRealPtrArray;
-
-struct _GRealPtrArray {
-    gpointer *pdata;
-    guint len;
-    guint alloc;
-    gatomicrefcount ref_count;
-    guint8 null_terminated; /* always either 0 or 1, so it can be added to array
-                               lengths */
-    GDestroyNotify element_free_func;
-};
-
 static guint g_array_binary_search_safe(GPtrArray *array, gconstpointer target,
                                         GCompareFunc compare_func)
 {
-    GRealPtrArray *_array = (GRealPtrArray *)array;
     guint left, middle = 0, right;
     gint val;
 
-    g_return_val_if_fail(_array != NULL, FALSE);
-    g_return_val_if_fail(compare_func != NULL, FALSE);
+    left = 0;
+    right = array->len - 1;
 
-    if (G_LIKELY(_array->len)) {
-        left = 0;
-        right = _array->len - 1;
+    while (left <= right) {
+        middle = left + (right - left) / 2;
 
-        while (left <= right) {
-            middle = left + (right - left) / 2;
-
-            val = compare_func(_array->pdata + middle, target);
-            if (val == 0)
-                break;
-            else if (val < 0)
-                left = middle + 1;
-            else if (middle > 0)
-                right = middle - 1;
-            else
-                break; /* element not found */
-        }
+        val = compare_func(array->pdata + middle, target);
+        if (val == 0)
+            break;
+        else if (val < 0)
+            left = middle + 1;
+        else if (middle > 0)
+            right = middle - 1;
+        else
+            break; // element not found
     }
 
     while (middle > 0 &&
-           compare_func(target, _array->pdata + middle - 1) <= 0) {
+           compare_func(target, array->pdata + middle - 1) <= 0) {
         middle--;
     }
 
     while (middle < array->len &&
-           compare_func(target, _array->pdata + middle) > 0) {
+           compare_func(target, array->pdata + middle) > 0) {
         middle++;
     }
 

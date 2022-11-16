@@ -26,7 +26,6 @@ Catalog catalog_new()
     return g_new(struct catalog, 1);
 }
 
-#include <stdio.h>
 int catalog_process(Catalog c)
 {
     rides_sort(c->rides);
