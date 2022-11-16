@@ -4,6 +4,8 @@
 #include "driver.h"
 #include "query2.h"
 #include "query3.h"
+#include "query9.h"
+#include "rides.h"
 #include "ui.h"
 #include "user.h"
 #include <stdio.h>
@@ -108,7 +110,12 @@ int run_query(Catalog c, char *query)
             printf("Query 8\n");
             break;
         case '9':
-            printf("Query 9\n");
+            char dateA2[16];
+            char dateB2[16];
+            sscanf(query, "%*d %s %s", dateA2, dateB2);
+            Query9 q9 = catalog_get_rides_with_tips_in_range(c, dateA2, dateB2);
+            show_query9(q9);
+            //rides_free(q9);
             break;
     }
 

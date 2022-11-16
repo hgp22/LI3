@@ -22,6 +22,14 @@ gint compare_trips(gpointer a, gpointer b);
 unsigned short date_to_days(char *date);
 
 /**
+ * @brief 
+ * 
+ * @param date 
+ * @return char* 
+ */
+char *days_to_date(unsigned short date);
+
+/**
  * @brief
  *
  * @param date

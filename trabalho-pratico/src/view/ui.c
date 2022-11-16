@@ -1,6 +1,11 @@
 #include "ui.h"
 #include "driver.h"
+#include "query2.h"
+#include "query3.h"
+#include "query9.h"
+#include "ride.h"
 #include "user.h"
+#include "utils.h"
 #include <stdio.h>
 
 static int counter = 1;
@@ -80,5 +85,18 @@ void show_query7(Query2 drivers, char *city)
         printf("%012ld;%s;%.3f\n", driver_get_id(d), name,
                driver_get_city_score(d, city));
         free(name);
+    }
+}
+
+void show_query9(Query9 q9)
+{
+    for (guint i = 0; i < q9->len; i++) {
+        Ride r = (Ride)g_ptr_array_index(q9, i);
+        char *date = days_to_date(ride_get_date(r));
+        char *city = ride_get_city(r);
+        printf("%012ld;%s;%d;%s;%.3f\n", ride_get_id(r), date, (int)ride_get_distance(r),
+               city, ride_get_tip(r));
+        free(date);
+        free(city);
     }
 }

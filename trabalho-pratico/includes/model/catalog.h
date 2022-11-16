@@ -11,6 +11,7 @@ typedef GHashTable *Drivers;
 typedef GPtrArray *Rides;
 typedef GPtrArray *Query2;
 typedef GPtrArray *Query3;
+typedef GPtrArray *Query9;
 typedef struct catalog *Catalog;
 
 /**
@@ -136,5 +137,16 @@ double catalog_get_city_avg_dist_in_range(Catalog c, char *city, char *dateA,
  * @return Query2
  */
 Query2 catalog_get_top_n_drivers_in_city(Catalog c, char *city, int N);
+
+/**
+ * @brief
+ *
+ * @param c
+ * @param dateA
+ * @param dateB
+ * @return Query9
+ */
+Query9 catalog_get_rides_with_tips_in_range(Catalog c, char *dateA,
+                                            char *dateB);
 
 #endif

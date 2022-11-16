@@ -8,6 +8,7 @@ typedef struct user *User;
 typedef struct driver *Driver;
 typedef GPtrArray *Query2;
 typedef GPtrArray *Query3;
+typedef GPtrArray *Query9;
 
 /**
  * @brief Sets next output file
@@ -72,5 +73,12 @@ void show_query6(double avg_distance);
  * @param city
  */
 void show_query7(Query2 drivers, char *city);
+
+/**
+ * @brief
+ *
+ * @param q9
+ */
+void show_query9(Query9 q9);
 
 #endif
