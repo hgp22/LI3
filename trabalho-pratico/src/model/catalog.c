@@ -4,6 +4,7 @@
 #include "drivers.h"
 #include "query2.h"
 #include "query3.h"
+#include "query8.h"
 #include "ride.h"
 #include "rides.h"
 #include "user.h"
@@ -17,6 +18,7 @@ struct catalog {
     Query2 query2;
     Query3 query3;
     Cities cities;
+    Query8 query8;
 };
 
 Catalog catalog_new()
@@ -27,6 +29,8 @@ Catalog catalog_new()
 int catalog_process(Catalog c)
 {
     rides_sort(c->rides);
+
+    c->query8 = query8_new(c->rides, c->users, c->drivers);
 
     guint n_rides = c->rides->len;
 
