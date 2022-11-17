@@ -8,7 +8,6 @@ typedef struct user *User;
 typedef struct driver *Driver;
 typedef GPtrArray *Query2;
 typedef GPtrArray *Query3;
-typedef GPtrArray *Query9;
 
 /**
  * @brief Sets next output file

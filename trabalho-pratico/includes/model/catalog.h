@@ -11,7 +11,6 @@ typedef GHashTable *Drivers;
 typedef GPtrArray *Rides;
 typedef GPtrArray *Query2;
 typedef GPtrArray *Query3;
-typedef GPtrArray *Query9;
 typedef struct catalog *Catalog;
 
 /**
