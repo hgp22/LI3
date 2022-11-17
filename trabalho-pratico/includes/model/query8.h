@@ -18,4 +18,11 @@ typedef GPtrArray *Rides;
  */
 Query8 query8_new(Rides rides, Users users, Drivers drivers);
 
+/**
+ * @brief
+ *
+ * @param q8
+ */
+void query8_free(Query8 q8);
+
 #endif

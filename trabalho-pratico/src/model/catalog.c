@@ -75,6 +75,7 @@ void catalog_free(Catalog c)
     query2_free(c->query2);
     query3_free(c->query3);
     cities_free(c->cities);
+    query8_free(c->query8);
     free(c);
 }
 
