@@ -5,7 +5,8 @@
 
 #define RESERVED_SIZE 1048576 // (2^20)
 
-static gint _ride_comparator(gconstpointer a, gconstpointer b);
+static gint _ride_comparator_date(gconstpointer a, gconstpointer b);
+static gint _ride_comparator_distance(gconstpointer a, gconstpointer b);
 static guint g_array_binary_search_safe(GPtrArray *array, gconstpointer target,
                                         GCompareFunc compare_func);
 
@@ -43,7 +44,7 @@ Ride rides_get_ride_shallow(Rides rides, guint index)
 
 void rides_sort(Rides rides)
 {
-    g_ptr_array_sort(rides, (GCompareFunc)_ride_comparator);
+    g_ptr_array_sort(rides, (GCompareFunc)_ride_comparator_date);
 }
 
 double rides_get_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
@@ -51,7 +52,7 @@ double rides_get_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
 {
     Ride r_date = ride_new();
     ride_set_date(r_date, dateA);
-    guint i = g_array_binary_search_safe(rides, &r_date, _ride_comparator);
+    guint i = g_array_binary_search_safe(rides, &r_date, _ride_comparator_date);
     free(r_date);
 
     unsigned short target = date_to_days(dateB);
@@ -68,11 +69,79 @@ double rides_get_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
     return sum_stat / n_rides;
 }
 
-static gint _ride_comparator(gconstpointer a, gconstpointer b)
+Rides rides_get_rides_with_tip(Rides rides)
+{
+    Rides rs = g_ptr_array_sized_new(rides->len);
+
+    for (guint i = 0; i < rides->len; i++) {
+        Ride r = g_ptr_array_index(rides, i);
+        if (ride_get_tip(r) != 0) {
+            g_ptr_array_add(rs, r);
+        }
+    }
+
+    return rs;
+}
+
+Rides rides_get_rides_with_tip_in_range(Rides rides, char *dateA, char *dateB)
+{
+    Ride r_date = ride_new();
+    ride_set_date(r_date, dateA);
+    guint i = g_array_binary_search_safe(rides, &r_date, _ride_comparator_date);
+
+    unsigned short target = date_to_days(dateB);
+    Rides rs = g_ptr_array_new_with_free_func(ride_free);
+
+    for (Ride r = g_ptr_array_index(rides, i);
+         i < rides->len && ride_get_date(r) <= target;
+         r = g_ptr_array_index(rides, ++i)) {
+        g_ptr_array_add(rs, ride_copy(r));
+    }
+
+    g_ptr_array_sort(rs, _ride_comparator_distance);
+
+    return rs;
+}
+
+static gint _ride_comparator_date(gconstpointer a, gconstpointer b)
 {
     const Ride r1 = *((Ride *)a);
     const Ride r2 = *((Ride *)b);
     return ride_get_date(r1) - ride_get_date(r2);
+}
+
+static gint _ride_comparator_distance(gconstpointer a, gconstpointer b)
+{
+    const Ride r1 = *((Ride *)a);
+    const Ride r2 = *((Ride *)b);
+
+    uint8_t distance1 = ride_get_distance(r1);
+    uint8_t distance2 = ride_get_distance(r2);
+
+    if (distance1 < distance2)
+        return 1;
+    else if (distance1 > distance2)
+        return -1;
+    else {
+        unsigned short date1 = ride_get_date(r1);
+        unsigned short date2 = ride_get_date(r2);
+
+        if (date1 < date2)
+            return 1;
+        else if (date1 > date2)
+            return -1;
+        else {
+            long id1 = ride_get_id(r1);
+            long id2 = ride_get_id(r2);
+
+            if (id1 < id2)
+                return 1;
+            else if (id1 > id2)
+                return -1;
+            else
+                return 0;
+        }
+    }
 }
 
 static guint g_array_binary_search_safe(GPtrArray *array, gconstpointer target,

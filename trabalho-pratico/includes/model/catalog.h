@@ -146,7 +146,6 @@ Query2 catalog_get_top_n_drivers_in_city(Catalog c, char *city, int N);
  * @param dateB
  * @return Query9
  */
-Query9 catalog_get_rides_with_tips_in_range(Catalog c, char *dateA,
-                                            char *dateB);
+Query9 catalog_get_rides_with_tip_in_range(Catalog c, char *dateA, char *dateB);
 
 #endif

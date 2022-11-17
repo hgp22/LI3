@@ -74,4 +74,22 @@ void rides_sort(Rides rides);
 double rides_get_avg_stat_in_range(Rides rides, char *dateA, char *dateB,
                                    double (*get_func)(Ride));
 
+/**
+ * @brief Get rides with tip
+ *
+ * @param rides Rides to filter
+ * @return Rides with tips
+ */
+Rides rides_get_rides_with_tip(Rides rides);
+
+/**
+ * @brief Get rides with tip between two date
+ *
+ * @param rides Rides to process
+ * @param dateA First date
+ * @param dateB Second date
+ * @return Rides with tip bewtween two date
+ */
+Rides rides_get_rides_with_tip_in_range(Rides rides, char *dateA, char *dateB);
+
 #endif

@@ -4,7 +4,6 @@
 #include "drivers.h"
 #include "query2.h"
 #include "query3.h"
-#include "query9.h"
 #include "ride.h"
 #include "rides.h"
 #include "user.h"
@@ -18,7 +17,7 @@ struct catalog {
     Query2 query2;
     Query3 query3;
     Cities cities;
-    Query9 query9;
+    Rides query9;
 };
 
 Catalog catalog_new()
@@ -62,7 +61,7 @@ int catalog_process(Catalog c)
     // query 4, 6 and 7
     c->cities = cities_new(c->rides, c->query2);
 
-    c->query9 = query9_new(c->rides);
+    c->query9 = rides_get_rides_with_tip(c->rides);
 
     return 0;
 }
@@ -146,7 +145,7 @@ Query2 catalog_get_top_n_drivers_in_city(Catalog c, char *city, int N)
     return cities_get_city_top_N_drivers(c->cities, city, N);
 }
 
-Query9 catalog_get_rides_with_tips_in_range(Catalog c, char *dateA, char *dateB)
+Rides catalog_get_rides_with_tip_in_range(Catalog c, char *dateA, char *dateB)
 {
-    return query9_rides_with_tips_in_range(c->query9, dateA, dateB);
+    return rides_get_rides_with_tip_in_range(c->query9, dateA, dateB);
 }
