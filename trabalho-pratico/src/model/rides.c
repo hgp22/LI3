@@ -98,8 +98,7 @@ static guint g_array_binary_search_safe(GPtrArray *array, gconstpointer target,
             break; // element not found
     }
 
-    while (middle > 0 &&
-           compare_func(target, array->pdata + middle - 1) <= 0) {
+    while (middle > 0 && compare_func(target, array->pdata + middle - 1) <= 0) {
         middle--;
     }
 

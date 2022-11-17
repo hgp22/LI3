@@ -115,7 +115,7 @@ int run_query(Catalog c, char *query)
             sscanf(query, "%*d %s %s", dateA2, dateB2);
             Query9 q9 = catalog_get_rides_with_tips_in_range(c, dateA2, dateB2);
             show_query9(q9);
-            //rides_free(q9);
+            // rides_free(q9);
             break;
     }
 

@@ -94,8 +94,8 @@ void show_query9(Query9 q9)
         Ride r = (Ride)g_ptr_array_index(q9, i);
         char *date = days_to_date(ride_get_date(r));
         char *city = ride_get_city(r);
-        printf("%012ld;%s;%d;%s;%.3f\n", ride_get_id(r), date, (int)ride_get_distance(r),
-               city, ride_get_tip(r));
+        printf("%012ld;%s;%d;%s;%.3f\n", ride_get_id(r), date,
+               (int)ride_get_distance(r), city, ride_get_tip(r));
         free(date);
         free(city);
     }
