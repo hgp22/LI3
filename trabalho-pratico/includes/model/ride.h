@@ -114,6 +114,22 @@ void ride_set_cost(Ride r, Driver d);
 void ride_set_tip(Ride r, char *tip);
 
 /**
+ * @brief 
+ * 
+ * @param r 
+ * @param user_account_age 
+ */
+void ride_set_user_account_age(Ride r, uint8_t user_account_age);
+
+/**
+ * @brief 
+ * 
+ * @param r 
+ * @param driver_account_age 
+ */
+void ride_set_driver_account_age(Ride r, uint8_t driver_account_age);
+
+/**
  * @brief Get the ride id object
  *
  * @param r
@@ -200,5 +216,21 @@ double ride_get_tip(Ride r);
  * @return Ride
  */
 Ride ride_copy(Ride old_r);
+
+/**
+ * @brief 
+ * 
+ * @param r 
+ * @return uint8_t 
+ */
+uint8_t ride_get_user_account_age(Ride r);
+
+/**
+ * @brief 
+ * 
+ * @param r 
+ * @return uint8_t 
+ */
+uint8_t ride_get_driver_account_age(Ride r);
 
 #endif

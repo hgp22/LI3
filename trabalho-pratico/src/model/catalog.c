@@ -30,8 +30,6 @@ int catalog_process(Catalog c)
 {
     rides_sort(c->rides);
 
-    c->query8 = query8_new(c->rides, c->users, c->drivers);
-
     guint n_rides = c->rides->len;
 
     for (guint i = 0; i < n_rides; i++) {
@@ -39,10 +37,12 @@ int catalog_process(Catalog c)
         long d_id = ride_get_driver(r);
         Driver d = drivers_get_driver(c->drivers, d_id);
         ride_set_cost(r, d);
+        ride_set_driver_account_age(r, driver_get_account_age(d));
         driver_add_ride_data(d, r);
         char *username = ride_get_user(r);
         User u = users_get_user(c->users, username);
         free(username);
+        ride_set_user_account_age(r, user_get_account_age(u));
         user_add_ride_data(u, r);
         users_add_user(c->users, u);
         drivers_add_driver(c->drivers, d);
@@ -51,6 +51,8 @@ int catalog_process(Catalog c)
         driver_free(d);
         ride_free(r);
     }
+
+    c->query8 = query8_new(c->rides, c->users, c->drivers);
 
     users_remove_inactive_accounts(c->users);
     drivers_remove_inactive_accounts(c->drivers);
