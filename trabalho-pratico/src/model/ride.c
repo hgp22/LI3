@@ -16,8 +16,8 @@ struct ride {
     uint8_t score_driver;
     double cost;
     double tip;
-    uint8_t user_account_age;
-    uint8_t driver_account_age;
+    unsigned short user_account_age;
+    unsigned short driver_account_age;
 };
 
 Ride ride_new(void)
@@ -97,12 +97,12 @@ void ride_set_tip(Ride r, char *tip)
     r->tip = (float)strtof(tip, &endptr);
 }
 
-void ride_set_user_account_age(Ride r, uint8_t user_account_age)
+void ride_set_user_account_age(Ride r, unsigned short user_account_age)
 {
     r->user_account_age = user_account_age;
 }
 
-void ride_set_driver_account_age(Ride r, uint8_t driver_account_age)
+void ride_set_driver_account_age(Ride r, unsigned short driver_account_age)
 {
     r->driver_account_age = driver_account_age;
 }
@@ -157,12 +157,12 @@ double ride_get_tip(Ride r)
     return r->tip;
 }
 
-uint8_t ride_get_user_account_age(Ride r)
+unsigned short ride_get_user_account_age(Ride r)
 {
     return r->user_account_age;
 }
 
-uint8_t ride_get_driver_account_age(Ride r)
+unsigned short ride_get_driver_account_age(Ride r)
 {
     return r->driver_account_age;
 }

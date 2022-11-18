@@ -153,9 +153,9 @@ Car_Class driver_get_car_class(Driver d);
  * @brief Get the driver account age object
  *
  * @param d
- * @return uint8_t
+ * @return unsigned short
  */
-uint8_t driver_get_account_age(Driver d);
+unsigned short driver_get_account_age(Driver d);
 
 /**
  * @brief Get the driver account status object

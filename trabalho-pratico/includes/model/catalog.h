@@ -137,4 +137,14 @@ double catalog_get_city_avg_dist_in_range(Catalog c, char *city, char *dateA,
  */
 Query2 catalog_get_top_n_drivers_in_city(Catalog c, char *city, int N);
 
+/**
+ * @brief
+ *
+ * @param c
+ * @param gender
+ * @param account_age
+ * @return Rides
+ */
+Rides catalog_query8(Catalog c, char gender, int account_age);
+
 #endif

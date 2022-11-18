@@ -52,8 +52,6 @@ int catalog_process(Catalog c)
         ride_free(r);
     }
 
-    c->query8 = query8_new(c->rides, c->users, c->drivers);
-
     users_remove_inactive_accounts(c->users);
     drivers_remove_inactive_accounts(c->drivers);
 
@@ -65,6 +63,8 @@ int catalog_process(Catalog c)
 
     // query 4, 6 and 7
     c->cities = cities_new(c->rides, c->query2);
+
+    c->query8 = query8_new(c->rides, c->users, c->drivers);
 
     return 0;
 }
@@ -147,4 +147,9 @@ double catalog_get_city_avg_dist_in_range(Catalog c, char *city, char *dateA,
 Query2 catalog_get_top_n_drivers_in_city(Catalog c, char *city, int N)
 {
     return cities_get_city_top_N_drivers(c->cities, city, N);
+}
+
+Rides catalog_query8(Catalog c, char gender, int account_age)
+{
+    return query8_get_answer(c->query8, gender, account_age);
 }

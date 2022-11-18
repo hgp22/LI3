@@ -11,7 +11,7 @@ struct driver {
     char gender;
     uint8_t age;
     Car_Class car_class;
-    uint8_t account_age;
+    unsigned short account_age;
     D_Status account_status;
     unsigned short sum_score;
     double total_earned;
@@ -98,7 +98,7 @@ void driver_set_car_class(Driver d, char *car_class)
 
 void driver_set_account_age(Driver d, char *account_creation)
 {
-    d->account_age = date_to_age(account_creation);
+    d->account_age = date_to_days(account_creation);
 }
 
 void driver_set_account_status(Driver d, char *account_status)
@@ -140,7 +140,7 @@ Car_Class driver_get_car_class(Driver d)
     return d->car_class;
 }
 
-uint8_t driver_get_account_age(Driver d)
+unsigned short driver_get_account_age(Driver d)
 {
     return d->account_age;
 }

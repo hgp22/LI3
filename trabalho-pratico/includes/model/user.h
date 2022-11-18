@@ -119,9 +119,9 @@ uint8_t user_get_age(User u);
  * @brief Get the user account age object
  *
  * @param u
- * @return uint8_t
+ * @return unsigned short
  */
-uint8_t user_get_account_age(User u);
+unsigned short user_get_account_age(User u);
 
 /**
  * @brief Get the user account status object

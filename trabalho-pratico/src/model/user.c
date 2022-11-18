@@ -10,7 +10,7 @@ struct user {
     char *name;
     char gender;
     uint8_t age;
-    uint8_t account_age;
+    unsigned short account_age;
     U_Status account_status;
     unsigned short sum_score;
     double total_spent;
@@ -64,7 +64,7 @@ void user_set_age(User u, char *birth_date)
 
 void user_set_account_age(User u, char *account_creation)
 {
-    u->account_age = date_to_age(account_creation);
+    u->account_age = date_to_days(account_creation);
 }
 
 void user_set_account_status(User u, char *account_status)
@@ -101,7 +101,7 @@ uint8_t user_get_age(User u)
     return u->age;
 }
 
-uint8_t user_get_account_age(User u)
+unsigned short user_get_account_age(User u)
 {
     return u->account_age;
 }
