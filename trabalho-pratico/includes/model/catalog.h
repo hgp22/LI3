@@ -141,10 +141,20 @@ Query2 catalog_get_top_n_drivers_in_city(Catalog c, char *city, int N);
  * @brief
  *
  * @param c
+ * @param gender
+ * @param account_age
+ * @return Rides
+ */
+Rides catalog_query8(Catalog c, char gender, int account_age);
+
+/**
+ * @brief
+ *
+ * @param c
  * @param dateA
  * @param dateB
- * @return Query9
+ * @return Rides
  */
-Query9 catalog_get_rides_with_tip_in_range(Catalog c, char *dateA, char *dateB);
+Rides catalog_get_rides_with_tip_in_range(Catalog c, char *dateA, char *dateB);
 
 #endif

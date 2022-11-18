@@ -106,7 +106,12 @@ int run_query(Catalog c, char *query)
             query2_free(drivers);
             break;
         case '8':
-            printf("Query 8\n");
+            char gender;
+            int account_age;
+            sscanf(query, "%*d %c %d", &gender, &account_age);
+            Rides q8 = catalog_query8(c, gender, account_age);
+            show_query8(q8, c);
+            rides_free(q8);
             break;
         case '9':
             char dateA2[16];

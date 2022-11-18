@@ -4,6 +4,7 @@
 #include "drivers.h"
 #include "query2.h"
 #include "query3.h"
+#include "query8.h"
 #include "ride.h"
 #include "rides.h"
 #include "user.h"
@@ -17,6 +18,7 @@ struct catalog {
     Query2 query2;
     Query3 query3;
     Cities cities;
+    Query8 query8;
     Rides query9;
 };
 
@@ -36,10 +38,12 @@ int catalog_process(Catalog c)
         long d_id = ride_get_driver(r);
         Driver d = drivers_get_driver(c->drivers, d_id);
         ride_set_cost(r, d);
+        ride_set_driver_account_age(r, driver_get_account_age(d));
         driver_add_ride_data(d, r);
         char *username = ride_get_user(r);
         User u = users_get_user(c->users, username);
         free(username);
+        ride_set_user_account_age(r, user_get_account_age(u));
         user_add_ride_data(u, r);
         users_add_user(c->users, u);
         drivers_add_driver(c->drivers, d);
@@ -61,6 +65,8 @@ int catalog_process(Catalog c)
     // query 4, 6 and 7
     c->cities = cities_new(c->rides, c->query2);
 
+    c->query8 = query8_new(c->rides, c->users, c->drivers);
+
     c->query9 = rides_get_rides_with_tip(c->rides);
 
     return 0;
@@ -74,6 +80,7 @@ void catalog_free(Catalog c)
     query2_free(c->query2);
     query3_free(c->query3);
     cities_free(c->cities);
+    query8_free(c->query8);
     free(c);
 }
 
@@ -148,4 +155,9 @@ Query2 catalog_get_top_n_drivers_in_city(Catalog c, char *city, int N)
 Rides catalog_get_rides_with_tip_in_range(Catalog c, char *dateA, char *dateB)
 {
     return rides_get_rides_with_tip_in_range(c->query9, dateA, dateB);
+}
+
+Rides catalog_query8(Catalog c, char gender, int account_age)
+{
+    return query8_get_answer(c->query8, gender, account_age);
 }

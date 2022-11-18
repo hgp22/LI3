@@ -6,6 +6,8 @@
 
 typedef struct user *User;
 typedef struct driver *Driver;
+typedef struct catalog *Catalog;
+typedef GPtrArray *Rides;
 typedef GPtrArray *Query2;
 typedef GPtrArray *Query3;
 
@@ -76,8 +78,16 @@ void show_query7(Query2 drivers, char *city);
 /**
  * @brief
  *
+ * @param rides
+ * @param c
+ */
+void show_query8(Rides rides, Catalog c);
+
+/**
+ * @brief
+ *
  * @param q9
  */
-void show_query9(Query9 q9);
+void show_query9(Rides q9);
 
 #endif

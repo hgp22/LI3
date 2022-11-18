@@ -1,8 +1,10 @@
 #include "ui.h"
+#include "catalog.h"
 #include "driver.h"
 #include "query2.h"
 #include "query3.h"
 #include "ride.h"
+#include "rides.h"
 #include "user.h"
 #include "utils.h"
 #include <stdio.h>
@@ -87,7 +89,30 @@ void show_query7(Query2 drivers, char *city)
     }
 }
 
-void show_query9(Query9 q9)
+void show_query8(Rides rides, Catalog c)
+{
+    for (guint i = 0; i < rides->len; i++) {
+        Ride r = rides_get_ride(rides, i);
+        char *user = ride_get_user(r);
+        long driver = ride_get_driver(r);
+        ride_free(r);
+        User u = catalog_get_user(c, user);
+        free(user);
+        Driver d = catalog_get_driver(c, driver);
+        char *user_name = user_get_name(u);
+        char *user_username = user_get_username(u);
+        user_free(u);
+        char *driver_name = driver_get_name(d);
+        printf("%012ld;%s;%s;%s\n", driver_get_id(d), driver_name,
+               user_username, user_name);
+        driver_free(d);
+        free(user_name);
+        free(user_username);
+        free(driver_name);
+    }
+}
+
+void show_query9(Rides q9)
 {
     for (guint i = 0; i < q9->len; i++) {
         Ride r = (Ride)g_ptr_array_index(q9, i);
