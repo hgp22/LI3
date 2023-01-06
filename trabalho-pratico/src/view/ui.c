@@ -1,24 +1,12 @@
 #include "ui.h"
-#include "catalog.h"
+#include "date.h"
 #include "driver.h"
-#include "query2.h"
-#include "query3.h"
 #include "ride.h"
-#include "rides.h"
+#include "taxi_system.h"
 #include "user.h"
-#include "utils.h"
 #include <stdio.h>
 
-static int counter = 1;
-
-FILE *next_output_file(void)
-{
-    char file[64];
-    sprintf(file, "./Resultados/command%d_output.txt", counter++);
-    return freopen(file, "w", stdout);
-}
-
-void show_query1_user(User u)
+void show_query1_user(const User u)
 {
     if (u != NULL) {
         char *name = user_get_name(u);
@@ -29,7 +17,7 @@ void show_query1_user(User u)
     }
 }
 
-void show_query1_driver(Driver d)
+void show_query1_driver(const Driver d)
 {
     if (d != NULL) {
         char *name = driver_get_name(d);
@@ -40,21 +28,21 @@ void show_query1_driver(Driver d)
     }
 }
 
-void show_query2(Query2 q2)
+void show_query2(const GPtrArray *drivers)
 {
-    for (guint i = 0; i < q2->len; i++) {
-        Driver d = (Driver)g_ptr_array_index(q2, i);
+    for (guint i = 0; i < drivers->len; i++) {
+        Driver d = (Driver)g_ptr_array_index(drivers, i);
         char *name = driver_get_name(d);
-        printf("%012ld;%s;%.3f\n", driver_get_id(d), name,
+        printf("%012d;%s;%.3f\n", driver_get_id(d), name,
                driver_get_avg_score(d));
         free(name);
     }
 }
 
-void show_query3(Query3 q3)
+void show_query3(const GPtrArray *users)
 {
-    for (guint i = 0; i < q3->len; i++) {
-        User u = (User)g_ptr_array_index(q3, i);
+    for (guint i = 0; i < users->len; i++) {
+        User u = (User)g_ptr_array_index(users, i);
         char *name = user_get_name(u);
         char *username = user_get_username(u);
         printf("%s;%s;%d\n", username, name, user_get_total_distance(u));
@@ -78,33 +66,32 @@ void show_query6(double avg_distance)
     printf("%.3f\n", avg_distance);
 }
 
-void show_query7(Query2 drivers, char *city)
+void show_query7(const GPtrArray *drivers, const char *city)
 {
     for (guint i = 0; i < drivers->len; i++) {
         Driver d = (Driver)g_ptr_array_index(drivers, i);
         char *name = driver_get_name(d);
-        printf("%012ld;%s;%.3f\n", driver_get_id(d), name,
+        printf("%012d;%s;%.3f\n", driver_get_id(d), name,
                driver_get_city_score(d, city));
         free(name);
     }
 }
 
-void show_query8(Rides rides, Catalog c)
+void show_query8(const GPtrArray *rides, const TaxiSystem ts)
 {
     for (guint i = 0; i < rides->len; i++) {
-        Ride r = rides_get_ride(rides, i);
+        Ride r = g_ptr_array_index(rides, i);
         char *user = ride_get_user(r);
-        long driver = ride_get_driver(r);
-        ride_free(r);
-        User u = catalog_get_user(c, user);
+        int driver = ride_get_driver(r);
+        User u = taxi_get_user(ts, user);
         free(user);
-        Driver d = catalog_get_driver(c, driver);
+        Driver d = taxi_get_driver(ts, driver);
         char *user_name = user_get_name(u);
         char *user_username = user_get_username(u);
         user_free(u);
         char *driver_name = driver_get_name(d);
-        printf("%012ld;%s;%s;%s\n", driver_get_id(d), driver_name,
-               user_username, user_name);
+        printf("%012d;%s;%s;%s\n", driver_get_id(d), driver_name, user_username,
+               user_name);
         driver_free(d);
         free(user_name);
         free(user_username);
@@ -112,13 +99,13 @@ void show_query8(Rides rides, Catalog c)
     }
 }
 
-void show_query9(Rides q9)
+void show_query9(const GPtrArray *rides)
 {
-    for (guint i = 0; i < q9->len; i++) {
-        Ride r = (Ride)g_ptr_array_index(q9, i);
+    for (guint i = 0; i < rides->len; i++) {
+        Ride r = (Ride)g_ptr_array_index(rides, i);
         char *date = days_to_date(ride_get_date(r));
         char *city = ride_get_city(r);
-        printf("%012ld;%s;%d;%s;%.3f\n", ride_get_id(r), date,
+        printf("%012d;%s;%d;%s;%.3f\n", ride_get_id(r), date,
                (int)ride_get_distance(r), city, ride_get_tip(r));
         free(date);
         free(city);

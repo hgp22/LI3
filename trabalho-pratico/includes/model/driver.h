@@ -2,35 +2,15 @@
 #define __DRIVER_H__
 
 #include <glib.h>
-#include <stdint.h>
+#include <stdbool.h>
 
-typedef struct ride *Ride;
 typedef struct driver *Driver;
-typedef GHashTable *CitiesScore;
-typedef struct city_score *CityScore;
 
-typedef enum field_driver {
-    D_id,
-    D_name,
-    D_birth_date,
-    D_gender,
-    D_car_class,
-    D_license_plate,
-    D_city,
-    D_account_creation,
-    D_account_status,
-} Field_driver;
-
-typedef enum car_class {
+typedef enum __attribute__((__packed__)) car_class {
     Basic,
     Green,
     Premium,
-} Car_Class;
-
-typedef enum d_account_status {
-    D_Inactive,
-    D_Active,
-} D_Status;
+} CarClass;
 
 /**
  * @brief Create new Driver
@@ -40,18 +20,19 @@ typedef enum d_account_status {
 Driver driver_new(void);
 
 /**
- * @brief Frees Driver
+ * @brief
  *
- * @param driver Driver to be freed
+ * @param driver_record
+ * @return Driver
  */
-void driver_free(void *driver);
+Driver driver_new_from_record(const char *driver_record);
 
 /**
- * @brief Frees CitiesScore
+ * @brief Frees GHashTable *
  *
- * @param cs CitiesScore to be freed
+ * @param cs GHashTable * to be freed
  */
-void driver_free_cities_score(CitiesScore cs);
+void driver_free_cities_score(GHashTable *cs);
 
 /**
  * @brief Set the driver id object
@@ -59,7 +40,7 @@ void driver_free_cities_score(CitiesScore cs);
  * @param d
  * @param id
  */
-void driver_set_id(Driver d, char *id);
+void driver_set_id(const Driver d, const char *id);
 
 /**
  * @brief Set the driver name object
@@ -67,7 +48,7 @@ void driver_set_id(Driver d, char *id);
  * @param d
  * @param name
  */
-void driver_set_name(Driver d, char *name);
+void driver_set_name(const Driver d, const char *name);
 
 /**
  * @brief Set the driver gend object
@@ -75,7 +56,7 @@ void driver_set_name(Driver d, char *name);
  * @param d
  * @param gender
  */
-void driver_set_gender(Driver d, char *gender);
+void driver_set_gender(const Driver d, const char *gender);
 
 /**
  * @brief Set the driver age object
@@ -83,7 +64,7 @@ void driver_set_gender(Driver d, char *gender);
  * @param d
  * @param birth_date
  */
-void driver_set_age(Driver d, char *birth_date);
+void driver_set_age(const Driver d, const char *birth_date);
 
 /**
  * @brief Set the driver car class object
@@ -91,7 +72,7 @@ void driver_set_age(Driver d, char *birth_date);
  * @param d
  * @param car_class
  */
-void driver_set_car_class(Driver d, char *car_class);
+void driver_set_car_class(const Driver d, const char *car_class);
 
 /**
  * @brief Set the driver account age object
@@ -99,7 +80,7 @@ void driver_set_car_class(Driver d, char *car_class);
  * @param d
  * @param account_creation
  */
-void driver_set_account_age(Driver d, char *account_creation);
+void driver_set_account_age(const Driver d, const char *account_creation);
 
 /**
  * @brief Set the driver account status object
@@ -107,15 +88,15 @@ void driver_set_account_age(Driver d, char *account_creation);
  * @param d
  * @param account_status
  */
-void driver_set_account_status(Driver d, char *account_status);
+void driver_set_account_status(const Driver d, const char *account_status);
 
 /**
  * @brief Get the driver id object
  *
  * @param d
- * @return long
+ * @return int
  */
-long driver_get_id(Driver d);
+int driver_get_id(const Driver d);
 
 /**
  * @brief Get the driver name object
@@ -123,7 +104,7 @@ long driver_get_id(Driver d);
  * @param d
  * @return char*
  */
-char *driver_get_name(Driver d);
+char *driver_get_name(const Driver d);
 
 /**
  * @brief Get the driver gender object
@@ -131,39 +112,39 @@ char *driver_get_name(Driver d);
  * @param d
  * @return char
  */
-char driver_get_gender(Driver d);
+char driver_get_gender(const Driver d);
 
 /**
  * @brief Get the driver age object
  *
  * @param d
- * @return uint8_t
+ * @return guint8
  */
-uint8_t driver_get_age(Driver d);
+guint8 driver_get_age(const Driver d);
 
 /**
  * @brief Get the driver car class object
  *
  * @param d
- * @return Car_Class
+ * @return CarClass
  */
-Car_Class driver_get_car_class(Driver d);
+CarClass driver_get_car_class(const Driver d);
 
 /**
  * @brief Get the driver account age object
  *
  * @param d
- * @return unsigned short
+ * @return guint16
  */
-unsigned short driver_get_account_age(Driver d);
+guint16 driver_get_account_age(const Driver d);
 
 /**
  * @brief Get the driver account status object
  *
  * @param d
- * @return D_Status
+ * @return DStatus
  */
-D_Status driver_get_account_status(Driver d);
+bool driver_is_account_active(const Driver d);
 
 /**
  * @brief Get the driver avg score object
@@ -171,7 +152,7 @@ D_Status driver_get_account_status(Driver d);
  * @param d
  * @return double
  */
-double driver_get_avg_score(Driver d);
+double driver_get_avg_score(const Driver d);
 
 /**
  * @brief Get the driver total earned object
@@ -179,23 +160,23 @@ double driver_get_avg_score(Driver d);
  * @param d
  * @return double
  */
-double driver_get_total_earned(Driver d);
+double driver_get_total_earned(const Driver d);
 
 /**
  * @brief Get the driver n trips object
  *
  * @param d
- * @return unsigned short
+ * @return guint16
  */
-unsigned short driver_get_n_trips(Driver d);
+guint16 driver_get_n_trips(const Driver d);
 
 /**
  * @brief Get the driver last ride date object
  *
  * @param d
- * @return unsigned short
+ * @return guint16
  */
-unsigned short driver_get_last_ride_date(Driver d);
+guint16 driver_get_last_ride_date(const Driver d);
 
 /**
  * @brief Get cities scores from driver
@@ -203,7 +184,7 @@ unsigned short driver_get_last_ride_date(Driver d);
  * @param d Driver
  * @return Cities Scores
  */
-CitiesScore driver_get_cities_score(Driver d);
+GHashTable *driver_get_cities_score(const Driver d);
 
 /**
  * @brief Get driver city score
@@ -212,15 +193,20 @@ CitiesScore driver_get_cities_score(Driver d);
  * @param city City
  * @return City score
  */
-double driver_get_city_score(Driver d, char *city);
+double driver_get_city_score(const Driver d, const char *city);
 
 /**
- * @brief Get data in a drivers' ride
+ * @brief Add a ride's data in a driver
  *
- * @param d Driver
- * @param r Ride
+ * @param d
+ * @param score
+ * @param cost
+ * @param tip
+ * @param date
+ * @param city_name
  */
-void driver_add_ride_data(Driver d, Ride r);
+void driver_add_ride_data(const Driver d, guint8 score, double cost,
+                          guint16 date, const char *city_name);
 
 /**
  * @brief Copy driver
@@ -228,6 +214,13 @@ void driver_add_ride_data(Driver d, Ride r);
  * @param old_d Driver to be copied
  * @return Driver copy
  */
-Driver driver_copy(Driver old_d);
+Driver driver_copy(const Driver old_d);
+
+/**
+ * @brief Frees Driver
+ *
+ * @param driver Driver to be freed
+ */
+void driver_free(void *driver);
 
 #endif

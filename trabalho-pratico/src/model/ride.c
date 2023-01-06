@@ -1,23 +1,34 @@
 #include "ride.h"
-#include "driver.h"
-#include "utils.h"
+#include "date.h"
 #include <glib.h>
-#include <stdint.h>
 #include <string.h>
 
-struct ride {
-    long id;
-    unsigned short date;
-    long driver;
+typedef enum field_ride {
+    Id,
+    Date,
+    Driver_id,
+    User_id,
+    City_name,
+    Distance,
+    Score_user,
+    Score_driver,
+    Tip,
+    Comment,
+} FieldRide;
+
+struct __attribute__((__packed__)) ride {
     char *user;
     char *city;
-    uint8_t distance;
-    uint8_t score_user;
-    uint8_t score_driver;
     double cost;
     double tip;
-    unsigned short user_account_age;
-    unsigned short driver_account_age;
+    int id;
+    int driver;
+    guint16 date;
+    guint16 user_account_age;
+    guint16 driver_account_age;
+    guint8 distance;
+    guint8 score_driver;
+    guint8 score_user;
 };
 
 Ride ride_new(void)
@@ -25,149 +36,177 @@ Ride ride_new(void)
     return g_new(struct ride, 1);
 }
 
-// ? void or proper type
-void ride_free(void *ride)
+Ride ride_new_from_record(const char *ride_record)
 {
-    if (ride != NULL) {
-        Ride r = (Ride)ride;
-        free(r->user);
-        free(r->city);
-        free(ride);
+    Ride ride = ride_new();
+
+    for (FieldRide field = Id; field <= Comment; field++) {
+        char *buff = strsep(&ride_record, ";\n");
+        switch (field) {
+            case Id:
+                ride_set_id(ride, buff);
+                break;
+            case Date:
+                ride_set_date(ride, buff);
+                break;
+            case Driver_id:
+                ride_set_driver(ride, buff);
+                break;
+            case User_id:
+                ride_set_user(ride, buff);
+                break;
+            case City_name:
+                ride_set_city(ride, buff);
+                break;
+            case Distance:
+                ride_set_distance(ride, buff);
+                break;
+            case Score_user:
+                ride_set_score_user(ride, buff);
+                break;
+            case Score_driver:
+                ride_set_score_driver(ride, buff);
+                break;
+            case Tip:
+                ride_set_tip(ride, buff);
+                break;
+            case Comment:
+                break;
+            default:
+                break;
+        }
     }
+
+    return ride;
 }
 
-void ride_set_id(Ride r, char *id)
+void ride_set_id(const Ride r, const char *id)
 {
     char *endptr;
-    r->id = strtol(id, &endptr, 10);
+    r->id = (int)strtol(id, &endptr, 10);
 }
 
-void ride_set_date(Ride r, char *date)
+void ride_set_date(const Ride r, const char *date)
 {
     r->date = date_to_days(date);
 }
 
-void ride_set_driver(Ride r, char *driver)
+void ride_set_driver(const Ride r, const char *driver)
 {
     char *endptr;
-    r->driver = strtol(driver, &endptr, 10);
+    r->driver = (int)strtol(driver, &endptr, 10);
 }
 
-void ride_set_user(Ride r, char *user)
+void ride_set_user(const Ride r, const char *user)
 {
     r->user = strdup(user);
 }
 
-void ride_set_city(Ride r, char *city)
+void ride_set_city(const Ride r, const char *city)
 {
     r->city = strdup(city);
 }
 
-void ride_set_distance(Ride r, char *distance)
+void ride_set_distance(const Ride r, const char *distance)
 {
     char *endptr;
-    r->distance = (uint8_t)strtol(distance, &endptr, 10);
+    r->distance = (guint8)strtol(distance, &endptr, 10);
 }
 
-void ride_set_score_user(Ride r, char *score_user)
+void ride_set_score_user(const Ride r, const char *score_user)
 {
     char *endptr;
-    r->score_user = (uint8_t)strtol(score_user, &endptr, 10);
+    r->score_user = (guint8)strtol(score_user, &endptr, 10);
 }
 
-void ride_set_score_driver(Ride r, char *score_driver)
+void ride_set_score_driver(const Ride r, const char *score_driver)
 {
     char *endptr;
-    r->score_driver = (uint8_t)strtol(score_driver, &endptr, 10);
+    r->score_driver = (guint8)strtol(score_driver, &endptr, 10);
 }
 
-void ride_set_cost(Ride r, Driver d)
+void ride_set_cost(const Ride r, double cost)
 {
-    Car_Class class = driver_get_car_class(d);
-    double base[] = {3.25, 4.00, 5.20};
-    double tax[] = {0.62, 0.79, 0.94};
-    double b = base[class];
-    double t = tax[class];
-    r->cost = b + t * r->distance;
+    r->cost = cost;
 }
 
-void ride_set_tip(Ride r, char *tip)
+void ride_set_tip(const Ride r, const char *tip)
 {
     char *endptr;
-    r->tip = (float)strtof(tip, &endptr);
+    r->tip = strtof(tip, &endptr);
 }
 
-void ride_set_user_account_age(Ride r, unsigned short user_account_age)
+void ride_set_user_account_age(const Ride r, guint16 user_account_age)
 {
     r->user_account_age = user_account_age;
 }
 
-void ride_set_driver_account_age(Ride r, unsigned short driver_account_age)
+void ride_set_driver_account_age(const Ride r, guint16 driver_account_age)
 {
     r->driver_account_age = driver_account_age;
 }
 
-long ride_get_id(Ride r)
+int ride_get_id(const Ride r)
 {
     return r->id;
 }
 
-unsigned short ride_get_date(Ride r)
+guint16 ride_get_date(const Ride r)
 {
     return r->date;
 }
 
-long ride_get_driver(Ride r)
+int ride_get_driver(const Ride r)
 {
     return r->driver;
 }
 
-char *ride_get_user(Ride r)
+char *ride_get_user(const Ride r)
 {
     return strdup(r->user);
 }
 
-char *ride_get_city(Ride r)
+char *ride_get_city(const Ride r)
 {
     return strdup(r->city);
 }
 
-double ride_get_distance(Ride r)
+double ride_get_distance(const Ride r)
 {
     return (double)r->distance;
 }
 
-uint8_t ride_get_score_user(Ride r)
+guint8 ride_get_score_user(const Ride r)
 {
     return r->score_user;
 }
 
-uint8_t ride_get_score_driver(Ride r)
+guint8 ride_get_score_driver(const Ride r)
 {
     return r->score_driver;
 }
 
-double ride_get_cost(Ride r)
+double ride_get_cost(const Ride r)
 {
     return r->cost;
 }
 
-double ride_get_tip(Ride r)
+double ride_get_tip(const Ride r)
 {
     return r->tip;
 }
 
-unsigned short ride_get_user_account_age(Ride r)
+guint16 ride_get_user_account_age(const Ride r)
 {
     return r->user_account_age;
 }
 
-unsigned short ride_get_driver_account_age(Ride r)
+guint16 ride_get_driver_account_age(const Ride r)
 {
     return r->driver_account_age;
 }
 
-Ride ride_copy(Ride old_r)
+Ride ride_copy(const Ride old_r)
 {
     if (old_r == NULL) {
         return NULL;
@@ -189,4 +228,14 @@ Ride ride_copy(Ride old_r)
     new_r->driver_account_age = old_r->driver_account_age;
 
     return new_r;
+}
+
+void ride_free(void *ride)
+{
+    if (ride != NULL) {
+        Ride r = (Ride)ride;
+        free(r->user);
+        free(r->city);
+        free(ride);
+    }
 }

@@ -6,45 +6,35 @@
 
 typedef struct user *User;
 typedef struct driver *Driver;
-typedef struct catalog *Catalog;
-typedef GPtrArray *Rides;
-typedef GPtrArray *Query2;
-typedef GPtrArray *Query3;
-
-/**
- * @brief Sets next output file
- *
- * @return FILE* File pointer to next output file
- */
-FILE *next_output_file(void);
+typedef struct taxi_system *TaxiSystem;
 
 /**
  * @brief Prints result of query 1 for a user
  *
  * @param u Answer to query 1 for driver
  */
-void show_query1_user(User u);
+void show_query1_user(const User u);
 
 /**
  * @brief Prints result of query 1 for a driver
  *
  * @param d Answer to query 1 for driver
  */
-void show_query1_driver(Driver d);
+void show_query1_driver(const Driver d);
 
 /**
  * @brief Prints result of query 2
  *
- * @param q2 Answer to query 2
+ * @param drivers Answer to query 2
  */
-void show_query2(Query2 q2);
+void show_query2(const GPtrArray *drivers);
 
 /**
  * @brief Prints result of query 3
  *
- * @param q3 Answer to query 3
+ * @param users Answer to query 3
  */
-void show_query3(Query3 q3);
+void show_query3(const GPtrArray *users);
 
 /**
  * @brief Prints result of query 4
@@ -73,7 +63,7 @@ void show_query6(double avg_distance);
  * @param drivers
  * @param city
  */
-void show_query7(Query2 drivers, char *city);
+void show_query7(const GPtrArray *drivers, const char *city);
 
 /**
  * @brief
@@ -81,13 +71,13 @@ void show_query7(Query2 drivers, char *city);
  * @param rides
  * @param c
  */
-void show_query8(Rides rides, Catalog c);
+void show_query8(const GPtrArray *rides, const TaxiSystem ts);
 
 /**
  * @brief
  *
- * @param q9
+ * @param rides
  */
-void show_query9(Rides q9);
+void show_query9(const GPtrArray *rides);
 
 #endif

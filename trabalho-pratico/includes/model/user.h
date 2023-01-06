@@ -1,25 +1,9 @@
 #ifndef __USER_H__
 #define __USER_H__
 
-#include <stdint.h>
+#include <glib.h>
 
-typedef struct ride *Ride;
 typedef struct user *User;
-
-typedef enum field_user {
-    U_username,
-    U_name,
-    U_gender,
-    U_birth_date,
-    U_account_creation,
-    U_pay_method,
-    U_account_status,
-} Field_user;
-
-typedef enum u_account_status {
-    U_Inactive,
-    U_Active,
-} U_Status;
 
 /**
  * @brief Create new User
@@ -29,11 +13,12 @@ typedef enum u_account_status {
 User user_new(void);
 
 /**
- * @brief Frees User
+ * @brief
  *
- * @param user User to be freed
+ * @param user_record
+ * @return User
  */
-void user_free(void *user);
+User user_new_from_record(const char *user_record);
 
 /**
  * @brief Set the user username object
@@ -41,7 +26,7 @@ void user_free(void *user);
  * @param u
  * @param username
  */
-void user_set_username(User u, char *username);
+void user_set_username(const User u, const char *username);
 
 /**
  * @brief Set the user name object
@@ -49,7 +34,7 @@ void user_set_username(User u, char *username);
  * @param u
  * @param name
  */
-void user_set_name(User u, char *name);
+void user_set_name(const User u, const char *name);
 
 /**
  * @brief Set the user gender object
@@ -57,7 +42,7 @@ void user_set_name(User u, char *name);
  * @param u
  * @param gender
  */
-void user_set_gender(User u, char *gender);
+void user_set_gender(const User u, const char *gender);
 
 /**
  * @brief Set the user age object
@@ -65,7 +50,7 @@ void user_set_gender(User u, char *gender);
  * @param u
  * @param birth_date
  */
-void user_set_age(User u, char *birth_date);
+void user_set_age(const User u, const char *birth_date);
 
 /**
  * @brief Set the user account age object
@@ -73,15 +58,7 @@ void user_set_age(User u, char *birth_date);
  * @param u
  * @param account_creation
  */
-void user_set_account_age(User u, char *account_creation);
-
-/**
- * @brief Set the user account status object
- *
- * @param u
- * @param account_status
- */
-void user_set_account_status(User u, char *account_status);
+void user_set_account_age(const User u, const char *account_creation);
 
 /**
  * @brief Get the user username object
@@ -89,7 +66,7 @@ void user_set_account_status(User u, char *account_status);
  * @param u
  * @return char*
  */
-char *user_get_username(User u);
+char *user_get_username(const User u);
 
 /**
  * @brief Get the user name object
@@ -97,7 +74,7 @@ char *user_get_username(User u);
  * @param u
  * @return char*
  */
-char *user_get_name(User u);
+char *user_get_name(const User u);
 
 /**
  * @brief Get the user gender object
@@ -105,31 +82,23 @@ char *user_get_name(User u);
  * @param u
  * @return char
  */
-char user_get_gender(User u);
+char user_get_gender(const User u);
 
 /**
  * @brief Get the user age object
  *
  * @param u
- * @return uint8_t
+ * @return guint8
  */
-uint8_t user_get_age(User u);
+guint8 user_get_age(const User u);
 
 /**
  * @brief Get the user account age object
  *
  * @param u
- * @return unsigned short
+ * @return guint16
  */
-unsigned short user_get_account_age(User u);
-
-/**
- * @brief Get the user account status object
- *
- * @param u
- * @return U_Status
- */
-U_Status user_get_account_status(User u);
+guint16 user_get_account_age(const User u);
 
 /**
  * @brief Get the user avg score object
@@ -137,7 +106,7 @@ U_Status user_get_account_status(User u);
  * @param u
  * @return double
  */
-double user_get_avg_score(User u);
+double user_get_avg_score(const User u);
 
 /**
  * @brief Get the user total spent object
@@ -145,39 +114,44 @@ double user_get_avg_score(User u);
  * @param u
  * @return double
  */
-double user_get_total_spent(User u);
+double user_get_total_spent(const User u);
 
 /**
  * @brief Get the user total distance object
  *
  * @param u
- * @return unsigned short
+ * @return guint16
  */
-unsigned short user_get_total_distance(User u);
+guint16 user_get_total_distance(const User u);
 
 /**
  * @brief Get the user n trips object
  *
  * @param u
- * @return unsigned short
+ * @return guint16
  */
-unsigned short user_get_n_trips(User u);
+guint16 user_get_n_trips(const User u);
 
 /**
  * @brief Get the user last ride date object
  *
  * @param u
- * @return unsigned short
+ * @return guint16
  */
-unsigned short user_get_last_ride_date(User u);
+guint16 user_get_last_ride_date(const User u);
 
 /**
  * @brief
  *
  * @param u
- * @param r
+ * @param score
+ * @param cost
+ * @param tip
+ * @param date
+ * @param distance
  */
-void user_add_ride_data(User u, Ride r);
+void user_add_ride_data(const User u, guint8 score, double cost, guint16 date,
+                        guint8 distance);
 
 /**
  * @brief
@@ -185,6 +159,13 @@ void user_add_ride_data(User u, Ride r);
  * @param old_u
  * @return User
  */
-User user_copy(User old_u);
+User user_copy(const User old_u);
+
+/**
+ * @brief Frees User
+ *
+ * @param user User to be freed
+ */
+void user_free(void *user);
 
 #endif

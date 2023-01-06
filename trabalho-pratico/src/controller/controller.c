@@ -1,127 +1,188 @@
 #include "controller.h"
-#include "catalog.h"
-#include "db.h"
 #include "driver.h"
-#include "query2.h"
-#include "query3.h"
 #include "rides.h"
+#include "taxi_system.h"
 #include "ui.h"
 #include "user.h"
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
-int run_controller(char *path_inputs, char *path_queries)
+#define BUFFER 64
+
+static int _run_queries(const TaxiSystem ts, const char *queries_path);
+static int _run_query(const TaxiSystem ts, const char *query);
+static void _query1(const TaxiSystem ts, const char *query);
+static void _query2(const TaxiSystem ts, const char *query);
+static void _query3(const TaxiSystem ts, const char *query);
+static void _query4(const TaxiSystem ts, const char *query);
+static void _query5(const TaxiSystem ts, const char *query);
+static void _query6(const TaxiSystem ts, const char *query);
+static void _query7(const TaxiSystem ts, const char *query);
+static void _query8(const TaxiSystem ts, const char *query);
+static void _query9(const TaxiSystem ts, const char *query);
+
+int run_controller(const char *inputs_path, const char *queries_path)
 {
-    Catalog c = catalog_new();
-    db_load(c, path_inputs);
-    catalog_process(c);
+    TaxiSystem ts = taxi_new(inputs_path);
 
-    FILE *file_queries = freopen(path_queries, "r", stdin);
+    struct stat st = {0};
 
-    run_queries(c);
+    if (stat("Resultados", &st) == -1) {
+        mkdir("Resultados", 0700);
+    }
 
-    fclose(file_queries);
+    int r = _run_queries(ts, queries_path);
 
-    catalog_free(c);
+    taxi_free(ts);
 
-    return 0;
+    return r;
 }
 
-int run_queries(Catalog c)
+static int _run_queries(const TaxiSystem ts, const char *queries_path)
 {
     char *query = NULL;
     size_t len = 0;
-    FILE *fp = NULL;
+    char file[BUFFER];
+    int n_query = 1;
+
+    FILE *fp = freopen(queries_path, "r", stdin);
 
     while (getline(&query, &len, stdin) != -1) {
-        fp = next_output_file();
-        run_query(c, query);
+        sprintf(file, "./Resultados/command%d_output.txt", n_query++);
+        fp = freopen(file, "w", stdout);
+        _run_query(ts, query);
     }
 
     fclose(fp);
     free(query);
 
-    return 0;
+    return n_query;
 }
 
-int run_query(Catalog c, char *query)
+static int _run_query(const TaxiSystem ts, const char *query)
 {
-    int N;
     switch (query[0]) {
         case '1':
-            char id[64];
-            sscanf(query, "%*d %s\n", id);
-            // If User and Driver could be generalized to Person
-            // we could simply do show_query1(query1(c, id))
-            // where query1 returns and show_query1 receives a Person
-            char *endptr;
-            long driver = strtol(id, &endptr, 10);
-            if (*endptr != '\0') {
-                User u = catalog_get_user(c, id);
-                show_query1_user(u);
-                user_free(u);
-            }
-            else {
-                Driver d = catalog_get_driver(c, driver);
-                show_query1_driver(d);
-                driver_free(d);
-            }
+            _query1(ts, query);
             break;
         case '2':
-            sscanf(query, "%*d %d", &N);
-            Query2 q2 = catalog_get_top_n_drivers_by_score(c, N);
-            show_query2(q2);
-            query2_free(q2);
+            _query2(ts, query);
             break;
         case '3':
-            sscanf(query, "%*d %d", &N);
-            Query3 q3 = catalog_get_top_n_users_by_distance(c, N);
-            show_query3(q3);
-            query3_free(q3);
+            _query3(ts, query);
             break;
         case '4':
-            char city[64];
-            sscanf(query, "%*d %s", city);
-            show_query4(catalog_get_city_avg_cost(c, city));
+            _query4(ts, query);
             break;
         case '5':
-            char dateA[16];
-            char dateB[16];
-            sscanf(query, "%*d %s %s", dateA, dateB);
-            show_query5(catalog_get_avg_cost_in_range(c, dateA, dateB));
+            _query5(ts, query);
             break;
         case '6':
-            char city1[64];
-            char dateA1[16];
-            char dateB1[16];
-            sscanf(query, "%*d %s %s %s", city1, dateA1, dateB1);
-            show_query6(
-                catalog_get_city_avg_dist_in_range(c, city1, dateA1, dateB1));
+            _query6(ts, query);
             break;
         case '7':
-            char city2[64];
-            sscanf(query, "%*d %d %s", &N, city2);
-            Query2 drivers = catalog_get_top_n_drivers_in_city(c, city2, N);
-            show_query7(drivers, city2);
-            query2_free(drivers);
+            _query7(ts, query);
             break;
         case '8':
-            char gender;
-            int account_age;
-            sscanf(query, "%*d %c %d", &gender, &account_age);
-            Rides q8 = catalog_query8(c, gender, account_age);
-            show_query8(q8, c);
-            rides_free(q8);
+            _query8(ts, query);
             break;
         case '9':
-            char dateA2[16];
-            char dateB2[16];
-            sscanf(query, "%*d %s %s", dateA2, dateB2);
-            Rides q9 = catalog_get_rides_with_tip_in_range(c, dateA2, dateB2);
-            show_query9(q9);
-            rides_free(q9);
+            _query9(ts, query);
             break;
     }
 
     return 0;
+}
+
+static void _query1(const TaxiSystem ts, const char *query)
+{
+    // If User and Driver could be generalized to Person
+    // we could simply do show_query1(query1(c, id))
+    // where query1 returns and show_query1 receives a Person
+    char id[BUFFER];
+    sscanf(query, "%*d %s\n", id);
+    char *endptr;
+    int driver = strtol(id, &endptr, 10);
+    if (*endptr != '\0') {
+        User u = taxi_get_user(ts, id);
+        show_query1_user(u);
+        user_free(u);
+    }
+    else {
+        Driver d = taxi_get_driver(ts, driver);
+        show_query1_driver(d);
+        driver_free(d);
+    }
+}
+
+static void _query2(const TaxiSystem ts, const char *query)
+{
+    int N;
+    sscanf(query, "%*d %d", &N);
+    GPtrArray *drivers = taxi_top_n_drivers_by_score(ts, N);
+    show_query2(drivers);
+    g_ptr_array_free(drivers, TRUE);
+}
+
+static void _query3(const TaxiSystem ts, const char *query)
+{
+    int N;
+    sscanf(query, "%*d %d", &N);
+    GPtrArray *users = taxi_top_n_users_by_distance(ts, N);
+    show_query3(users);
+    g_ptr_array_free(users, TRUE);
+}
+
+static void _query4(const TaxiSystem ts, const char *query)
+{
+    char city[BUFFER];
+    sscanf(query, "%*d %s", city);
+    show_query4(taxi_city_avg_cost(ts, city));
+}
+
+static void _query5(const TaxiSystem ts, const char *query)
+{
+    char dateA[BUFFER], dateB[BUFFER];
+    sscanf(query, "%*d %s %s", dateA, dateB);
+    show_query5(taxi_avg_cost_in_range(ts, dateA, dateB));
+}
+
+static void _query6(const TaxiSystem ts, const char *query)
+{
+    char city[BUFFER], dateA[BUFFER], dateB[BUFFER];
+    sscanf(query, "%*d %s %s %s", city, dateA, dateB);
+    show_query6(taxi_city_avg_dist_in_range(ts, city, dateA, dateB));
+}
+
+static void _query7(const TaxiSystem ts, const char *query)
+{
+    int N;
+    char city[BUFFER];
+    sscanf(query, "%*d %d %s", &N, city);
+    GPtrArray *drivers = taxi_top_n_drivers_in_city(ts, city, N);
+    show_query7(drivers, city);
+    g_ptr_array_free(drivers, TRUE);
+}
+
+static void _query8(const TaxiSystem ts, const char *query)
+{
+    char gender;
+    int account_age;
+    sscanf(query, "%*d %c %d", &gender, &account_age);
+    GPtrArray *rides = taxi_query8(ts, gender, account_age);
+    show_query8(rides, ts);
+    g_ptr_array_free(rides, TRUE);
+}
+
+static void _query9(const TaxiSystem ts, const char *query)
+{
+    char dateA2[BUFFER];
+    char dateB2[BUFFER];
+    sscanf(query, "%*d %s %s", dateA2, dateB2);
+    GPtrArray *rides = taxi_rides_with_tip_in_range(ts, dateA2, dateB2);
+    show_query9(rides);
+    g_ptr_array_free(rides, TRUE);
 }

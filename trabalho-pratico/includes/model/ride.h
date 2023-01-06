@@ -1,23 +1,9 @@
 #ifndef __RIDE_H__
 #define __RIDE_H__
 
-#include <stdint.h>
+#include <glib.h>
 
-typedef struct driver *Driver;
 typedef struct ride *Ride;
-
-typedef enum field_ride {
-    R_id,
-    R_date,
-    R_driver,
-    R_user,
-    R_city,
-    R_distance,
-    R_score_user,
-    R_score_driver,
-    R_tip,
-    R_comment,
-} Field_ride;
 
 /**
  * @brief Create new Ride
@@ -27,11 +13,12 @@ typedef enum field_ride {
 Ride ride_new(void);
 
 /**
- * @brief Frees Ride
+ * @brief
  *
- * @param ride Ride to be freed
+ * @param ride_record
+ * @return Ride
  */
-void ride_free(void *ride);
+Ride ride_new_from_record(const char *ride_record);
 
 /**
  * @brief Set the ride id object
@@ -39,7 +26,7 @@ void ride_free(void *ride);
  * @param r
  * @param id
  */
-void ride_set_id(Ride r, char *id);
+void ride_set_id(const Ride r, const char *id);
 
 /**
  * @brief Set the ride date object
@@ -47,7 +34,7 @@ void ride_set_id(Ride r, char *id);
  * @param r
  * @param date
  */
-void ride_set_date(Ride r, char *date);
+void ride_set_date(const Ride r, const char *date);
 
 /**
  * @brief Set the ride driver object
@@ -55,7 +42,7 @@ void ride_set_date(Ride r, char *date);
  * @param r
  * @param driver
  */
-void ride_set_driver(Ride r, char *driver);
+void ride_set_driver(const Ride r, const char *driver);
 
 /**
  * @brief Set the ride user object
@@ -63,7 +50,7 @@ void ride_set_driver(Ride r, char *driver);
  * @param r
  * @param user
  */
-void ride_set_user(Ride r, char *user);
+void ride_set_user(const Ride r, const char *user);
 
 /**
  * @brief Set the ride city object
@@ -71,7 +58,7 @@ void ride_set_user(Ride r, char *user);
  * @param r
  * @param city
  */
-void ride_set_city(Ride r, char *city);
+void ride_set_city(const Ride r, const char *city);
 
 /**
  * @brief Set the ride distance object
@@ -79,7 +66,7 @@ void ride_set_city(Ride r, char *city);
  * @param r
  * @param distance
  */
-void ride_set_distance(Ride r, char *distance);
+void ride_set_distance(const Ride r, const char *distance);
 
 /**
  * @brief Set the ride score user object
@@ -87,7 +74,7 @@ void ride_set_distance(Ride r, char *distance);
  * @param r
  * @param score_user
  */
-void ride_set_score_user(Ride r, char *score_user);
+void ride_set_score_user(const Ride r, const char *score_user);
 
 /**
  * @brief Set the ride score driver object
@@ -95,15 +82,15 @@ void ride_set_score_user(Ride r, char *score_user);
  * @param r
  * @param score_driver
  */
-void ride_set_score_driver(Ride r, char *score_driver);
+void ride_set_score_driver(const Ride r, const char *score_driver);
 
 /**
- * @brief Set the ride cost object
+ * @brief
  *
  * @param r
- * @param d
+ * @param cost
  */
-void ride_set_cost(Ride r, Driver d);
+void ride_set_cost(const Ride r, double cost);
 
 /**
  * @brief Set the ride tip object
@@ -111,7 +98,7 @@ void ride_set_cost(Ride r, Driver d);
  * @param r
  * @param tip
  */
-void ride_set_tip(Ride r, char *tip);
+void ride_set_tip(const Ride r, const char *tip);
 
 /**
  * @brief
@@ -119,7 +106,7 @@ void ride_set_tip(Ride r, char *tip);
  * @param r
  * @param user_account_age
  */
-void ride_set_user_account_age(Ride r, unsigned short user_account_age);
+void ride_set_user_account_age(const Ride r, guint16 user_account_age);
 
 /**
  * @brief
@@ -127,31 +114,31 @@ void ride_set_user_account_age(Ride r, unsigned short user_account_age);
  * @param r
  * @param driver_account_age
  */
-void ride_set_driver_account_age(Ride r, unsigned short driver_account_age);
+void ride_set_driver_account_age(const Ride r, guint16 driver_account_age);
 
 /**
  * @brief Get the ride id object
  *
  * @param r
- * @return long
+ * @return int
  */
-long ride_get_id(Ride r);
+int ride_get_id(const Ride r);
 
 /**
  * @brief Get the ride date object
  *
  * @param r
- * @return unsigned short
+ * @return guint16
  */
-unsigned short ride_get_date(Ride r);
+guint16 ride_get_date(const Ride r);
 
 /**
  * @brief Get the ride driver object
  *
  * @param r
- * @return long
+ * @return int
  */
-long ride_get_driver(Ride r);
+int ride_get_driver(const Ride r);
 
 /**
  * @brief Get the ride user object
@@ -159,7 +146,7 @@ long ride_get_driver(Ride r);
  * @param r
  * @return char*
  */
-char *ride_get_user(Ride r);
+char *ride_get_user(const Ride r);
 
 /**
  * @brief Get the ride city object
@@ -167,7 +154,7 @@ char *ride_get_user(Ride r);
  * @param r
  * @return char*
  */
-char *ride_get_city(Ride r);
+char *ride_get_city(const Ride r);
 
 /**
  * @brief Get the ride distance object
@@ -175,23 +162,23 @@ char *ride_get_city(Ride r);
  * @param r
  * @return double
  */
-double ride_get_distance(Ride r);
+double ride_get_distance(const Ride r);
 
 /**
  * @brief Get the ride score user object
  *
  * @param r
- * @return uint8_t
+ * @return guint8
  */
-uint8_t ride_get_score_user(Ride r);
+guint8 ride_get_score_user(const Ride r);
 
 /**
  * @brief Get the ride score driver object
  *
  * @param r
- * @return uint8_t
+ * @return guint8
  */
-uint8_t ride_get_score_driver(Ride r);
+guint8 ride_get_score_driver(const Ride r);
 
 /**
  * @brief Get the ride cost object
@@ -199,7 +186,7 @@ uint8_t ride_get_score_driver(Ride r);
  * @param r
  * @return float
  */
-double ride_get_cost(Ride r);
+double ride_get_cost(const Ride r);
 
 /**
  * @brief Get the ride tip object
@@ -207,23 +194,23 @@ double ride_get_cost(Ride r);
  * @param r
  * @return float
  */
-double ride_get_tip(Ride r);
+double ride_get_tip(const Ride r);
 
 /**
  * @brief
  *
  * @param r
- * @return unsigned short
+ * @return guint16
  */
-unsigned short ride_get_user_account_age(Ride r);
+guint16 ride_get_user_account_age(const Ride r);
 
 /**
  * @brief
  *
  * @param r
- * @return unsigned short
+ * @return guint16
  */
-unsigned short ride_get_driver_account_age(Ride r);
+guint16 ride_get_driver_account_age(const Ride r);
 
 /**
  * @brief
@@ -231,6 +218,13 @@ unsigned short ride_get_driver_account_age(Ride r);
  * @param old_r
  * @return Ride
  */
-Ride ride_copy(Ride old_r);
+Ride ride_copy(const Ride old_r);
+
+/**
+ * @brief Frees Ride
+ *
+ * @param ride Ride to be freed
+ */
+void ride_free(void *ride);
 
 #endif

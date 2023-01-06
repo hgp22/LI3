@@ -1,22 +1,29 @@
 #include "user.h"
-#include "ride.h"
-#include "utils.h"
+#include "date.h"
 #include <glib.h>
-#include <stdint.h>
 #include <string.h>
 
-struct user {
+typedef enum field_user {
+    Username,
+    Name,
+    Gender,
+    Birth_date,
+    Account_creation,
+    Pay_method,
+    Account_status,
+} FieldUser;
+
+struct __attribute__((__packed__)) user {
     char *username;
     char *name;
-    char gender;
-    uint8_t age;
-    unsigned short account_age;
-    U_Status account_status;
-    unsigned short sum_score;
     double total_spent;
-    unsigned short total_distance;
-    unsigned short n_trips;
-    unsigned short last_ride_date;
+    guint16 account_age;
+    guint16 sum_score;
+    guint16 total_distance;
+    guint16 n_trips;
+    guint16 last_ride_date;
+    char gender;
+    guint8 age;
 };
 
 User user_new(void)
@@ -32,86 +39,95 @@ User user_new(void)
     return u;
 }
 
-void user_free(void *user)
+User user_new_from_record(const char *user_record)
 {
-    if (user != NULL) {
-        User u = (User)user;
-        free(u->username);
-        free(u->name);
-        free(user);
+    User user = user_new();
+
+    for (FieldUser field = Username; field <= Account_status; field++) {
+        char *buff = strsep(&user_record, ";\n");
+        switch (field) {
+            case Username:
+                user_set_username(user, buff);
+                break;
+            case Name:
+                user_set_name(user, buff);
+                break;
+            case Gender:
+                user_set_gender(user, buff);
+                break;
+            case Birth_date:
+                user_set_age(user, buff);
+                break;
+            case Account_creation:
+                user_set_account_age(user, buff);
+                break;
+            case Pay_method:
+                break;
+            case Account_status:
+                if (buff[0] == 'i') {
+                    user_free(user);
+                    return NULL;
+                }
+                break;
+            default:
+                break;
+        }
     }
+
+    return user;
 }
 
-void user_set_username(User u, char *username)
+void user_set_username(const User u, const char *username)
 {
     u->username = strdup(username);
 }
 
-void user_set_name(User u, char *name)
+void user_set_name(const User u, const char *name)
 {
     u->name = strdup(name);
 }
 
-void user_set_gender(User u, char *gender)
+void user_set_gender(const User u, const char *gender)
 {
     u->gender = *gender;
 }
 
-void user_set_age(User u, char *birth_date)
+void user_set_age(const User u, const char *birth_date)
 {
     u->age = date_to_age(birth_date);
 }
 
-void user_set_account_age(User u, char *account_creation)
+void user_set_account_age(const User u, const char *account_creation)
 {
     u->account_age = date_to_days(account_creation);
 }
 
-void user_set_account_status(User u, char *account_status)
-{
-    switch (account_status[0]) {
-        case 'i':
-            u->account_status = U_Inactive;
-            break;
-        case 'a':
-            u->account_status = U_Active;
-            break;
-        default:
-            break;
-    }
-}
-
-char *user_get_username(User u)
+char *user_get_username(const User u)
 {
     return strdup(u->username);
 }
 
-char *user_get_name(User u)
+char *user_get_name(const User u)
 {
     return strdup(u->name);
 }
 
-char user_get_gender(User u)
+char user_get_gender(const User u)
 {
     return u->gender;
 }
 
-uint8_t user_get_age(User u)
+guint8 user_get_age(const User u)
 {
     return u->age;
 }
 
-unsigned short user_get_account_age(User u)
+guint16 user_get_account_age(const User u)
 {
     return u->account_age;
 }
 
-U_Status user_get_account_status(User u)
-{
-    return u->account_status;
-}
-
-double user_get_avg_score(User u)
+double user_get_avg_score(const User u)
 {
     double avg_score = 0;
     if (u->n_trips != 0) {
@@ -120,39 +136,37 @@ double user_get_avg_score(User u)
     return avg_score;
 }
 
-double user_get_total_spent(User u)
+double user_get_total_spent(const User u)
 {
     return u->total_spent;
 }
 
-unsigned short user_get_total_distance(User u)
+guint16 user_get_total_distance(const User u)
 {
     return u->total_distance;
 }
 
-unsigned short user_get_n_trips(User u)
+guint16 user_get_n_trips(const User u)
 {
     return u->n_trips;
 }
 
-unsigned short user_get_last_ride_date(User u)
+guint16 user_get_last_ride_date(const User u)
 {
     return u->last_ride_date;
 }
 
-void user_add_ride_data(User u, Ride r)
+void user_add_ride_data(const User u, guint8 score, double cost, guint16 date,
+                        guint8 distance)
 {
-    u->sum_score += ride_get_score_user(r);
-    u->total_spent += ride_get_cost(r) + ride_get_tip(r);
-    u->total_distance += (unsigned short)ride_get_distance(r);
-    unsigned short ride_date = ride_get_date(r);
-    if (ride_date > u->last_ride_date) {
-        u->last_ride_date = ride_date;
-    }
+    u->sum_score += score;
+    u->total_spent += cost;
+    u->total_distance += (guint16)distance;
+    u->last_ride_date = date;
     u->n_trips += 1;
 }
 
-User user_copy(User old_u)
+User user_copy(const User old_u)
 {
     if (old_u == NULL) {
         return NULL;
@@ -165,7 +179,6 @@ User user_copy(User old_u)
     new_u->gender = old_u->gender;
     new_u->age = old_u->age;
     new_u->account_age = old_u->account_age;
-    new_u->account_status = old_u->account_status;
     new_u->sum_score = old_u->sum_score;
     new_u->total_spent = old_u->total_spent;
     new_u->total_distance = old_u->total_distance;
@@ -173,4 +186,14 @@ User user_copy(User old_u)
     new_u->last_ride_date = old_u->last_ride_date;
 
     return new_u;
+}
+
+void user_free(void *user)
+{
+    if (user != NULL) {
+        User u = (User)user;
+        free(u->username);
+        free(u->name);
+        free(user);
+    }
 }

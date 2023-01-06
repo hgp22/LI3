@@ -13,6 +13,7 @@ CC      = gcc
 LD      = gcc
 CFLAGS  = -O2 -Wall -Wextra
 CFLAGS += -Wno-unused-parameter -Wno-unused-function -Wno-unused-result
+CFLAGS += -Wno-incompatible-pointer-types -Wno-format-overflow
 LIBS    = `pkg-config --cflags --libs glib-2.0`
 INCLDS  = -I $(INC_DIR)
 INCLDS += -I $(INC_DIR)/$(MDL_DIR)
@@ -90,16 +91,15 @@ lint:
 	@splint -retvalint -hints -I $(INC_DIR) \
 		$(SRC_DIR)/*
 
+.PHONY: check # Check for memory leaks with valgrind
 check: LOG = $(LOG_DIR)/`date +%Y-%m-%d_%H:%M:%S`
-check: CFLAGS += -g -Og # -pg
+check: CFLAGS += -g -Og
 check: build
-	#@memusage --data=$(LOG).dat --png=$(LOG).png $(BIN_DIR)/$(PROGRAM) $(ARGS)
-	#@gprof $(BIN_DIR)/$(PROGRAM) $(ARGS) gmon.out > $(LOG).txt
 	@valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all \
 		--log-file=$(LOG).log ./$(BIN_DIR)/$(PROGRAM) $(ARGS)
 
 .PHONY: debug # Run program with debugger
-debug: CFLAGS = -Wall -Wextra -pedantic -O0 -g # -ansi
+debug: CFLAGS = -Wall -Wextra -O0 -g
 debug: build
 	gdb ./$(BIN_DIR)/$(PROGRAM)
 
@@ -129,3 +129,4 @@ clean:
 .PHONY: help # Generate list of targets with descriptions
 help:
 	@grep '^.PHONY: .* #' Makefile | sed 's/\.PHONY: \(.*\) # \(.*\)/    \1 \t \2/'
+

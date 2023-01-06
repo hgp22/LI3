@@ -1,29 +1,40 @@
 #include "driver.h"
-#include "ride.h"
-#include "utils.h"
+#include "date.h"
 #include <glib.h>
-#include <stdint.h>
+#include <stdbool.h>
 #include <string.h>
 
-struct driver {
-    long id;
+typedef enum field_driver {
+    Id,
+    Name,
+    Birth_date,
+    Gender,
+    Car_class,
+    License_plate,
+    City,
+    Account_creation,
+    Account_status,
+} FieldDriver;
+
+struct __attribute__((__packed__)) driver {
     char *name;
-    char gender;
-    uint8_t age;
-    Car_Class car_class;
-    unsigned short account_age;
-    D_Status account_status;
-    unsigned short sum_score;
     double total_earned;
-    unsigned short n_trips;
-    unsigned short last_ride_date;
-    CitiesScore cities_score;
+    GHashTable *cities_score;
+    int id;
+    guint16 account_age;
+    guint16 sum_score;
+    guint16 n_trips;
+    guint16 last_ride_date;
+    char gender;
+    guint8 age;
+    CarClass car_class;
+    bool account_status;
 };
 
-struct city_score {
+typedef struct city_score {
     int sum_score;
     int n_cities;
-};
+} * CityScore;
 
 static void _key_destroyed(gpointer data);
 static void _value_destroyed(gpointer data);
@@ -43,43 +54,73 @@ Driver driver_new(void)
     return d;
 }
 
-void driver_free(void *driver)
+Driver driver_new_from_record(const char *driver_record)
 {
-    if (driver != NULL) {
-        Driver d = (Driver)driver;
-        free(d->name);
-        driver_free_cities_score(d->cities_score);
-        free(driver);
+    Driver driver = driver_new();
+
+    for (FieldDriver field = Id; field <= Account_status; field++) {
+        char *buff = strsep(&driver_record, ";\n");
+        switch (field) {
+            case Id:
+                driver_set_id(driver, buff);
+                break;
+            case Name:
+                driver_set_name(driver, buff);
+                break;
+            case Birth_date:
+                driver_set_age(driver, buff);
+                break;
+            case Gender:
+                driver_set_gender(driver, buff);
+                break;
+            case Car_class:
+                driver_set_car_class(driver, buff);
+                break;
+            case License_plate:
+                break;
+            case City:
+                break;
+            case Account_creation:
+                driver_set_account_age(driver, buff);
+                break;
+            case Account_status:
+                driver_set_account_status(driver, buff);
+                break;
+            default:
+                break;
+        }
     }
+
+    return driver;
 }
 
-void driver_free_cities_score(CitiesScore cs)
+void driver_free_cities_score(GHashTable *cs)
 {
-    g_hash_table_destroy(g_steal_pointer(&cs));
+    g_hash_table_destroy(cs);
 }
 
-void driver_set_id(Driver d, char *id)
+void driver_set_id(const Driver d, const char *id)
 {
     char *endptr;
-    d->id = strtol(id, &endptr, 10);
+    d->id = (int)strtol(id, &endptr, 10);
 }
 
-void driver_set_name(Driver d, char *name)
+void driver_set_name(const Driver d, const char *name)
 {
     d->name = strdup(name);
 }
 
-void driver_set_gender(Driver d, char *gender)
+void driver_set_gender(const Driver d, const char *gender)
 {
     d->gender = *gender;
 }
 
-void driver_set_age(Driver d, char *birth_date)
+void driver_set_age(const Driver d, const char *birth_date)
 {
     d->age = date_to_age(birth_date);
 }
 
-void driver_set_car_class(Driver d, char *car_class)
+void driver_set_car_class(const Driver d, const char *car_class)
 {
     switch (car_class[0]) {
         case 'b':
@@ -96,61 +137,52 @@ void driver_set_car_class(Driver d, char *car_class)
     }
 }
 
-void driver_set_account_age(Driver d, char *account_creation)
+void driver_set_account_age(const Driver d, const char *account_creation)
 {
     d->account_age = date_to_days(account_creation);
 }
 
-void driver_set_account_status(Driver d, char *account_status)
+void driver_set_account_status(const Driver d, const char *account_status)
 {
-    switch (account_status[0]) {
-        case 'i':
-            d->account_status = D_Inactive;
-            break;
-        case 'a':
-            d->account_status = D_Active;
-            break;
-        default:
-            break;
-    }
+    d->account_status = *account_status == 'a';
 }
 
-long driver_get_id(Driver d)
+int driver_get_id(const Driver d)
 {
     return d->id;
 }
 
-char *driver_get_name(Driver d)
+char *driver_get_name(const Driver d)
 {
     return strdup(d->name);
 }
 
-char driver_get_gender(Driver d)
+char driver_get_gender(const Driver d)
 {
     return d->gender;
 }
 
-uint8_t driver_get_age(Driver d)
+guint8 driver_get_age(const Driver d)
 {
     return d->age;
 }
 
-Car_Class driver_get_car_class(Driver d)
+CarClass driver_get_car_class(const Driver d)
 {
     return d->car_class;
 }
 
-unsigned short driver_get_account_age(Driver d)
+guint16 driver_get_account_age(const Driver d)
 {
     return d->account_age;
 }
 
-D_Status driver_get_account_status(Driver d)
+bool driver_is_account_active(const Driver d)
 {
     return d->account_status;
 }
 
-double driver_get_avg_score(Driver d)
+double driver_get_avg_score(const Driver d)
 {
     double avg_score = 0;
     if (d->n_trips != 0) {
@@ -159,24 +191,24 @@ double driver_get_avg_score(Driver d)
     return avg_score;
 }
 
-double driver_get_total_earned(Driver d)
+double driver_get_total_earned(const Driver d)
 {
     return d->total_earned;
 }
 
-unsigned short driver_get_n_trips(Driver d)
+guint16 driver_get_n_trips(const Driver d)
 {
     return d->n_trips;
 }
 
-unsigned short driver_get_last_ride_date(Driver d)
+guint16 driver_get_last_ride_date(const Driver d)
 {
     return d->last_ride_date;
 }
 
-CitiesScore driver_get_cities_score(Driver d)
+GHashTable *driver_get_cities_score(const Driver d)
 {
-    CitiesScore cities_score = g_hash_table_new_similar(d->cities_score);
+    GHashTable *cities_score = g_hash_table_new_similar(d->cities_score);
 
     GHashTableIter iter;
     gpointer key, value;
@@ -193,38 +225,31 @@ CitiesScore driver_get_cities_score(Driver d)
     return cities_score;
 }
 
-double driver_get_city_score(Driver d, char *city)
+double driver_get_city_score(const Driver d, const char *city)
 {
     CityScore c_s = g_hash_table_lookup(d->cities_score, city);
     return (double)c_s->sum_score / c_s->n_cities;
 }
 
-void driver_add_ride_data(Driver d, Ride r)
+void driver_add_ride_data(const Driver d, guint8 score, double cost,
+                          guint16 date, const char *city_name)
 {
-    d->sum_score += ride_get_score_driver(r);
-    d->total_earned += ride_get_cost(r) + ride_get_tip(r);
-    unsigned short ride_date = ride_get_date(r);
-    if (ride_date > d->last_ride_date) {
-        d->last_ride_date = ride_date;
+    d->sum_score += score;
+    d->total_earned += cost;
+    d->last_ride_date = date;
+    CityScore city = g_hash_table_lookup(d->cities_score, city_name);
+    if (city == NULL) {
+        city = g_new(struct city_score, 1);
+        city->sum_score = 0;
+        city->n_cities = 0;
+        g_hash_table_insert(d->cities_score, strdup(city_name), city);
     }
-    int score = ride_get_score_driver(r);
-    char *city = ride_get_city(r);
-    CityScore found = g_hash_table_lookup(d->cities_score, city);
-    if (found != NULL) {
-        found->sum_score += score;
-        found->n_cities++;
-        free(city);
-    }
-    else {
-        CityScore new = g_new(struct city_score, 1);
-        new->sum_score = score;
-        new->n_cities = 1;
-        g_hash_table_insert(d->cities_score, city, new);
-    }
+    city->sum_score += score;
+    city->n_cities++;
     d->n_trips += 1;
 }
 
-Driver driver_copy(Driver old_d)
+Driver driver_copy(const Driver old_d)
 {
     if (old_d == NULL) {
         return NULL;
@@ -268,4 +293,14 @@ static void _key_destroyed(gpointer data)
 static void _value_destroyed(gpointer data)
 {
     g_free(data);
+}
+
+void driver_free(void *driver)
+{
+    if (driver != NULL) {
+        Driver d = (Driver)driver;
+        free(d->name);
+        driver_free_cities_score(d->cities_score);
+        free(driver);
+    }
 }
