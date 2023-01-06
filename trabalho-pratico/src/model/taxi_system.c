@@ -5,6 +5,7 @@
 #include "rides.h"
 #include "user.h"
 #include "users.h"
+#include "validation.h"
 #include <glib.h>
 
 struct taxi_system {
@@ -19,6 +20,7 @@ static void _correlate_collections(Rides rides, Users users, Drivers drivers);
 TaxiSystem taxi_new(const char *inputs_path)
 {
     TaxiSystem ts = g_new(struct taxi_system, 1);
+    compile_regex();
     ts->users = users_new_from_file(inputs_path);
     ts->drivers = drivers_new_from_file(inputs_path);
     ts->rides = rides_new_from_file(inputs_path);
