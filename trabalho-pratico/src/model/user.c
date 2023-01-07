@@ -1,6 +1,7 @@
 #include "user.h"
 #include "date.h"
 #include "validation.h"
+#include <ctype.h>
 #include <glib.h>
 #include <string.h>
 
@@ -31,6 +32,8 @@ User user_new(void)
 {
     User u = g_new(struct user, 1);
 
+    u->username = NULL;
+    u->name = NULL;
     u->sum_score = 0;
     u->total_spent = 0;
     u->total_distance = 0;
@@ -73,7 +76,7 @@ User user_new_from_record(const char *user_record)
             case Pay_method:
                 break;
             case Account_status:
-                if (!validate_account_status(buff) || buff[0] == 'i') {
+                if (!validate_account_status(buff) || tolower(buff[0]) == 'i') {
                     user_free(user);
                     return NULL;
                 }
@@ -201,8 +204,10 @@ void user_free(void *user)
 {
     if (user != NULL) {
         User u = (User)user;
-        free(u->username);
-        free(u->name);
+        if (u->username != NULL)
+            free(u->username);
+        if (u->name != NULL)
+            free(u->name);
         free(user);
     }
 }

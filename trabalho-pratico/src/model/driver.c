@@ -1,6 +1,7 @@
 #include "driver.h"
 #include "date.h"
 #include "validation.h"
+#include <ctype.h>
 #include <glib.h>
 #include <stdbool.h>
 #include <string.h>
@@ -141,7 +142,7 @@ void driver_set_age(const Driver d, const char *birth_date)
 
 void driver_set_car_class(const Driver d, const char *car_class)
 {
-    switch (car_class[0]) {
+    switch (tolower(car_class[0])) {
         case 'b':
             d->car_class = Basic;
             break;
@@ -163,7 +164,7 @@ void driver_set_account_age(const Driver d, const char *account_creation)
 
 void driver_set_account_status(const Driver d, const char *account_status)
 {
-    d->account_status = *account_status == 'a';
+    d->account_status = tolower(*account_status) == 'a';
 }
 
 int driver_get_id(const Driver d)
