@@ -20,7 +20,7 @@ void compile_regex(void)
         exit(EXIT_FAILURE);
     if (regcomp(&r_account_status, "active|inactive", REG_EXTENDED | REG_ICASE))
         exit(EXIT_FAILURE);
-    if (regcomp(&r_natural, "[0-9]+", REG_EXTENDED))
+    if (regcomp(&r_natural, "[1-9][0-9]*", REG_EXTENDED))
         exit(EXIT_FAILURE);
     if (regcomp(&r_fractional, "[0-9]+\\.[0-9]+", REG_EXTENDED))
         exit(EXIT_FAILURE);
@@ -60,4 +60,11 @@ bool validate_account_status(const char *account_status)
     regmatch_t pmatch[1];
 
     return !regexec(&r_account_status, account_status, 1, pmatch, 0);
+}
+
+bool validate_natural(const char *natural)
+{
+    regmatch_t pmatch[1];
+
+    return !regexec(&r_natural, natural, 1, pmatch, 0);
 }

@@ -69,12 +69,24 @@ Ride ride_new_from_record(const char *ride_record)
                 ride_set_city(ride, buff);
                 break;
             case Distance:
+                if (!validate_natural(buff)) {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_distance(ride, buff);
                 break;
             case Score_user:
+                if (!validate_natural(buff)) {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_score_user(ride, buff);
                 break;
             case Score_driver:
+                if (!validate_natural(buff)) {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_score_driver(ride, buff);
                 break;
             case Tip:
