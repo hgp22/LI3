@@ -24,6 +24,7 @@ TaxiSystem taxi_new(const char *inputs_path)
     ts->users = users_new_from_file(inputs_path);
     ts->drivers = drivers_new_from_file(inputs_path);
     ts->rides = rides_new_from_file(inputs_path);
+    free_regex();
     _taxi_process(ts);
     return ts;
 }

@@ -1,5 +1,6 @@
 #include "ride.h"
 #include "date.h"
+#include "validation.h"
 #include <glib.h>
 #include <string.h>
 
@@ -33,7 +34,12 @@ struct __attribute__((__packed__)) ride {
 
 Ride ride_new(void)
 {
-    return g_new(struct ride, 1);
+    Ride ride = g_new(struct ride, 1);
+
+    ride->user = NULL;
+    ride->city = NULL;
+
+    return ride;
 }
 
 Ride ride_new_from_record(const char *ride_record)
@@ -47,6 +53,10 @@ Ride ride_new_from_record(const char *ride_record)
                 ride_set_id(ride, buff);
                 break;
             case Date:
+                if (!validate_date1(buff)) {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_date(ride, buff);
                 break;
             case Driver_id:
@@ -234,8 +244,10 @@ void ride_free(void *ride)
 {
     if (ride != NULL) {
         Ride r = (Ride)ride;
-        free(r->user);
-        free(r->city);
+        if (r->user != NULL)
+            free(r->user);
+        if (r->city != NULL)
+            free(r->city);
         free(ride);
     }
 }

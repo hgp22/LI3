@@ -69,7 +69,9 @@ void rides_add_ride(const Rides rides, const Ride ride)
 void rides_add_record(const Rides rides, const char *ride_record)
 {
     Ride ride = ride_new_from_record(ride_record);
-    g_ptr_array_add(rides->all, ride);
+    if (ride != NULL) {
+        g_ptr_array_add(rides->all, ride);
+    }
 }
 
 void rides_replace_ride(const Rides rides, const Ride ride, guint index)
