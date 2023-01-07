@@ -4,24 +4,33 @@
 #include <stdbool.h>
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 void compile_regex(void);
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 void free_regex(void);
 
 /**
- * @brief 
- * 
- * @param date 
- * @return true 
- * @return false 
+ * @brief
+ *
+ * @param date
+ * @return true
+ * @return false
  */
-bool validate_date1(const char *date);
+bool validate_date(const char *date);
+
+/**
+ * @brief
+ *
+ * @param car_class
+ * @return true
+ * @return false
+ */
+bool validate_car_class(const char *car_class);
 
 #endif

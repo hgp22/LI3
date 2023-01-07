@@ -1,5 +1,6 @@
 #include "driver.h"
 #include "date.h"
+#include "validation.h"
 #include <glib.h>
 #include <stdbool.h>
 #include <string.h>
@@ -43,6 +44,8 @@ Driver driver_new(void)
 {
     Driver d = g_new(struct driver, 1);
 
+    d->name = NULL;
+    d->cities_score = NULL;
     d->sum_score = 0;
     d->total_earned = 0;
     d->n_trips = 0;
@@ -68,12 +71,20 @@ Driver driver_new_from_record(const char *driver_record)
                 driver_set_name(driver, buff);
                 break;
             case Birth_date:
+                if (!validate_date(buff)) {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_age(driver, buff);
                 break;
             case Gender:
                 driver_set_gender(driver, buff);
                 break;
             case Car_class:
+                if (!validate_car_class(buff)) {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_car_class(driver, buff);
                 break;
             case License_plate:
@@ -81,6 +92,10 @@ Driver driver_new_from_record(const char *driver_record)
             case City:
                 break;
             case Account_creation:
+                if (!validate_date(buff)) {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_account_age(driver, buff);
                 break;
             case Account_status:
@@ -299,8 +314,10 @@ void driver_free(void *driver)
 {
     if (driver != NULL) {
         Driver d = (Driver)driver;
-        free(d->name);
-        driver_free_cities_score(d->cities_score);
+        if (d->name != NULL)
+            free(d->name);
+        if (d->cities_score != NULL)
+            driver_free_cities_score(d->cities_score);
         free(driver);
     }
 }

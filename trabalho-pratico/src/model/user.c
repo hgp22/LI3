@@ -1,5 +1,6 @@
 #include "user.h"
 #include "date.h"
+#include "validation.h"
 #include <glib.h>
 #include <string.h>
 
@@ -56,9 +57,17 @@ User user_new_from_record(const char *user_record)
                 user_set_gender(user, buff);
                 break;
             case Birth_date:
+                if (!validate_date(buff)) {
+                    user_free(user);
+                    return NULL;
+                }
                 user_set_age(user, buff);
                 break;
             case Account_creation:
+                if (!validate_date(buff)) {
+                    user_free(user);
+                    return NULL;
+                }
                 user_set_account_age(user, buff);
                 break;
             case Pay_method:

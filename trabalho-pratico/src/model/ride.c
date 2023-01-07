@@ -53,7 +53,7 @@ Ride ride_new_from_record(const char *ride_record)
                 ride_set_id(ride, buff);
                 break;
             case Date:
-                if (!validate_date1(buff)) {
+                if (!validate_date(buff)) {
                     ride_free(ride);
                     return NULL;
                 }

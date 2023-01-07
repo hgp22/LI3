@@ -51,9 +51,11 @@ gboolean drivers_add_driver(const Drivers drivers, const Driver d)
 void drivers_add_record(const Drivers drivers, const char *driver_record)
 {
     Driver driver = driver_new_from_record(driver_record);
-    gint *driver_id = g_new(gint, 1);
-    *driver_id = driver_get_id(driver);
-    g_hash_table_insert(drivers->hash_table, driver_id, driver);
+    if (driver != NULL) {
+        gint *driver_id = g_new(gint, 1);
+        *driver_id = driver_get_id(driver);
+        g_hash_table_insert(drivers->hash_table, driver_id, driver);
+    }
 }
 
 Driver drivers_get_driver(const Drivers drivers, int id)
