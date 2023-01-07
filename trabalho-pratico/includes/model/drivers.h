@@ -159,7 +159,7 @@ Drivers drivers_list(const Drivers drivers);
  * @param N Number of drivers
  * @return Top N drivers
  */
-GPtrArray *drivers_top_n_drivers(const Drivers drivers, int N);
+GPtrArray *drivers_top_n_drivers(const Drivers drivers, guint N);
 
 /**
  * @brief

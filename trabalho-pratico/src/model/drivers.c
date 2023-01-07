@@ -192,11 +192,11 @@ Drivers drivers_cities(const Drivers drivers)
 }
 
 // query 2
-GPtrArray *drivers_top_n_drivers(const Drivers drivers, int N)
+GPtrArray *drivers_top_n_drivers(const Drivers drivers, guint N)
 {
     GPtrArray *r = g_ptr_array_new_full(N, driver_free);
 
-    for (int i = 0; i < N; i++) {
+    for (guint i = 0; i < drivers->array->len && i < N; i++) {
         g_ptr_array_add(r, driver_copy(g_ptr_array_index(drivers->array, i)));
     }
 
@@ -208,6 +208,10 @@ GPtrArray *drivers_top_n_drivers_in_city(const Drivers drivers,
                                          const char *city, guint N)
 {
     const GPtrArray *ds = g_hash_table_lookup(drivers->cities, city);
+    if (ds == NULL) {
+        return NULL;
+    }
+
     GPtrArray *r = g_ptr_array_new_full(N, driver_free);
 
     for (guint i = 0; i < ds->len && i < N; i++) {
@@ -247,9 +251,9 @@ static gint _driver_comparator(gconstpointer a, gconstpointer b)
     const int id2 = driver_get_id(d2);
 
     if (id1 < id2)
-        return ORDER_ASCENDING;
-    else if (id1 > id2)
         return ORDER_DESCENDING;
+    else if (id1 > id2)
+        return ORDER_ASCENDING;
     else
         return ORDER_EQUAL;
 }

@@ -51,6 +51,14 @@ User users_get_user(const Users users, const char *username);
  * @brief
  *
  * @param users
+ * @return guint
+ */
+guint users_size(const Users users);
+
+/**
+ * @brief
+ *
+ * @param users
  * @param username
  * @param score
  * @param cost
@@ -104,7 +112,7 @@ Users users_list(const Users users);
  * @param N Number of users
  * @return Top N users
  */
-GPtrArray *users_top_n_users(const Users users, int N);
+GPtrArray *users_top_n_users(const Users users, guint N);
 
 /**
  * @brief Frees Users

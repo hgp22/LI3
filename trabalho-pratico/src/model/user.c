@@ -43,6 +43,8 @@ User user_new(void)
     return u;
 }
 
+int globalN = 0;
+
 User user_new_from_record(const char *user_record)
 {
     User user = user_new();

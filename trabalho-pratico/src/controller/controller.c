@@ -140,21 +140,30 @@ static void _query4(const TaxiSystem ts, const char *query)
 {
     char city[BUFFER];
     sscanf(query, "%*d %s", city);
-    show_query4(taxi_city_avg_cost(ts, city));
+    double avg_cost = taxi_city_avg_cost(ts, city);
+    if (avg_cost > 0) {
+        show_query4(avg_cost);
+    }
 }
 
 static void _query5(const TaxiSystem ts, const char *query)
 {
     char dateA[BUFFER], dateB[BUFFER];
     sscanf(query, "%*d %s %s", dateA, dateB);
-    show_query5(taxi_avg_cost_in_range(ts, dateA, dateB));
+    double avg_cost = taxi_avg_cost_in_range(ts, dateA, dateB);
+    if (avg_cost == avg_cost) { // check if avg_cost is NaN
+        show_query5(avg_cost);
+    }
 }
 
 static void _query6(const TaxiSystem ts, const char *query)
 {
     char city[BUFFER], dateA[BUFFER], dateB[BUFFER];
     sscanf(query, "%*d %s %s %s", city, dateA, dateB);
-    show_query6(taxi_city_avg_dist_in_range(ts, city, dateA, dateB));
+    double avg_dist = taxi_city_avg_dist_in_range(ts, city, dateA, dateB);
+    if (avg_dist > 0) {
+        show_query6(avg_dist);
+    }
 }
 
 static void _query7(const TaxiSystem ts, const char *query)
@@ -163,8 +172,10 @@ static void _query7(const TaxiSystem ts, const char *query)
     char city[BUFFER];
     sscanf(query, "%*d %d %s", &N, city);
     GPtrArray *drivers = taxi_top_n_drivers_in_city(ts, city, N);
-    show_query7(drivers, city);
-    g_ptr_array_free(drivers, TRUE);
+    if (drivers != NULL) {
+        show_query7(drivers, city);
+        g_ptr_array_free(drivers, TRUE);
+    }
 }
 
 static void _query8(const TaxiSystem ts, const char *query)

@@ -243,6 +243,9 @@ double rides_get_avg_stat_in_range(const GPtrArray *rides, const char *dateA,
 double rides_city_avg_cost(const Rides rides, const char *city_name)
 {
     City city = g_hash_table_lookup(rides->cities, city_name);
+    if (city == NULL) {
+        return -1;
+    }
     return city->sum_costs / city->n_rides;
 }
 
@@ -258,6 +261,9 @@ double rides_city_avg_dist_in_range(const Rides rides, const char *city_name,
                                     const char *dateA, const char *dateB)
 {
     City city = g_hash_table_lookup(rides->cities, city_name);
+    if (city == NULL) {
+        return -1;
+    }
     return rides_get_avg_stat_in_range(city->rides, dateA, dateB,
                                        ride_get_distance);
 }

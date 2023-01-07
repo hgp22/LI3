@@ -43,20 +43,20 @@ bool validate_car_class(const char *car_class);
 bool validate_account_status(const char *account_status);
 
 /**
- * @brief 
- * 
- * @param natural 
- * @return true 
- * @return false 
+ * @brief
+ *
+ * @param natural
+ * @return true
+ * @return false
  */
 bool validate_natural(const char *natural);
 
 /**
- * @brief 
- * 
- * @param fractional 
- * @return true 
- * @return false 
+ * @brief
+ *
+ * @param fractional
+ * @return true
+ * @return false
  */
 bool validate_fractional(const char *fractional);
 

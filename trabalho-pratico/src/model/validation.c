@@ -14,15 +14,15 @@ static regex_t r_fractional;
 
 void compile_regex(void)
 {
-    if (regcomp(&r_date, "[0-9]{2}/[0-9]{2}/[0-9]{4}", REG_EXTENDED))
+    if (regcomp(&r_date, "^[0-9]{2}/[0-9]{2}/[0-9]{4}$", REG_EXTENDED))
         exit(EXIT_FAILURE);
-    if (regcomp(&r_car_class, "basic|green|premium", REG_EXTENDED | REG_ICASE))
+    if (regcomp(&r_car_class, "^(basic|green|premium)$", REG_EXTENDED | REG_ICASE))
         exit(EXIT_FAILURE);
-    if (regcomp(&r_account_status, "active|inactive", REG_EXTENDED | REG_ICASE))
+    if (regcomp(&r_account_status, "^(active|inactive)$", REG_EXTENDED | REG_ICASE))
         exit(EXIT_FAILURE);
-    if (regcomp(&r_natural, "[1-9][0-9]*", REG_EXTENDED))
+    if (regcomp(&r_natural, "^[1-9][0-9]*$", REG_EXTENDED))
         exit(EXIT_FAILURE);
-    if (regcomp(&r_fractional, "[0-9]+\\.[0-9]+", REG_EXTENDED))
+    if (regcomp(&r_fractional, "^[0-9]+\\.[0-9]+$", REG_EXTENDED))
         exit(EXIT_FAILURE);
 }
 

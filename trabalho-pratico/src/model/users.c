@@ -51,6 +51,11 @@ User users_get_user(const Users users, const char *username)
     return user_copy(g_hash_table_lookup(users->hash_table, username));
 }
 
+guint users_size(const Users users)
+{
+    return users->array->len;
+}
+
 void users_add_user_ride_data(const Users users, const char *username,
                               guint8 score, double cost, guint16 date,
                               guint8 distance)
@@ -91,11 +96,11 @@ Users users_list(const Users users)
     return users;
 }
 
-GPtrArray *users_top_n_users(const Users users, int N)
+GPtrArray *users_top_n_users(const Users users, guint N)
 {
     GPtrArray *r = g_ptr_array_new_full(N, user_free);
 
-    for (int i = 0; i < N; i++) {
+    for (guint i = 0; i < users->array->len && i < N; i++) {
         g_ptr_array_add(r, user_copy(g_ptr_array_index(users->array, i)));
     }
 
