@@ -50,6 +50,10 @@ Ride ride_new_from_record(const char *ride_record)
         char *buff = strsep(&ride_record, ";\n");
         switch (field) {
             case Id:
+                if (*buff == '\0') {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_id(ride, buff);
                 break;
             case Date:
@@ -60,12 +64,24 @@ Ride ride_new_from_record(const char *ride_record)
                 ride_set_date(ride, buff);
                 break;
             case Driver_id:
+                if (*buff == '\0') {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_driver(ride, buff);
                 break;
             case User_id:
+                if (*buff == '\0') {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_user(ride, buff);
                 break;
             case City_name:
+                if (*buff == '\0') {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_city(ride, buff);
                 break;
             case Distance:

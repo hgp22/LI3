@@ -66,9 +66,17 @@ Driver driver_new_from_record(const char *driver_record)
         char *buff = strsep(&driver_record, ";\n");
         switch (field) {
             case Id:
+                if (*buff == '\0') {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_id(driver, buff);
                 break;
             case Name:
+                if (*buff == '\0') {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_name(driver, buff);
                 break;
             case Birth_date:
@@ -79,6 +87,10 @@ Driver driver_new_from_record(const char *driver_record)
                 driver_set_age(driver, buff);
                 break;
             case Gender:
+                if (*buff == '\0') {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_gender(driver, buff);
                 break;
             case Car_class:
@@ -89,8 +101,16 @@ Driver driver_new_from_record(const char *driver_record)
                 driver_set_car_class(driver, buff);
                 break;
             case License_plate:
+                if (*buff == '\0') {
+                    driver_free(driver);
+                    return NULL;
+                }
                 break;
             case City:
+                if (*buff == '\0') {
+                    driver_free(driver);
+                    return NULL;
+                }
                 break;
             case Account_creation:
                 if (!validate_date(buff)) {

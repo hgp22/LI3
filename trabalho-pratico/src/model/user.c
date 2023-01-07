@@ -51,12 +51,24 @@ User user_new_from_record(const char *user_record)
         char *buff = strsep(&user_record, ";\n");
         switch (field) {
             case Username:
+                if (*buff == '\0') {
+                    user_free(user);
+                    return NULL;
+                }
                 user_set_username(user, buff);
                 break;
             case Name:
+                if (*buff == '\0') {
+                    user_free(user);
+                    return NULL;
+                }
                 user_set_name(user, buff);
                 break;
             case Gender:
+                if (*buff == '\0') {
+                    user_free(user);
+                    return NULL;
+                }
                 user_set_gender(user, buff);
                 break;
             case Birth_date:
@@ -74,6 +86,10 @@ User user_new_from_record(const char *user_record)
                 user_set_account_age(user, buff);
                 break;
             case Pay_method:
+                if (*buff == '\0') {
+                    user_free(user);
+                    return NULL;
+                }
                 break;
             case Account_status:
                 if (!validate_account_status(buff) || tolower(buff[0]) == 'i') {
