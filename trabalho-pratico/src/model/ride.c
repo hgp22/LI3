@@ -90,6 +90,10 @@ Ride ride_new_from_record(const char *ride_record)
                 ride_set_score_driver(ride, buff);
                 break;
             case Tip:
+                if (!validate_fractional(buff)) {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_tip(ride, buff);
                 break;
             case Comment:

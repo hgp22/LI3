@@ -68,3 +68,10 @@ bool validate_natural(const char *natural)
 
     return !regexec(&r_natural, natural, 1, pmatch, 0);
 }
+
+bool validate_fractional(const char *fractional)
+{
+    regmatch_t pmatch[1];
+
+    return !regexec(&r_fractional, fractional, 1, pmatch, 0);
+}

@@ -51,4 +51,13 @@ bool validate_account_status(const char *account_status);
  */
 bool validate_natural(const char *natural);
 
+/**
+ * @brief 
+ * 
+ * @param fractional 
+ * @return true 
+ * @return false 
+ */
+bool validate_fractional(const char *fractional);
+
 #endif
