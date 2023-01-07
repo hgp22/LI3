@@ -54,3 +54,10 @@ bool validate_car_class(const char *car_class)
 
     return !regexec(&r_car_class, car_class, 1, pmatch, 0);
 }
+
+bool validate_account_status(const char *account_status)
+{
+    regmatch_t pmatch[1];
+
+    return !regexec(&r_account_status, account_status, 1, pmatch, 0);
+}

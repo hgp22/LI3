@@ -33,4 +33,13 @@ bool validate_date(const char *date);
  */
 bool validate_car_class(const char *car_class);
 
+/**
+ * @brief
+ *
+ * @param account_status
+ * @return true
+ * @return false
+ */
+bool validate_account_status(const char *account_status);
+
 #endif

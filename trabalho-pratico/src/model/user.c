@@ -73,7 +73,7 @@ User user_new_from_record(const char *user_record)
             case Pay_method:
                 break;
             case Account_status:
-                if (buff[0] == 'i') {
+                if (!validate_account_status(buff) || buff[0] == 'i') {
                     user_free(user);
                     return NULL;
                 }

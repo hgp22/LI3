@@ -99,6 +99,10 @@ Driver driver_new_from_record(const char *driver_record)
                 driver_set_account_age(driver, buff);
                 break;
             case Account_status:
+                if (!validate_account_status(buff)) {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_account_status(driver, buff);
                 break;
             default:
