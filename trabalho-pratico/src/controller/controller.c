@@ -99,22 +99,23 @@ static int _run_query(const TaxiSystem ts, const char *query)
 
 static void _query1(const TaxiSystem ts, const char *query)
 {
-    // If User and Driver could be generalized to Person
-    // we could simply do show_query1(query1(c, id))
-    // where query1 returns and show_query1 receives a Person
     char id[BUFFER];
     sscanf(query, "%*d %s\n", id);
     char *endptr;
-    int driver = strtol(id, &endptr, 10);
+    int driver_id = strtol(id, &endptr, 10);
     if (*endptr != '\0') {
-        User u = taxi_get_user(ts, id);
-        show_query1_user(u);
-        user_free(u);
+        User user = taxi_get_user(ts, id);
+        if (user != NULL) {
+            show_query1_user(user);
+        }
+        user_free(user);
     }
     else {
-        Driver d = taxi_get_driver(ts, driver);
-        show_query1_driver(d);
-        driver_free(d);
+        Driver driver = taxi_get_driver(ts, driver_id);
+        if (driver != NULL) {
+            show_query1_driver(driver);
+        }
+        driver_free(driver);
     }
 }
 
