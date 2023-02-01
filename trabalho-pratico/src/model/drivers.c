@@ -37,8 +37,13 @@ Drivers drivers_new(void)
 
 Drivers drivers_new_from_file(const char *inputs_path)
 {
+#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+#pragma GCC diagnostic push
+
     return load_file(inputs_path, INPUT_FILE, drivers_new(),
                      drivers_add_record);
+
+#pragma GCC diagnostic pop
 }
 
 gboolean drivers_add_driver(const Drivers drivers, const Driver d)
@@ -48,12 +53,14 @@ gboolean drivers_add_driver(const Drivers drivers, const Driver d)
     return g_hash_table_insert(drivers->hash_table, k_id, driver_copy(d));
 }
 
-void drivers_add_record(const Drivers drivers, const char *driver_record)
+void drivers_add_record(const Drivers drivers, char *driver_record)
 {
     Driver driver = driver_new_from_record(driver_record);
-    gint *driver_id = g_new(gint, 1);
-    *driver_id = driver_get_id(driver);
-    g_hash_table_insert(drivers->hash_table, driver_id, driver);
+    if (driver != NULL) {
+        gint *driver_id = g_new(gint, 1);
+        *driver_id = driver_get_id(driver);
+        g_hash_table_insert(drivers->hash_table, driver_id, driver);
+    }
 }
 
 Driver drivers_get_driver(const Drivers drivers, int id)
@@ -190,11 +197,11 @@ Drivers drivers_cities(const Drivers drivers)
 }
 
 // query 2
-GPtrArray *drivers_top_n_drivers(const Drivers drivers, int N)
+GPtrArray *drivers_top_n_drivers(const Drivers drivers, guint N)
 {
     GPtrArray *r = g_ptr_array_new_full(N, driver_free);
 
-    for (int i = 0; i < N; i++) {
+    for (guint i = 0; i < drivers->array->len && i < N; i++) {
         g_ptr_array_add(r, driver_copy(g_ptr_array_index(drivers->array, i)));
     }
 
@@ -206,6 +213,10 @@ GPtrArray *drivers_top_n_drivers_in_city(const Drivers drivers,
                                          const char *city, guint N)
 {
     const GPtrArray *ds = g_hash_table_lookup(drivers->cities, city);
+    if (ds == NULL) {
+        return NULL;
+    }
+
     GPtrArray *r = g_ptr_array_new_full(N, driver_free);
 
     for (guint i = 0; i < ds->len && i < N; i++) {
@@ -245,9 +256,9 @@ static gint _driver_comparator(gconstpointer a, gconstpointer b)
     const int id2 = driver_get_id(d2);
 
     if (id1 < id2)
-        return ORDER_ASCENDING;
-    else if (id1 > id2)
         return ORDER_DESCENDING;
+    else if (id1 > id2)
+        return ORDER_ASCENDING;
     else
         return ORDER_EQUAL;
 }

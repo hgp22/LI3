@@ -36,7 +36,7 @@ gboolean users_add_user(const Users users, const User u);
  * @param users
  * @param user_record
  */
-void users_add_record(const Users users, const char *user_record);
+void users_add_record(const Users users, char *user_record);
 
 /**
  * @brief Get a User from Users by username
@@ -46,6 +46,14 @@ void users_add_record(const Users users, const char *user_record);
  * @return User found
  */
 User users_get_user(const Users users, const char *username);
+
+/**
+ * @brief
+ *
+ * @param users
+ * @return guint
+ */
+guint users_size(const Users users);
 
 /**
  * @brief
@@ -104,7 +112,7 @@ Users users_list(const Users users);
  * @param N Number of users
  * @return Top N users
  */
-GPtrArray *users_top_n_users(const Users users, int N);
+GPtrArray *users_top_n_users(const Users users, guint N);
 
 /**
  * @brief Frees Users

@@ -4,7 +4,7 @@
 #include <string.h>
 
 void *load_file(const char *inputs_path, char *input_file, void *collection,
-                void (*load_record)(void *, char *))
+                void (*load_record)(const void *, const char *))
 {
     char *input_file_path =
         malloc((strlen(inputs_path) + strlen(input_file) + 1) *
@@ -14,8 +14,7 @@ void *load_file(const char *inputs_path, char *input_file, void *collection,
 
     FILE *fp = fopen(input_file_path, "r");
     if (fp == NULL) {
-        perror(input_file_path);
-        exit(1);
+        return NULL;
     }
 
     free(input_file_path);

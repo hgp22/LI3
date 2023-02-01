@@ -1,5 +1,7 @@
 #include "user.h"
 #include "date.h"
+#include "validation.h"
+#include <ctype.h>
 #include <glib.h>
 #include <string.h>
 
@@ -13,6 +15,7 @@ typedef enum field_user {
     Account_status,
 } FieldUser;
 
+// struct user {
 struct __attribute__((__packed__)) user {
     char *username;
     char *name;
@@ -30,6 +33,8 @@ User user_new(void)
 {
     User u = g_new(struct user, 1);
 
+    u->username = NULL;
+    u->name = NULL;
     u->sum_score = 0;
     u->total_spent = 0;
     u->total_distance = 0;
@@ -39,7 +44,9 @@ User user_new(void)
     return u;
 }
 
-User user_new_from_record(const char *user_record)
+int globalN = 0;
+
+User user_new_from_record(char *user_record)
 {
     User user = user_new();
 
@@ -47,24 +54,48 @@ User user_new_from_record(const char *user_record)
         char *buff = strsep(&user_record, ";\n");
         switch (field) {
             case Username:
+                if (*buff == '\0') {
+                    user_free(user);
+                    return NULL;
+                }
                 user_set_username(user, buff);
                 break;
             case Name:
+                if (*buff == '\0') {
+                    user_free(user);
+                    return NULL;
+                }
                 user_set_name(user, buff);
                 break;
             case Gender:
+                if (*buff == '\0') {
+                    user_free(user);
+                    return NULL;
+                }
                 user_set_gender(user, buff);
                 break;
             case Birth_date:
+                if (!validate_date(buff)) {
+                    user_free(user);
+                    return NULL;
+                }
                 user_set_age(user, buff);
                 break;
             case Account_creation:
+                if (!validate_date(buff)) {
+                    user_free(user);
+                    return NULL;
+                }
                 user_set_account_age(user, buff);
                 break;
             case Pay_method:
+                if (*buff == '\0') {
+                    user_free(user);
+                    return NULL;
+                }
                 break;
             case Account_status:
-                if (buff[0] == 'i') {
+                if (!validate_account_status(buff) || tolower(buff[0]) == 'i') {
                     user_free(user);
                     return NULL;
                 }
@@ -166,6 +197,35 @@ void user_add_ride_data(const User u, guint8 score, double cost, guint16 date,
     u->n_trips += 1;
 }
 
+#include <stdio.h>
+
+#define SCORE_SIZE 6
+#define DISTANCE_SIZE 16
+
+char *user_show_username(User u)
+{
+    return user_get_username(u);
+}
+
+char *user_show_name(User u)
+{
+    return user_get_name(u);
+}
+
+char *user_show_avg_score(User u)
+{
+    char *avg_score = malloc(SCORE_SIZE);
+    sprintf(avg_score, "%.3f", user_get_avg_score(u));
+    return avg_score;
+}
+
+char *user_show_total_distance(User u)
+{
+    char *distance = malloc(DISTANCE_SIZE);
+    sprintf(distance, "%d", user_get_total_distance(u));
+    return distance;
+}
+
 User user_copy(const User old_u)
 {
     if (old_u == NULL) {
@@ -192,8 +252,10 @@ void user_free(void *user)
 {
     if (user != NULL) {
         User u = (User)user;
-        free(u->username);
-        free(u->name);
+        if (u->username != NULL)
+            free(u->username);
+        if (u->name != NULL)
+            free(u->name);
         free(user);
     }
 }

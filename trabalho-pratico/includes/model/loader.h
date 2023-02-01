@@ -11,6 +11,6 @@
  * @return void*
  */
 void *load_file(const char *inputs_path, char *input_file, void *collection,
-                void (*load_record)(void *, char *));
+                void (*load_record)(const void *, const char *));
 
 #endif

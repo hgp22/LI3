@@ -13,8 +13,9 @@ CC      = gcc
 LD      = gcc
 CFLAGS  = -O2 -Wall -Wextra
 CFLAGS += -Wno-unused-parameter -Wno-unused-function -Wno-unused-result
-CFLAGS += -Wno-incompatible-pointer-types -Wno-format-overflow
-LIBS    = `pkg-config --cflags --libs glib-2.0`
+CFLAGS += -Wno-format-truncation
+CFLAGS += -D_XOPEN_SOURCE_EXTENDED
+LIBS    = `pkg-config --cflags --libs glib-2.0` -lncurses -lncursesw -lm
 INCLDS  = -I $(INC_DIR)
 INCLDS += -I $(INC_DIR)/$(MDL_DIR)
 INCLDS += -I $(INC_DIR)/$(VIW_DIR)
@@ -99,7 +100,7 @@ check: build
 		--log-file=$(LOG).log ./$(BIN_DIR)/$(PROGRAM) $(ARGS)
 
 .PHONY: debug # Run program with debugger
-debug: CFLAGS = -Wall -Wextra -O0 -g
+debug: CFLAGS = -Wall -Wextra -O0 -g -D_XOPEN_SOURCE_EXTENDED
 debug: build
 	gdb ./$(BIN_DIR)/$(PROGRAM)
 

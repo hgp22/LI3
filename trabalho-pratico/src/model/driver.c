@@ -1,5 +1,7 @@
 #include "driver.h"
 #include "date.h"
+#include "validation.h"
+#include <ctype.h>
 #include <glib.h>
 #include <stdbool.h>
 #include <string.h>
@@ -16,6 +18,7 @@ typedef enum field_driver {
     Account_status,
 } FieldDriver;
 
+// struct driver {
 struct __attribute__((__packed__)) driver {
     char *name;
     double total_earned;
@@ -43,6 +46,8 @@ Driver driver_new(void)
 {
     Driver d = g_new(struct driver, 1);
 
+    d->name = NULL;
+    d->cities_score = NULL;
     d->sum_score = 0;
     d->total_earned = 0;
     d->n_trips = 0;
@@ -54,7 +59,7 @@ Driver driver_new(void)
     return d;
 }
 
-Driver driver_new_from_record(const char *driver_record)
+Driver driver_new_from_record(char *driver_record)
 {
     Driver driver = driver_new();
 
@@ -62,28 +67,64 @@ Driver driver_new_from_record(const char *driver_record)
         char *buff = strsep(&driver_record, ";\n");
         switch (field) {
             case Id:
+                if (*buff == '\0') {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_id(driver, buff);
                 break;
             case Name:
+                if (*buff == '\0') {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_name(driver, buff);
                 break;
             case Birth_date:
+                if (!validate_date(buff)) {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_age(driver, buff);
                 break;
             case Gender:
+                if (*buff == '\0') {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_gender(driver, buff);
                 break;
             case Car_class:
+                if (!validate_car_class(buff)) {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_car_class(driver, buff);
                 break;
             case License_plate:
+                if (*buff == '\0') {
+                    driver_free(driver);
+                    return NULL;
+                }
                 break;
             case City:
+                if (*buff == '\0') {
+                    driver_free(driver);
+                    return NULL;
+                }
                 break;
             case Account_creation:
+                if (!validate_date(buff)) {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_account_age(driver, buff);
                 break;
             case Account_status:
+                if (!validate_account_status(buff)) {
+                    driver_free(driver);
+                    return NULL;
+                }
                 driver_set_account_status(driver, buff);
                 break;
             default:
@@ -122,7 +163,7 @@ void driver_set_age(const Driver d, const char *birth_date)
 
 void driver_set_car_class(const Driver d, const char *car_class)
 {
-    switch (car_class[0]) {
+    switch (tolower(car_class[0])) {
         case 'b':
             d->car_class = Basic;
             break;
@@ -144,7 +185,7 @@ void driver_set_account_age(const Driver d, const char *account_creation)
 
 void driver_set_account_status(const Driver d, const char *account_status)
 {
-    d->account_status = *account_status == 'a';
+    d->account_status = tolower(*account_status) == 'a';
 }
 
 int driver_get_id(const Driver d)
@@ -249,6 +290,37 @@ void driver_add_ride_data(const Driver d, guint8 score, double cost,
     d->n_trips += 1;
 }
 
+#include <stdio.h>
+
+#define ID_SIZE 13
+#define SCORE_SIZE 6
+
+char *driver_show_id(Driver d)
+{
+    char *id = malloc(ID_SIZE);
+    sprintf(id, "%012d", driver_get_id(d));
+    return id;
+}
+
+char *driver_show_name(Driver d)
+{
+    return driver_get_name(d);
+}
+
+char *driver_show_avg_score(Driver d)
+{
+    char *avg_score = malloc(SCORE_SIZE);
+    sprintf(avg_score, "%.3f", driver_get_avg_score(d));
+    return avg_score;
+}
+
+char *driver_show_city_score(Driver d, const char *city)
+{
+    char *city_score = malloc(SCORE_SIZE);
+    sprintf(city_score, "%.3f", driver_get_city_score(d, city));
+    return city_score;
+}
+
 Driver driver_copy(const Driver old_d)
 {
     if (old_d == NULL) {
@@ -299,8 +371,10 @@ void driver_free(void *driver)
 {
     if (driver != NULL) {
         Driver d = (Driver)driver;
-        free(d->name);
-        driver_free_cities_score(d->cities_score);
+        if (d->name != NULL)
+            free(d->name);
+        if (d->cities_score != NULL)
+            driver_free_cities_score(d->cities_score);
         free(driver);
     }
 }

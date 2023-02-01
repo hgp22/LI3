@@ -25,7 +25,7 @@ Driver driver_new(void);
  * @param driver_record
  * @return Driver
  */
-Driver driver_new_from_record(const char *driver_record);
+Driver driver_new_from_record(char *driver_record);
 
 /**
  * @brief Frees GHashTable *
@@ -207,6 +207,39 @@ double driver_get_city_score(const Driver d, const char *city);
  */
 void driver_add_ride_data(const Driver d, guint8 score, double cost,
                           guint16 date, const char *city_name);
+
+/**
+ * @brief
+ *
+ * @param d
+ * @return char*
+ */
+char *driver_show_id(Driver d);
+
+/**
+ * @brief
+ *
+ * @param d
+ * @return char*
+ */
+char *driver_show_name(Driver d);
+
+/**
+ * @brief
+ *
+ * @param d
+ * @return char*
+ */
+char *driver_show_avg_score(Driver d);
+
+/**
+ * @brief
+ *
+ * @param d
+ * @param city
+ * @return char*
+ */
+char *driver_show_city_score(Driver d, const char *city);
 
 /**
  * @brief Copy driver

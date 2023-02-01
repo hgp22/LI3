@@ -11,6 +11,7 @@
 #define ORDER_ASCENDING 1
 #define ORDER_DESCENDING -1
 #define ORDER_EQUAL 0
+#define MAX_ACCOUNT_AGE 52
 
 struct rides {
     GPtrArray *all;
@@ -51,7 +52,12 @@ Rides rides_new(void)
 
 Rides rides_new_from_file(const char *inputs_path)
 {
+#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+#pragma GCC diagnostic push
+
     return load_file(inputs_path, INPUT_FILE, rides_new(), rides_add_record);
+
+#pragma GCC diagnostic pop
 }
 
 void rides_new_genders(const Rides rides)
@@ -66,10 +72,12 @@ void rides_add_ride(const Rides rides, const Ride ride)
     g_ptr_array_add(rides->all, ride_copy(ride));
 }
 
-void rides_add_record(const Rides rides, const char *ride_record)
+void rides_add_record(const Rides rides, char *ride_record)
 {
     Ride ride = ride_new_from_record(ride_record);
-    g_ptr_array_add(rides->all, ride);
+    if (ride != NULL) {
+        g_ptr_array_add(rides->all, ride);
+    }
 }
 
 void rides_replace_ride(const Rides rides, const Ride ride, guint index)
@@ -241,6 +249,9 @@ double rides_get_avg_stat_in_range(const GPtrArray *rides, const char *dateA,
 double rides_city_avg_cost(const Rides rides, const char *city_name)
 {
     City city = g_hash_table_lookup(rides->cities, city_name);
+    if (city == NULL) {
+        return -1;
+    }
     return city->sum_costs / city->n_rides;
 }
 
@@ -256,6 +267,9 @@ double rides_city_avg_dist_in_range(const Rides rides, const char *city_name,
                                     const char *dateA, const char *dateB)
 {
     City city = g_hash_table_lookup(rides->cities, city_name);
+    if (city == NULL) {
+        return -1;
+    }
     return rides_get_avg_stat_in_range(city->rides, dateA, dateB,
                                        ride_get_distance);
 }
@@ -264,8 +278,8 @@ double rides_city_avg_dist_in_range(const Rides rides, const char *city_name,
 GPtrArray *rides_by_gender_by_age(const Rides rides, char gender,
                                   int account_age)
 {
-    char date[18];
-    snprintf(date, 18, "09/10/%d", 2022 - account_age);
+    char date[11];
+    snprintf(date, 11, "09/10/%d", 2022 - account_age);
     guint16 age_days = date_to_days(date);
 
     GPtrArray *rs;
@@ -283,6 +297,10 @@ GPtrArray *rides_by_gender_by_age(const Rides rides, char gender,
 
     GPtrArray *answer =
         g_ptr_array_new_with_free_func((GDestroyNotify)ride_free);
+
+    if (account_age >= MAX_ACCOUNT_AGE) {
+        return answer;
+    }
 
     guint i = 0;
     for (Ride r = g_ptr_array_index(rs, i);

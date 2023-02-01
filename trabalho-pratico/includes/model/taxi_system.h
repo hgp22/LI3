@@ -104,7 +104,8 @@ GPtrArray *taxi_top_n_drivers_in_city(const TaxiSystem ts, const char *city,
  * @param account_age
  * @return Rides
  */
-GPtrArray *taxi_query8(const TaxiSystem ts, char gender, int account_age);
+GPtrArray *taxi_rides_by_gender_by_age(const TaxiSystem ts, char gender,
+                                       int account_age);
 
 /**
  * @brief

@@ -1,5 +1,5 @@
-#ifndef __UI_H__
-#define __UI_H__
+#ifndef __VIEW_BATCH_H__
+#define __VIEW_BATCH_H__
 
 #include <glib.h>
 #include <stdio.h>
@@ -13,49 +13,49 @@ typedef struct taxi_system *TaxiSystem;
  *
  * @param u Answer to query 1 for driver
  */
-void show_query1_user(const User u);
+void batch_print_query1_user(const User u, FILE *fp);
 
 /**
  * @brief Prints result of query 1 for a driver
  *
  * @param d Answer to query 1 for driver
  */
-void show_query1_driver(const Driver d);
+void batch_print_query1_driver(const Driver d, FILE *fp);
 
 /**
  * @brief Prints result of query 2
  *
  * @param drivers Answer to query 2
  */
-void show_query2(const GPtrArray *drivers);
+void batch_print_query2(const GPtrArray *drivers, FILE *fp);
 
 /**
  * @brief Prints result of query 3
  *
  * @param users Answer to query 3
  */
-void show_query3(const GPtrArray *users);
+void batch_print_query3(const GPtrArray *users, FILE *fp);
 
 /**
  * @brief Prints result of query 4
  *
  * @param avg_score Answer to query 4
  */
-void show_query4(double avg_score);
+void batch_print_query4(double avg_score, FILE *fp);
 
 /**
  * @brief Prints result of query 5
  *
  * @param avg_cost Answer to query 5
  */
-void show_query5(double avg_cost);
+void batch_print_query5(double avg_cost, FILE *fp);
 
 /**
  * @brief Prints result of query 6
  *
  * @param avg_distance Answer to query 6
  */
-void show_query6(double avg_distance);
+void batch_print_query6(double avg_distance, FILE *fp);
 
 /**
  * @brief
@@ -63,7 +63,7 @@ void show_query6(double avg_distance);
  * @param drivers
  * @param city
  */
-void show_query7(const GPtrArray *drivers, const char *city);
+void batch_print_query7(const GPtrArray *drivers, const char *city, FILE *fp);
 
 /**
  * @brief
@@ -71,13 +71,13 @@ void show_query7(const GPtrArray *drivers, const char *city);
  * @param rides
  * @param c
  */
-void show_query8(const GPtrArray *rides, const TaxiSystem ts);
+void batch_print_query8(const GPtrArray *rides, const TaxiSystem ts, FILE *fp);
 
 /**
  * @brief
  *
  * @param rides
  */
-void show_query9(const GPtrArray *rides);
+void batch_print_query9(const GPtrArray *rides, FILE *fp);
 
 #endif

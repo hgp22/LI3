@@ -18,7 +18,7 @@ Ride ride_new(void);
  * @param ride_record
  * @return Ride
  */
-Ride ride_new_from_record(const char *ride_record);
+Ride ride_new_from_record(char *ride_record);
 
 /**
  * @brief Set the ride id object
@@ -211,6 +211,46 @@ guint16 ride_get_user_account_age(const Ride r);
  * @return guint16
  */
 guint16 ride_get_driver_account_age(const Ride r);
+
+/**
+ * @brief
+ *
+ * @param r
+ * @return char*
+ */
+char *ride_show_id(Ride r);
+
+/**
+ * @brief
+ *
+ * @param r
+ * @return char*
+ */
+char *ride_show_date(Ride r);
+
+/**
+ * @brief
+ *
+ * @param r
+ * @return char*
+ */
+char *ride_show_distance(Ride r);
+
+/**
+ * @brief
+ *
+ * @param r
+ * @return char*
+ */
+char *ride_show_city(Ride r);
+
+/**
+ * @brief
+ *
+ * @param r
+ * @return char*
+ */
+char *ride_show_tip(Ride r);
 
 /**
  * @brief

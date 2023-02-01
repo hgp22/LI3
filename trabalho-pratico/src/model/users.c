@@ -29,7 +29,12 @@ Users users_new(void)
 
 Users users_new_from_file(const char *inputs_path)
 {
+#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+#pragma GCC diagnostic push
+
     return load_file(inputs_path, INPUT_FILE, users_new(), users_add_record);
+
+#pragma GCC diagnostic pop
 }
 
 gboolean users_add_user(const Users users, const User u)
@@ -38,7 +43,7 @@ gboolean users_add_user(const Users users, const User u)
                                user_copy(u));
 }
 
-void users_add_record(const Users users, const char *user_record)
+void users_add_record(const Users users, char *user_record)
 {
     User user = user_new_from_record(user_record);
     if (user != NULL) {
@@ -49,6 +54,11 @@ void users_add_record(const Users users, const char *user_record)
 User users_get_user(const Users users, const char *username)
 {
     return user_copy(g_hash_table_lookup(users->hash_table, username));
+}
+
+guint users_size(const Users users)
+{
+    return users->array->len;
 }
 
 void users_add_user_ride_data(const Users users, const char *username,
@@ -91,11 +101,11 @@ Users users_list(const Users users)
     return users;
 }
 
-GPtrArray *users_top_n_users(const Users users, int N)
+GPtrArray *users_top_n_users(const Users users, guint N)
 {
     GPtrArray *r = g_ptr_array_new_full(N, user_free);
 
-    for (int i = 0; i < N; i++) {
+    for (guint i = 0; i < users->array->len && i < N; i++) {
         g_ptr_array_add(r, user_copy(g_ptr_array_index(users->array, i)));
     }
 

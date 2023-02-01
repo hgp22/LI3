@@ -39,7 +39,7 @@ char *days_to_date(guint16 days)
     const unsigned short y = (int)(yoe) + era * 400 + (m <= 2);
 
     char *date_str = malloc(DATE_STR_SIZE);
-    sprintf(date_str, "%02hhu/%02hhu/%hu", d, m, y);
+    snprintf(date_str, 11, "%02hhu/%02hhu/%hu", d, m, y);
 
     return date_str;
 }

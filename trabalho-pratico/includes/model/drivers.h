@@ -40,7 +40,7 @@ gboolean drivers_add_driver(const Drivers drivers, const Driver d);
  * @param driver_line
  * @return gboolean
  */
-void drivers_add_record(const Drivers drivers, const char *driver_line);
+void drivers_add_record(const Drivers drivers, char *driver_line);
 
 /**
  * @brief Get Driver from Drivers
@@ -159,7 +159,7 @@ Drivers drivers_list(const Drivers drivers);
  * @param N Number of drivers
  * @return Top N drivers
  */
-GPtrArray *drivers_top_n_drivers(const Drivers drivers, int N);
+GPtrArray *drivers_top_n_drivers(const Drivers drivers, guint N);
 
 /**
  * @brief

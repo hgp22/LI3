@@ -5,6 +5,7 @@
 #include "rides.h"
 #include "user.h"
 #include "users.h"
+#include "validation.h"
 #include <glib.h>
 
 struct taxi_system {
@@ -19,9 +20,17 @@ static void _correlate_collections(Rides rides, Users users, Drivers drivers);
 TaxiSystem taxi_new(const char *inputs_path)
 {
     TaxiSystem ts = g_new(struct taxi_system, 1);
-    ts->users = users_new_from_file(inputs_path);
-    ts->drivers = drivers_new_from_file(inputs_path);
-    ts->rides = rides_new_from_file(inputs_path);
+    compile_regex();
+    if ((ts->users = users_new_from_file(inputs_path)) == NULL) {
+        return NULL;
+    }
+    if ((ts->drivers = drivers_new_from_file(inputs_path)) == NULL) {
+        return NULL;
+    }
+    if ((ts->rides = rides_new_from_file(inputs_path)) == NULL) {
+        return NULL;
+    }
+    free_regex();
     _taxi_process(ts);
     return ts;
 }
@@ -96,7 +105,8 @@ GPtrArray *taxi_top_n_drivers_in_city(const TaxiSystem ts, const char *city,
     return drivers_top_n_drivers_in_city(ts->drivers, city, N);
 }
 
-GPtrArray *taxi_query8(const TaxiSystem ts, char gender, int account_age)
+GPtrArray *taxi_rides_by_gender_by_age(const TaxiSystem ts, char gender,
+                                       int account_age)
 {
     return rides_by_gender_by_age(ts->rides, gender, account_age);
 }
@@ -109,10 +119,12 @@ GPtrArray *taxi_rides_with_tip_in_range(const TaxiSystem ts, const char *dateA,
 
 void taxi_free(const TaxiSystem ts)
 {
-    users_free(ts->users);
-    drivers_free(ts->drivers);
-    rides_free(ts->rides);
-    free(ts);
+    if (ts != NULL) {
+        users_free(ts->users);
+        drivers_free(ts->drivers);
+        rides_free(ts->rides);
+        free(ts);
+    }
 }
 
 static void _correlate_collections(const Rides rides, const Users users,

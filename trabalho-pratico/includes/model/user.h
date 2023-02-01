@@ -18,7 +18,7 @@ User user_new(void);
  * @param user_record
  * @return User
  */
-User user_new_from_record(const char *user_record);
+User user_new_from_record(char *user_record);
 
 /**
  * @brief Set the user username object
@@ -152,6 +152,38 @@ guint16 user_get_last_ride_date(const User u);
  */
 void user_add_ride_data(const User u, guint8 score, double cost, guint16 date,
                         guint8 distance);
+
+/**
+ * @brief
+ *
+ * @param u
+ * @return char*
+ */
+char *user_show_username(User u);
+
+/**
+ * @brief
+ *
+ * @param u
+ * @return char*
+ */
+char *user_show_name(User u);
+
+/**
+ * @brief
+ *
+ * @param u
+ * @return char*
+ */
+char *user_show_avg_score(User u);
+
+/**
+ * @brief
+ *
+ * @param u
+ * @return char*
+ */
+char *user_show_total_distance(User u);
 
 /**
  * @brief

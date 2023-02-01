@@ -42,7 +42,7 @@ void rides_add_ride(const Rides rides, const Ride ride);
  * @param rides
  * @param ride_record
  */
-void rides_add_record(const Rides rides, const char *ride_record);
+void rides_add_record(const Rides rides, char *ride_record);
 
 /**
  * @brief

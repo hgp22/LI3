@@ -1,6 +1,8 @@
 #include "ride.h"
 #include "date.h"
+#include "validation.h"
 #include <glib.h>
+#include <stdio.h>
 #include <string.h>
 
 typedef enum field_ride {
@@ -16,6 +18,7 @@ typedef enum field_ride {
     Comment,
 } FieldRide;
 
+// struct ride {
 struct __attribute__((__packed__)) ride {
     char *user;
     char *city;
@@ -33,10 +36,15 @@ struct __attribute__((__packed__)) ride {
 
 Ride ride_new(void)
 {
-    return g_new(struct ride, 1);
+    Ride ride = g_new(struct ride, 1);
+
+    ride->user = NULL;
+    ride->city = NULL;
+
+    return ride;
 }
 
-Ride ride_new_from_record(const char *ride_record)
+Ride ride_new_from_record(char *ride_record)
 {
     Ride ride = ride_new();
 
@@ -44,30 +52,66 @@ Ride ride_new_from_record(const char *ride_record)
         char *buff = strsep(&ride_record, ";\n");
         switch (field) {
             case Id:
+                if (*buff == '\0') {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_id(ride, buff);
                 break;
             case Date:
+                if (!validate_date(buff)) {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_date(ride, buff);
                 break;
             case Driver_id:
+                if (*buff == '\0') {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_driver(ride, buff);
                 break;
             case User_id:
+                if (*buff == '\0') {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_user(ride, buff);
                 break;
             case City_name:
+                if (*buff == '\0') {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_city(ride, buff);
                 break;
             case Distance:
+                if (!validate_natural(buff)) {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_distance(ride, buff);
                 break;
             case Score_user:
+                if (!validate_natural(buff)) {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_score_user(ride, buff);
                 break;
             case Score_driver:
+                if (!validate_natural(buff)) {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_score_driver(ride, buff);
                 break;
             case Tip:
+                if (!validate_fractional(buff)) {
+                    ride_free(ride);
+                    return NULL;
+                }
                 ride_set_tip(ride, buff);
                 break;
             case Comment:
@@ -132,8 +176,7 @@ void ride_set_cost(const Ride r, double cost)
 
 void ride_set_tip(const Ride r, const char *tip)
 {
-    char *endptr;
-    r->tip = strtof(tip, &endptr);
+    r->tip = atof(tip);
 }
 
 void ride_set_user_account_age(const Ride r, guint16 user_account_age)
@@ -206,6 +249,42 @@ guint16 ride_get_driver_account_age(const Ride r)
     return r->driver_account_age;
 }
 
+#define ID_SIZE 13
+#define DATE_SIZE 10
+#define DISTANCE_SIZE 16
+#define TIP_SIZE 16
+
+char *ride_show_id(Ride r)
+{
+    char *id = malloc(ID_SIZE);
+    sprintf(id, "%012d", ride_get_id(r));
+    return id;
+}
+
+char *ride_show_date(Ride r)
+{
+    return days_to_date(ride_get_date(r));
+}
+
+char *ride_show_distance(Ride r)
+{
+    char *distance = malloc(DISTANCE_SIZE);
+    sprintf(distance, "%d", (int)ride_get_distance(r));
+    return distance;
+}
+
+char *ride_show_city(Ride r)
+{
+    return ride_get_city(r);
+}
+
+char *ride_show_tip(Ride r)
+{
+    char *tip = malloc(TIP_SIZE);
+    sprintf(tip, "%.3f", ride_get_tip(r));
+    return tip;
+}
+
 Ride ride_copy(const Ride old_r)
 {
     if (old_r == NULL) {
@@ -234,8 +313,10 @@ void ride_free(void *ride)
 {
     if (ride != NULL) {
         Ride r = (Ride)ride;
-        free(r->user);
-        free(r->city);
+        if (r->user != NULL)
+            free(r->user);
+        if (r->city != NULL)
+            free(r->city);
         free(ride);
     }
 }
