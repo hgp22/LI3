@@ -20,6 +20,8 @@ INCLDS  = -I $(INC_DIR)
 INCLDS += -I $(INC_DIR)/$(MDL_DIR)
 INCLDS += -I $(INC_DIR)/$(VIW_DIR)
 INCLDS += -I $(INC_DIR)/$(CTL_DIR)
+INCLDS_TST  = $(INCLDS)
+INCLDS_TST += -I $(INC_DIR_TST)
 #------------------------------------------------------------------------------
 BIN_DIR = .
 BIN_DIR_TST = .
@@ -27,6 +29,7 @@ BLD_DIR = build
 BLD_DIR_TST = build_tst
 DOC_DIR = docs
 INC_DIR = includes
+INC_DIR_TST = includes_tst
 LOG_DIR = log
 OUT_DIR = Resultados
 SRC_DIR = src
@@ -82,17 +85,17 @@ $(BIN_DIR)/$(PROGRAM): $(DEPS) $(OBJS)
 
 $(BLD_DIR_TST)/%.d: %.c
 	-$(call show,cyan,reset,"Generating $(shell basename $@) ... ")
-	@$(CC) -M $(INCLDS) $(LIBS) $(CFLAGS) $< -o $@
+	@$(CC) -M $(INCLDS_TST) $(LIBS) $(CFLAGS) $< -o $@
 	@echo -e "$(OK_STRING)"
 
 $(BLD_DIR_TST)/%.o: %.c
 	-$(call show,blue,reset,"Building $(shell basename $@) ... ")
-	@$(CC) -c $(INCLDS) $(LIBS) $(CFLAGS) $< -o $@
+	@$(CC) -c $(INCLDS_TST) $(LIBS) $(CFLAGS) $< -o $@
 	@echo -e "$(OK_STRING)"
 
 $(BIN_DIR_TST)/$(PROGRAM_TST): $(DEPS_TST) $(OBJS_TST)
 	-$(call show,green,bold,"Compiling $(shell basename $@) ... ")
-	@$(CC) $(INCLDS) $(CFLAGS) -o $@ $(OBJS_TST) $(LIBS)
+	@$(CC) $(INCLDS_TST) $(CFLAGS) -o $@ $(OBJS_TST) $(LIBS)
 	@echo -e "$(OK_STRING)"
 
 .PHONY: build # Compile binary program
@@ -112,6 +115,7 @@ format fmt:
 	@-clang-format -verbose -i $(SRC_DIR)/*.c $(INC_DIR)/*.h
 	@-clang-format -verbose -i $(SRC_DIR)/$(MDL_DIR)/*.c $(SRC_DIR)/$(CTL_DIR)/*.c $(SRC_DIR)/$(VIW_DIR)/*.c
 	@-clang-format -verbose -i $(INC_DIR)/$(MDL_DIR)/*.h $(INC_DIR)/$(CTL_DIR)/*.h $(INC_DIR)/$(VIW_DIR)/*.h
+	@-clang-format -verbose -i $(TST_DIR)/*.c $(INC_DIR_TST)/*.h
 	@echo ""
 	-$(call show,yellow,reset,"Shell files")
 	@echo ":"

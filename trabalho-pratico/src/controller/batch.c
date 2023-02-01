@@ -1,6 +1,5 @@
 #include "controller/batch.h"
 #include "driver.h"
-#include "rides.h"
 #include "taxi_system.h"
 #include "user.h"
 #include "view/batch.h"
@@ -13,7 +12,6 @@
 #define BUFFER 64
 
 static int _run_queries(const TaxiSystem ts, const char *queries_path);
-static int _run_query(const TaxiSystem ts, const char *query, FILE *fp);
 static void _query1(const TaxiSystem ts, const char *query, FILE *fp);
 static void _query2(const TaxiSystem ts, const char *query, FILE *fp);
 static void _query3(const TaxiSystem ts, const char *query, FILE *fp);
@@ -58,7 +56,7 @@ static int _run_queries(const TaxiSystem ts, const char *queries_path)
     while (getline(&query, &len, fp_queries) != -1) {
         sprintf(file, "./Resultados/command%d_output.txt", n_query++);
         FILE *fp_output = fopen(file, "w");
-        _run_query(ts, query, fp_output);
+        run_query(ts, query, fp_output);
         fclose(fp_output);
     }
 
@@ -67,7 +65,7 @@ static int _run_queries(const TaxiSystem ts, const char *queries_path)
     return n_query;
 }
 
-static int _run_query(const TaxiSystem ts, const char *query, FILE *fp)
+int run_query(const TaxiSystem ts, const char *query, FILE *fp)
 {
     switch (query[0]) {
         case '1':
