@@ -22,7 +22,9 @@ INCLDS += -I $(INC_DIR)/$(VIW_DIR)
 INCLDS += -I $(INC_DIR)/$(CTL_DIR)
 #------------------------------------------------------------------------------
 BIN_DIR = .
+BIN_DIR_TST = .
 BLD_DIR = build
+BLD_DIR_TST = build_tst
 DOC_DIR = docs
 INC_DIR = includes
 LOG_DIR = log
@@ -35,18 +37,27 @@ VIW_DIR = view
 CTL_DIR = controller
 #------------------------------------------------------------------------------
 PROGRAM = programa-principal
+PROGRAM_TST = programa-testes
 #------------------------------------------------------------------------------
-TRASH   = $(PROGRAM) $(BLD_DIR) $(DOC_DIR)/{html,latex} $(LOG_DIR) $(OUT_DIR)
+TRASH   = $(PROGRAM) $(PROGRAM_TST) $(BLD_DIR) $(BLD_DIR_TST) $(DOC_DIR)/{html,latex} $(LOG_DIR) $(OUT_DIR)
 #------------------------------------------------------------------------------
-SRC     = $(wildcard $(SRC_DIR)/*.c)
-SRC    += $(wildcard $(SRC_DIR)/$(MDL_DIR)/*.c)
+MAIN    = $(wildcard $(SRC_DIR)/*.c)
+
+SRC     = $(wildcard $(SRC_DIR)/$(MDL_DIR)/*.c)
 SRC    += $(wildcard $(SRC_DIR)/$(VIW_DIR)/*.c)
 SRC    += $(wildcard $(SRC_DIR)/$(CTL_DIR)/*.c)
-OBJS    = $(patsubst $(SRC_DIR)/%.c,$(BLD_DIR)/%.o,$(SRC))
+OBJS    = $(patsubst $(SRC_DIR)/%.c,$(BLD_DIR)/%.o,$(MAIN))
+OBJS   += $(patsubst $(SRC_DIR)/%.c,$(BLD_DIR)/%.o,$(SRC))
 DEPS    = $(patsubst $(BLD_DIR)/%.o,$(BLD_DIR)/%.d,$(OBJS))
+
+TST       = $(wildcard $(TST_DIR)/*.c)
+OBJS_TST  = $(patsubst $(TST_DIR)/%.c,$(BLD_DIR_TST)/%.o,$(TST))
+OBJS_TST += $(patsubst $(TST_DIR)/%.c,$(BLD_DIR)/%.o,$(SRC))
+DEPS_TST  = $(patsubst $(BLD_DIR_TST)/%.o,$(BLD_DIR_TST)/%.d,$(OBJS_TST))
 #==============================================================================
 
 vpath %.c $(SRC_DIR)
+vpath %.c $(TST_DIR)
 
 .DEFAULT_GOAL = build
 
@@ -69,11 +80,30 @@ $(BIN_DIR)/$(PROGRAM): $(DEPS) $(OBJS)
 	@$(CC) $(INCLDS) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
 	@echo -e "$(OK_STRING)"
 
+$(BLD_DIR_TST)/%.d: %.c
+	-$(call show,cyan,reset,"Generating $(shell basename $@) ... ")
+	@$(CC) -M $(INCLDS) $(LIBS) $(CFLAGS) $< -o $@
+	@echo -e "$(OK_STRING)"
+
+$(BLD_DIR_TST)/%.o: %.c
+	-$(call show,blue,reset,"Building $(shell basename $@) ... ")
+	@$(CC) -c $(INCLDS) $(LIBS) $(CFLAGS) $< -o $@
+	@echo -e "$(OK_STRING)"
+
+$(BIN_DIR_TST)/$(PROGRAM_TST): $(DEPS_TST) $(OBJS_TST)
+	-$(call show,green,bold,"Compiling $(shell basename $@) ... ")
+	@$(CC) $(INCLDS) $(CFLAGS) -o $@ $(OBJS_TST) $(LIBS)
+	@echo -e "$(OK_STRING)"
+
 .PHONY: build # Compile binary program
-build compile: setup $(BIN_DIR)/$(PROGRAM)
+build compile: setup $(BIN_DIR)/$(PROGRAM) $(BIN_DIR_TST)/$(PROGRAM_TST)
 
 run go: build
 	@./$(BIN_DIR)/$(PROGRAM) $(ARGS)
+
+.PHONY: test # Run tests
+test: build
+	@./$(BIN_DIR)/$(PROGRAM_TST) $(ARGS)
 
 .PHONY: format fmt # Format source files and scripts
 format fmt:
@@ -108,13 +138,10 @@ debug: build
 documentation doc:
 	@doxygen $(DOC_DIR)/Doxyfile
 
-.PHONY: test # Run tests
-test:
-	@for f in $(TST_DIR)/*.sh; do sh "$$f"; done
-
 setup:
 	@mkdir -p $(BIN_DIR)
 	@mkdir -p $(BLD_DIR)
+	@mkdir -p $(BLD_DIR_TST)
 	@mkdir -p $(BLD_DIR)/$(MDL_DIR)
 	@mkdir -p $(BLD_DIR)/$(VIW_DIR)
 	@mkdir -p $(BLD_DIR)/$(CTL_DIR)

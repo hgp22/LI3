@@ -6,6 +6,7 @@ latex/
 log/
 out/
 programa-principal
+programa-testes
 
 ### C ###
 # Prerequisites
